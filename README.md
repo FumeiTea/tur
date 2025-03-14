@@ -7,8 +7,8 @@ termux user repository
 [__en__](README.en.md)
 
 # 使用 <a name="use"/>
-在源文件中添加`deb [trusted=yes] https://raw.githubusercontent.com/wwbcici/tur/main/ stable main`  
-或直接使用`echo deb [trusted=yes] https://raw.githubusercontent.com/wwbcici/tur/main/ stable main > $PREFIX/etc/apt/sources.list.d/ctur.list`
+在源文件中添加：`deb [trusted=yes] https://raw.githubusercontent.com/wwbcici/tur/main/ stable main`  
+或直接使用：`echo deb [trusted=yes] https://raw.githubusercontent.com/wwbcici/tur/main/ stable main > $PREFIX/etc/apt/sources.list.d/ctur.list`
 
 # 创建自定义仓库 <a name="creatingCustomRepository"/>
 

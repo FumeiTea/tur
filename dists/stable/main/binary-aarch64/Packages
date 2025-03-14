@@ -1,0 +1,13 @@
+Package: mypackage
+Version: 1.0
+Architecture: all
+Maintainer: yourname <you@example.com>
+Filename: pool/main/mypackage.deb
+Size: 820
+MD5sum: 8692a0f8f86789040eb2edb5a537a141
+SHA1: cfd4bbe0ba20eba43408391444a3de82b8b81ab2
+SHA256: a2cc24e9a71a2c9165aa698b0f97d25b63d76232b0bf33846d2adbba2f3caf78
+Section: base
+Priority: optional
+Description: 这是一个示例软件包
+

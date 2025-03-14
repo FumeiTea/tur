@@ -3,16 +3,16 @@ termux user repository
 这是一个 termux用户仓库。
 [跳转到目录](#contents)
 
-# 多语言 {#i8k}
+# 多语言 <a name="#i8k">
 [__en__](README.en.md)
 
-# 使用
+# 使用 <a name="use"/>
 在源文件中添加`deb [trusted=yes] https://raw.githubusercontent.com/wwbcici/tur/main/ stable main`
 或直接使用`echo deb [trusted=yes] https://raw.githubusercontent.com/wwbcici/tur/main/ stable main > $PREFIX/etc/apt/sources.list.d/ctur.list`
 
-# 创建自定义仓库 {#creatingCustomRepository}
+# 创建自定义仓库 <a name="creatingCustomRepository"/>
 
-### 构建仓库 {#buildProject}
+### 构建仓库 <a name="buildProject"/>
 1. 安装工具：`apt install dpkg-scanpacka ges apt-ftparchive` # 用于创建索引文件
 
 2. 创建项目目录：`mkdir -p tur/dists/stable/main/binary-aarch64  tur/pool/main`
@@ -43,7 +43,7 @@ __*或*__
 
 4. `apt-ftparchive release dists/stable > dists/stable/Release`
 
-### 提交至GitHub {#commitToGitHub}
+### 提交至GitHub <a name="commitToGitHub"/>
 
 - 初始化仓库：`git init`
 - 重命名分支：`git branch -m main`  # 要求和github分支名一致
@@ -53,7 +53,7 @@ __*或*__
 - 以rebase方式拉取远程仓库变更：`git pull --rebase origin main`
 - 推送至远程仓库并将`origin`设置为默认推送源：`git push --set-upstream origin main`
 
-# 目录 {#contents}
+# 目录 <a name="contents"/>
 - [多语言](#i8k)
 - [创建自定义仓库](#creatingCustomRepository)
   - [构建仓库](#buildProject)

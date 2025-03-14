@@ -3,7 +3,7 @@ termux user repository
 这是一个 termux用户仓库。
 [跳转到目录](#contents)
 
-# 多语言 <a name="#i8k">
+# 多语言 <a name="i8k">
 [__en__](README.en.md)
 
 # 使用 <a name="use"/>
@@ -55,6 +55,7 @@ __*或*__
 
 # 目录 <a name="contents"/>
 - [多语言](#i8k)
+- [使用](#use)
 - [创建自定义仓库](#creatingCustomRepository)
   - [构建仓库](#buildProject)
   - [提交至GitHub](#commitToGitHub)

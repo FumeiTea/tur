@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#command -pv inotifywait || return
+_target_path=/storage/emulated/0/tt/Screenshots/
+[[ -d $_target_path ]] || mkdir -p $_target_path
+inotifywait -m -e moved_to /sdcard/DCIM/Screenshots |while read path action file; do
+  [[ -f ~/.config/.mv.screenshots.down ]] && continue
+    mv -v $path/$file $_target_path >> $HOME/.screenshots.history
+    am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file://${_target_path}
+    am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///storage/emulated/0/DCIM/Screenshots
+  #mv -v /storage/emulated/0/DCIM/Screenshots/* /storage/emulated/0/tt/Screenshots >> $HOME/.screenshots.history
+done

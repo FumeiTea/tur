@@ -1,0 +1,7 @@
+Package: service-sshd
+Version: 1.0
+Section: base
+Priority: optional
+Architecture: all
+Maintainer: fumei wwb.cici@gmail.com
+Description: service [service-sshd]

@@ -1,0 +1,9 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+read -p "Want to enable \`aria2c\` service now? [yes/y] : " -t10 -n3 isEn
+if [[ $isEn == yes || $isEn == y ]] ;then
+  [[ -f /data/data/com.termux/files/usr/var/service//aria2c/down ]] && rm /data/data/com.termux/files/usr/var/service//aria2c/down
+else
+  [[ -f /data/data/com.termux/files/usr/var/service//aria2c/down ]] || touch /data/data/com.termux/files/usr/var/service//aria2c/down
+fi
+

@@ -1,0 +1,92 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+# 设置aria2c RPC服务的URL和密钥
+RPC_URL="http://localhost:8909/jsonrpc"
+SECRET="colemark"  # 如果启用了令牌认证，请替换为实际的令牌
+
+NOTIFICATION_ID_PATH=${NOTIFICATION_ID_PATH:-$HOME/.notification.id}.aria2c
+printf $$ > $NOTIFICATION_ID_PATH
+
+#RUN=0
+bi=1
+bmax=3
+declare -A BUTTON=(
+[1]="--button1 Switch \
+    --button1-action Switch \
+    --button2 Switch \
+    --button2-action Switch"
+
+[2]="--button1 Switch2 \
+    --button1-action Switch \
+    --button2 Switch2 \
+    --button2-action Switch"
+)
+
+CMD_RESTART="kill -SIGRTMIN+3 $(
+    sed -n '1p' ${NOTIFICATION_ID_PATH:-$HOME/.notification.id.aria2c}
+)"
+
+trap 'kill -9 $runPid && echo kill -9 $runPid || run & runPid=$!; wait $ariaPid;' SIGRTMIN+1
+trap '{
+    kill -9 $runPid && echo kill -9 $runPid;
+    bi=$bi+1;
+    bi=$((bi % bmax))
+    run & runPid=$! && echo runPid=$!;
+    wait $ariaPid;
+}' SIGRTMIN+2
+trap '{
+    kill -9 $runPid && echo kill -9 $runPid;
+    run & runPid=$! && echo runPid=$!;
+    wait $ariaPid;
+}' SIGRTMIN+3
+
+. /data/data/com.termux/files/home/back_termux/sh/aria2c
+
+
+      #--button1 pause \
+      #--button1-action "bash -c 'kill -SIGRTMIN+1 "$(sed -n "2p" ${NOTIFICATION_ID_PATH:-$HOME/.notification.id.aria2c})"'" \
+send_notification(){
+    termux-notification \
+      --id=$NOTIFICATION_ID_PATH \
+      --alert-once \
+      --ongoing \
+      --priority max \
+      -t aria2c \
+      --on-delete " bash <<@
+          $CMD_RESTART
+          @ " \
+      --action "bash <<@
+          am start -n com.xmader.aria_ng_gui_android/com.xmader.aria_ng_gui_android.MainActivity;
+          $CMD_RESTART
+          @ " \
+      ${BUTTON[$bi]} \
+      -c "$1"
+}
+
+run(){
+    for((;;)); do
+        content="$(get_global_status $RPC_URL $SECRET |jq -r '.result | "\(.downloadSpeed) \(.numActive)"')"
+        [[ $content == $old_content ]] || send_notification $content
+        old_content="$content"
+        sleep 1
+    done
+}
+
+run &
+runPid=$!
+printf runPid=$runPid"\n"
+#printf "\n"$! >> $NOTIFICATION_ID_PATH
+
+aria2c --all-proxy="127.0.0.1:7891" 2>&1 1>/dev/null &
+ariaPid=$!
+printf ariaPid=$ariaPid
+
+trap 'kill -9 $runPid $ariaPid && echo kill -9 $runPid $ariaPid' SIGINT SIGTERM
+
+echo wait $ariaPid 1
+wait $ariaPid
+echo wait $ariaPid 2
+
+
+
+# kill -SIGRTMIN+1 $(cat ~/.notification.id.aria2c)

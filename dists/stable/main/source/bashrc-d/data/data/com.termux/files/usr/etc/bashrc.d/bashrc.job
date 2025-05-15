@@ -1,0 +1,27 @@
+
+## battery ##
+
+battery(){
+    local b=($(rish -c "dumpsys battery |grep -E 'AC|status|level' |cut -d ':' -f 2 |tr -d ' '")) b_status=''
+    [[ ${b[1]} == "2" ]] && {
+        b_status="y"
+        [[ ${b[0]} == true ]] && {
+            [[ ${b[2]} -ge 90 ]] && rish -c "dumpsys battery set ac 0" 
+        } || {
+            [[ ${b[2]} -le 80 ]] && rish -c "dumpsys battery reset"
+        }
+    } || {
+        b_status="x"
+    }
+    echo $(date +%Y%m%d_%H:%M:%S.batter) sed -i "/#!\/bin\/bash/ s@display: '[^']*'@display: '"${b[2]}${b_status}"'@" ~/.termux/termux.properties
+    sed -i "/#!\/bin\/bash/ s@display: '[^']*'@display: '"${b[2]}${b_status}"'@" ~/.termux/termux.properties
+    termux-reload-settings
+}
+
+battery_job(){
+    while : ;do
+        battery
+        sleep 30
+    done
+}
+#battery_job &

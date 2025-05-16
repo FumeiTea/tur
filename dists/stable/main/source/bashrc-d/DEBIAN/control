@@ -1,8 +1,8 @@
-Package: service-clashd
+Package: bashrc-d
 Version: 1.0
 Section: base
 Priority: optional
 Recommends: wlog, termux-api
 Architecture: all
 Maintainer: fumei wwb.cici@gmail.com
-Description: service [service-clashd]
+Description: bashrc [conf]

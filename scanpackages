@@ -1,0 +1,4 @@
+#!/bin/bash
+
+dpkg-scanpackages pool/ /dev/null > dists/stable/main/binary-aarch64/Packages
+gzip -vc dists/stable/main/binary-aarch64/Packages > dists/stable/main/binary-aarch64/Packages.gz

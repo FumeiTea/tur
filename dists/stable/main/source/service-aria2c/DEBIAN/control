@@ -2,6 +2,7 @@ Package: service-aria2c
 Version: 1.0
 Section: base
 Priority: optional
+Depends: termux-services
 Architecture: all
 Maintainer: fumei wwb.cici@gmail.com
 Description: service [service-aria2c]

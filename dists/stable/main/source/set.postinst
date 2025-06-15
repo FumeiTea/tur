@@ -1,0 +1,5 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+echo {service-aria2c,service-clashd,service-x11,service-mv-screenshots}/DEBIAN/ |xargs -n1 cp ./postinst
+
+# vim: set ft=sh ts=2 sw=2 sts=2 et :

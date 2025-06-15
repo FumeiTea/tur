@@ -1,9 +1,0 @@
-#!/data/data/com.termux/files/usr/bin/bash
-
-read -p "Want to enable \`sshd\` service now? [yes/y] : " -t10 -n3 isEn
-if [[ $isEn == yes || $isEn == y ]] ;then
-  [[ -f /data/data/com.termux/files/usr/var/service//sshd/down ]] && rm /data/data/com.termux/files/usr/var/service//sshd/down
-else
-  [[ -f /data/data/com.termux/files/usr/var/service//sshd/down ]] || touch /data/data/com.termux/files/usr/var/service//sshd/down
-fi
-

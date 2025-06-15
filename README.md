@@ -10,6 +10,8 @@ termux user repository
 在源文件中添加：`deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/ stable main`  
 或直接使用：`echo deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/ stable main > $PREFIX/etc/apt/sources.list.d/ctur.list`
 
+``
+
 # 创建自定义仓库 <a name="creatingCustomRepository"/>
 
 ### 构建仓库 <a name="buildProject"/>
@@ -34,11 +36,11 @@ tur/
 ```
 
 3. 生成Packages文件：
-  - `dpkg-scanpackages pool/ /dev/null > dists/stable/main/binary-aarch64/Packages` 或 `apt-ftparchive packages pool/ > dists/stable/main/binary-aarch64/Packages`
+  - .
+    - `dpkg-scanpackages pool/ /dev/null > dists/stable/main/binary-aarch64/Packages`
+    - `apt-ftparchive packages pool/ > dists/stable/main/binary-aarch64/Packages`
   - `gzip -c dists/stable/main/binary-aarch64/Packages > dists/stable/main/binary-aarch64/Packages.gz`
 
-__*或*__
-  - `dpkg-scanpackages pool/ /dev/null > dists/stable/main/binary-aarch64/Packages`
 > 为了保持兼容性，`Packages` 与 `Packages.gz` 通常是同时存在的，但也可以仅存在一个。
 
 4. `apt-ftparchive release dists/stable > dists/stable/Release`

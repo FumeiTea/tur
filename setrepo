@@ -6,4 +6,4 @@ EOF
 
 apt update
 
-#echo deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/ stable main > $PREFIX/etc/apt/sources.list.d/ctur.list
+# vim: set ft=sh ts=2 sw=2 sts=2 et :

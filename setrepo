@@ -3,4 +3,7 @@ mkdir $PREFIX/etc/apt/sources.list.d/ 2>/dev/null
 cat > $PREFIX/etc/apt/sources.list.d/ctur.list <<EOF
 deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/ stable main
 EOF
+
+apt update
+
 #echo deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/ stable main > $PREFIX/etc/apt/sources.list.d/ctur.list

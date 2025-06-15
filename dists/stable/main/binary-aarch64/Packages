@@ -82,10 +82,10 @@ Version: 1.0
 Architecture: all
 Maintainer: fumei wwb.cici@gmail.com
 Filename: pool/main/termux-properties.deb
-Size: 134536
-MD5sum: 7f390c28f7b2669d97de0b2f3d4d031c
-SHA1: d426aa23025f82b8c1b027ff0a6b3b5c2f572fb4
-SHA256: 0c5027341d46d7e7caf0588d80e5fb1c44d1aff228d53a72168691ba6f53483b
+Size: 134576
+MD5sum: af3d51a92ab55542b8013ec6c1977632
+SHA1: 102ec4b11948944cabb056831b9f1749a454b8e0
+SHA256: 1e5d73292c5cebd47bad2bc65e531548a44eaca6ddeed407beedbb109cafb700
 Section: base
 Priority: optional
 Description: ~/.termux/

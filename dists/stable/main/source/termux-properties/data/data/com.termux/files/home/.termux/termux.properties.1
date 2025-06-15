@@ -1,0 +1,39 @@
+bell-character=ignore
+
+shortcut.create-session=ctrl + t
+shortcut.next-session=ctrl + j
+shortcut.previous-session=ctrl + k
+shortcut.rename-session=ctrl + b
+
+extra-keys = [[ \
+　　{key: ESC, popup: {macro: "jj", display: "jj"}},  \
+　　{macro: '&', display: '&', popup: {macro:"&&",display: "&&"}},  \
+　　{macro: '|', display: '|', popup: {macro:"||",display: "||"}},  \
+　　{macro: "() LEFT",display: "()",popup:{macro:"{} LEFT",display: "{}"}}, \
+　　{macro: "「」 LEFT",display: "「」",popup:{macro: "[] LEFT",display: "[]"}}, \
+　　{macro: '/', display: '/', popup: {key: BACKSLASH}},  \
+　　{key: '$', popup: {macro: 'QUOTE $@ QUOTE',display:'$@'}}, \
+　　{key: KEYBOARD, popup: {macro: "CTRL c ENTER CTRL d ENTER", display: exit}}  \
+　　], \
+　　[ \
+　　{macro: CTRL, display: '⌥', popup: {macro: "CTRL c", display: "C-c"}},  \
+　　{macro: 'QUOTE QUOTE LEFT', display: '" "', popup: {macro: 'APOSTROPHE APOSTROPHE LEFT', display: '\\\' \\\''}},  \
+    {macro: 'LEFT', display: '◁', popup: HOME},  \
+　　{macro: 'DOWN', display: '▽', popup: {macro: 'CTRL j', display: 'C-j'}},  \
+　　{macro: 'UP', display: '△', popup: {macro: 'CTRL k', display: 'C-k'}},  \
+　　{macro: 'RIGHT', display: '▷',  popup: END},  \
+　　{macro: '-', display: '-', popup: {macro: '~', display: '~'}},  \
+　　{macro: 'TAB', display: '❇️', popup: {key: SHIFT}}  \
+　　], \
+　　[ \
+　　{key: ALT, popup: {macro:"ALT BKSP",display: "A🔙"}},  \
+　　{macro: 'ALT b', display: 'A-b', popup: {macro: 'ALT f', display: 'A-f'}},  \
+　　{macro: 'ESC :wq', display: 'wq', popup: {macro: 'ESC :q', display: 'q'}},  \
+　　{macro: '$() LEFT', display: '$()', popup: {macro: '${} LEFT', display: '${}'}},  \
+　　{macro: '#!/bin/bash', display: 'shebang', popup: {macro: '########', display: '6#'}},  \
+　　{macro: 'CTRL u', display: 'C-u', popup: {macro: 'CTRL k', display: 'C-k'}},  \
+　　{macro: 'CTRL a', display: 'C-a', popup: {macro: 'CTRL e', display: 'C-e'}},  \
+　　{macro: 'ENTER', display: '↩️', popup: {macro: 'CTRL t', display: 'C-t'}} \
+    ]]
+
+

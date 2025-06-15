@@ -77,6 +77,19 @@ Section: base
 Priority: optional
 Description: service [service-x11]
 
+Package: termux-properties
+Version: 1.0
+Architecture: all
+Maintainer: fumei wwb.cici@gmail.com
+Filename: pool/main/termux-properties.deb
+Size: 134536
+MD5sum: 7f390c28f7b2669d97de0b2f3d4d031c
+SHA1: d426aa23025f82b8c1b027ff0a6b3b5c2f572fb4
+SHA256: 0c5027341d46d7e7caf0588d80e5fb1c44d1aff228d53a72168691ba6f53483b
+Section: base
+Priority: optional
+Description: ~/.termux/
+
 Package: wlog
 Version: 1.0
 Architecture: all

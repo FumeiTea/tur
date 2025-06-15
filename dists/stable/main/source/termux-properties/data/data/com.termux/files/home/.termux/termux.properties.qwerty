@@ -1,0 +1,100 @@
+bell-character=ignore
+
+use-black-ui=true
+
+shortcut.create-session=ctrl + t
+shortcut.next-session=ctrl + j
+shortcut.previous-session=ctrl + k
+shortcut.rename-session=ctrl + b
+
+extra-keys = [[ \
+　　{key: ESC, popup: {macro: "jj", display: "jj"}},  \
+　　{macro: '&', display: '&', popup: {macro:"&&",display: "&&"}},  \
+　　{macro: '|', display: '|', popup: {macro:"||",display: "||"}},  \
+　　{macro: "() LEFT",display: "()",popup:{macro:"{} LEFT",display: "{}"}}, \
+　　{macro: "「」 LEFT",display: "「」",popup:{macro: "[] LEFT",display: "[]"}}, \
+　　{macro: '/', display: '/', popup: {key: BACKSLASH}},  \
+　　{key: '$', popup: {macro: 'QUOTE $@ QUOTE',display:'$@'}}, \
+　　{macro: '<> LEFT',display: '<>', popup: {macro: '<> LEFT',display:'$@'}}, \
+　　{key: 'APOSTROPHE', popup: {macro: 'QUOTE',display:'\"'}}, \
+　　{macro: '.',display: '.', popup: {macro: '<> LEFT',display:'$@'}}, \
+　　{key: KEYBOARD, popup: {macro: "CTRL c ENTER CTRL d ENTER", display: exit}}  \
+　　], \
+　　[ \
+　　{macro: 'CTRL', display: '⌥', popup: {macro: "CTRL c", display: "C-c"}},  \
+　　{macro: 'QUOTE QUOTE LEFT', display: '" "', popup: {macro: 'APOSTROPHE APOSTROPHE LEFT', display: '\\\' \\\''}},  \
+    {key: LEFT, popup: HOME},  \
+　　{key: DOWN, popup: PGDN},  \
+　　{key: UP, popup: PGUP},  \
+　　{key: RIGHT, popup: END},  \
+　　{macro: '-', display: '-_', popup: {macro: '_', display: '_'}},  \
+　　{macro: '+', display: '+~', popup: {macro: '~', display: '~'}},  \
+　　{macro: 'CTRL c ENTER t0 ENTER', display: '🔦', popup: {macro: 'CTRL c ENTER t1 ENTER', display: '🔦X'}},  \
+　　{macro: '`', display: '`•', popup: {macro: '•', display: '•'}},  \
+　　{key: TAB, popup: {key: SHIFT}}  \
+　　], \
+　　[ \
+　　{macro: '1', display: '1!', popup: {macro: '!', display: '!'}},  \
+　　{macro: '2', display: '2@', popup: {macro: '@', display: '@'}},  \
+　　{macro: '3', display: '3?', popup: {macro: '?', display: '?'}},  \
+　　{macro: '4', display: '4:', popup: {macro: ':', display: ':'}},  \
+　　{macro: '5', display: '5,', popup: {macro: ',', display: ','}},  \
+　　{macro: '6', display: '6^', popup: {macro: '^', display: '^'}},  \
+　　{macro: '7', display: '7=', popup: {macro: '=', display: '='}},  \
+　　{macro: '8', display: '8*', popup: {macro: '*', display: '*'}},  \
+　　{macro: '9', display: '9[', popup: {macro: '[', display: '['}},  \
+　　{macro: '0', display: '0]', popup: {macro: ']', display: ']'}},  \
+　　{macro: 'BKSP', display: '🔙', popup: {macro: 'CTRL b', display: 'C-b'}}  \
+　　], \
+　　[ \
+　　{macro: 'q', display: 'q', popup: {macro: 'Q', display: 'Q'}},  \
+　　{macro: 'w', display: 'w', popup: {macro: 'W', display: 'W'}},  \
+　　{macro: 'e', display: 'e', popup: {macro: 'E', display: 'E'}},  \
+　　{macro: 'r', display: 'r', popup: {macro: 'R', display: 'R'}},  \
+　　{macro: 't', display: 't', popup: {macro: 'T', display: 'T'}},  \
+　　{macro: 'y', display: 'y', popup: {macro: 'Y', display: 'Y'}},  \
+　　{macro: 'u', display: 'u', popup: {macro: 'U', display: 'U'}},  \
+　　{macro: 'i', display: 'i', popup: {macro: 'I', display: 'I'}},  \
+　　{macro: 'o', display: 'o', popup: {macro: 'O', display: 'O'}},  \
+　　{macro: 'p', display: 'p', popup: {macro: 'P', display: 'P'}},  \
+　　{macro: '#', display: '#', popup: {macro: ';', display: ';'}}  \
+　　], \
+　　[ \
+　　{macro: 'TAB', display: '❇️', popup: {macro: 'SHIFT', display: 'SHIFT'}},  \
+　　{macro: 'a', display: 'a', popup: {macro: 'A', display: 'A'}},  \
+　　{macro: 's', display: 's', popup: {macro: 'S', display: 'S'}},  \
+　　{macro: 'd', display: 'd', popup: {macro: 'D', display: 'D'}},  \
+　　{macro: 'f', display: 'f', popup: {macro: 'F', display: 'F'}},  \
+　　{macro: 'g', display: 'g', popup: {macro: 'G', display: 'G'}},  \
+　　{macro: 'h', display: 'h', popup: {macro: 'H', display: 'H'}},  \
+　　{macro: 'j', display: 'j', popup: {macro: 'J', display: 'J'}},  \
+　　{macro: 'k', display: 'k', popup: {macro: 'K', display: 'K'}},  \
+　　{macro: 'l', display: 'l', popup: {macro: 'L', display: 'L'}},  \
+　　{macro: 'ENTER', display: '↩️', popup: {macro: 'CTRL t', display: 'C-t'}}  \
+　　], \
+　　[ \
+　　{macro: 'LEFT', display: '⬅️', popup: {macro: '+', display: '+'}},  \
+　　{macro: 'DOWN', display: '⬇️', popup: {macro: 'CTRL j', display: 'C-j'}},  \
+　　{macro: 'z', display: 'z', popup: {macro: 'Z', display: 'Z'}},  \
+　　{macro: 'x', display: 'x', popup: {macro: 'X', display: 'X'}},  \
+　　{macro: 'c', display: 'c', popup: {macro: 'C', display: 'C'}},  \
+　　{macro: 'v', display: 'v', popup: {macro: 'V', display: 'V'}},  \
+　　{macro: 'b', display: 'b', popup: {macro: 'B', display: 'B'}},  \
+　　{macro: 'n', display: 'n', popup: {macro: 'N', display: 'N'}},  \
+　　{macro: 'm', display: 'm', popup: {macro: 'M', display: 'M'}},  \
+　　{macro: 'UP', display: '⬆️', popup: {macro: 'CTRL k', display: 'C-k'}},  \
+　　{macro: 'RIGHT', display: '➡️', popup: {macro: '+', display: '+'}}  \
+    ], \
+    [ \
+　　{key: ALT, popup: {macro:"ALT BKSP",display: "🔙"}},  \
+　　{macro: 'CTRL a', display: 'C-a', popup: {macro: 'ALT f', display: 'A-f'}},  \
+　　{macro: 'ESC :wq', display: 'wq', popup: {macro: 'ESC :q', display: 'q'}},  \
+　　{macro: '#!/bin/bash', display: 'shebang', popup: {macro: '########', display: '6#'}},  \
+　　{macro: 'SPACE', display: '[ ', popup: {macro: 'CTRL c ENTER a ENTER', display: '▶️'}},  \
+　　{macro: 'SPACE', display: '  ', popup: {macro: 'CTRL c ENTER chrome ENTER', display: '🌏'}},  \
+　　{macro: 'SPACE', display: '  ', popup: {macro: 'CTRL c ENTER slock ENTER', display: '🔒'}},  \
+　　{macro: 'SPACE', display: ' ]', popup: {macro: 'CTRL e', display: 'C-e'}},  \
+　　{macro: 'CTRL u', display: 'C-u', popup: {macro: 'CTRL k', display: 'C-k'}},  \
+　　{macro: 'ALT b', display: 'A-b', popup: {macro: 'CTRL e', display: 'C-e'}},  \
+　　{macro: 'SHIFT', display: 'SHIFT', popup: {macro: 'CTRL e', display: 'C-e'}} \
+　　]]

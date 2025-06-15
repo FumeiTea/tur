@@ -1,18 +1,17 @@
-Date: Sat, 17 May 2025 10:51:21 +0000
+Date: Sun, 15 Jun 2025 10:26:23 +0000
 MD5Sum:
- 423d0c7e90672a9bf02fd243e98f73b0               38 Release
- 8a3115edec324ae495646c0e788aaa6e             2606 main/binary-aarch64/Packages
- 2a75f65ceca1261a43c241a259ed9748              987 main/binary-aarch64/Packages.gz
+ 0680dca57c1bee56ac32416ce874839e               38 Release
+ 85c0a0dd129abb8a70aff17794798a20             2975 main/binary-aarch64/Packages
+ 4b5723ec77e29bb74c8540fa17f8c0bd             1113 main/binary-aarch64/Packages.gz
 SHA1:
- 161a112f909f5eaeccefad400dd720f970a75a8d               38 Release
- cf705d253ad8303023af8bb41f2f892db589f5d3             2606 main/binary-aarch64/Packages
- 2696c9bdc8130a2fb22f7f1f71efea0075d4f323              987 main/binary-aarch64/Packages.gz
+ 440a636a5a4446d7ed79f3363848be60ff752594               38 Release
+ a5bb44dee28b82bea354ce1364f4b1856f0830c7             2975 main/binary-aarch64/Packages
+ 4c6b96f2f38309d4e6a61d89939c113c72672aea             1113 main/binary-aarch64/Packages.gz
 SHA256:
- 8c7a16c4de6ecddddf9fc7483757ac66f35756352be38893df3b1df616328f02               38 Release
- 34e52b366659c2340bd87706b03abb8cde4372048c7c5f95a3ef311a81e16ace             2606 main/binary-aarch64/Packages
- ac8bda6cc6a6ad76e6b93b2fbddc807a4da10c422b7aac31467bff9e9b31822c              987 main/binary-aarch64/Packages.gz
+ b4c85bc1cfc74d81326b14239ac88cd9f4ac266e5cf819c6cb99932e49e56ddd               38 Release
+ 16c382527728db246b1fde9867b3b42182d2af20c741db830cbdd40c58f3750c             2975 main/binary-aarch64/Packages
+ 6e3930212779ad870b20a87c63dfd971a7a836d0af2d1fb8d088ce8d62111d77             1113 main/binary-aarch64/Packages.gz
 SHA512:
- 27e28e4b52b9aca4d9ba7bf2a37bfdde8818deebc0bc3250e13b861f543daa9f03403904edf7d35047f0c89f068769f588e293966744ad1853996b30b9028bd2               38 Release
- c6b7a110077940996adaf07460e3a86b740abdd3207397269f05df9a22021a6b368262c161505a25626e9a825d34294d77770d6198f5a2851c265ae7056c12c2             2606 main/binary-aarch64/Packages
- 7f3ce8a08df17bb06a2b952a2cfe2b6ec172c3064b0bf9c1fdf3637cf2160c1d459f5563cea5a73e6e4b3f22ca66530876eb597226200d1a51d5cf1f8218f813              987 main/binary-aarch64/Packages.gz
-Codename: stable
+ e8617e5a29a3a0d04ada61fe6be13629384f7367fa496e20a079e3aceb665e37b0c8c0012c4760e0cb6f00a46a58aaa6d047c329a0c709148fdf24fae27f0287               38 Release
+ 383fb246eaa20ed970bed4bb033b21d0e514b53cb210b03ba22b7c69222d4a651ff96365621c755939091993a7514bba3c392a224adcaeef2ff05f95933def19             2975 main/binary-aarch64/Packages
+ f548837d598e95714fd279b53eb62e2ba3e20e4f2cc9f1129faff8b9264249a1460eaf9f43c2484dcff536b57123e8e729cf5a4d30f10de8a51b24e828a45daf             1113 main/binary-aarch64/Packages.gz

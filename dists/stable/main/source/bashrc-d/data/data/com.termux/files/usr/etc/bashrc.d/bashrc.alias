@@ -3052,7 +3052,7 @@ ob 1        force-modemanager-offbody false
 
 
   local \
-    stdin_data \
+    stdin_data _ext_data \
     _def_arr \
     package_name \
     activity_name \
@@ -3182,11 +3182,11 @@ ob 1        force-modemanager-offbody false
         is_return=0
         ;;
     --info | info )
-        echo "-d package:$package_name" |apm - com.android.settings/com.android.settings.applications.InstalledAppDetails/android.settings.APPLICATION_DETAILS_SETTINGS/$user_id  #&>/dev/null
+        echo "-d package:$package_name" |apm com.android.settings/com.android.settings.applications.InstalledAppDetails/android.settings.APPLICATION_DETAILS_SETTINGS/$user_id  #&>/dev/null
         is_return=0
         ;;
     --info-mi | info-mi )
-        echo "-e package_name $package_name" |apm - com.miui.securitycenter/com.miui.appmanager.ApplicationsDetailsActivity/miui.intent.action.APP_MANAGER_APPLICATION_DETAIL/$user_id #&>/dev/null
+        echo "-e package_name $package_name" |apm com.miui.securitycenter/com.miui.appmanager.ApplicationsDetailsActivity/miui.intent.action.APP_MANAGER_APPLICATION_DETAIL/$user_id #&>/dev/null
         is_return=0
         ;;
     --mem | mem )

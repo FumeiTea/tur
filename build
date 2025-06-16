@@ -1,4 +1,10 @@
 #!/bin/bash
 
+# scanpackages
+
 dpkg-scanpackages pool/ /dev/null > dists/stable/main/binary-aarch64/Packages
 gzip -c dists/stable/main/binary-aarch64/Packages > dists/stable/main/binary-aarch64/Packages.gz
+
+# 
+
+apt-ftparchive release dists/stable > dists/stable/Release

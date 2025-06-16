@@ -2,12 +2,13 @@ Package: bashrc-d
 Version: 1.0
 Architecture: all
 Maintainer: fumei wwb.cici@gmail.com
-Recommends: wlog, termux-api
+Depends: termux-api
+Recommends: wlog
 Filename: pool/main/bashrc-d.deb
-Size: 41300
-MD5sum: cf8ac092a6867a9d6b53ed93a79f3b26
-SHA1: c4c2741636320de15df34d0a375bfb0357addd73
-SHA256: 51b895792c7561971434acabe341d5f3c3d0fd0acf390117e2158f42f7bae335
+Size: 40004
+MD5sum: 816edf17d94e47ddd4ad45f07c5a4e01
+SHA1: 409a85925afe318885bd95007dced61230ab9a7f
+SHA256: 24a46058ceb778698e36366f8377b8eb007d6dc65059c0815d1b07931b94d5e9
 Section: base
 Priority: optional
 Description: bashrc [conf]
@@ -16,11 +17,12 @@ Package: service-aria2c
 Version: 1.0
 Architecture: all
 Maintainer: fumei wwb.cici@gmail.com
+Depends: termux-services
 Filename: pool/main/service-aria2c.deb
-Size: 2012
-MD5sum: cb0ed9557b79037ec80f604ce0cc93c4
-SHA1: 523793fbecb21e037d5bd7ef023f38237fc33641
-SHA256: 3587169e62c49fdd20dbe2cc1cc85f85ef603802a657396ceaea310f176d9ef5
+Size: 2068
+MD5sum: 3ed3df957ef26b57e9540783c6286ada
+SHA1: 04bb8117cab8d70fe3b707f25dac65e758d53eac
+SHA256: 7614811232d2a876936390e4b3c9bcad1a76c8d31b9b4f75465922e79f057dd7
 Section: base
 Priority: optional
 Description: service [service-aria2c]

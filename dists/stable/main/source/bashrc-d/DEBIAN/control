@@ -2,7 +2,8 @@ Package: bashrc-d
 Version: 1.0
 Section: base
 Priority: optional
-Recommends: wlog, termux-api
+Depends: termux-api
+Recommends: wlog
 Architecture: all
 Maintainer: fumei wwb.cici@gmail.com
 Description: bashrc [conf]

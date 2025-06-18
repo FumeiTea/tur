@@ -4108,3 +4108,6 @@ alias bible="apm com.aquila.bible/com.wdbible.app.wedevotebible.base.LoadingActi
         $2 ${@:3}
     }
 }
+
+
+# vim: set ft=sh ts=2 sw=2 sts=2 et :

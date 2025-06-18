@@ -66,6 +66,9 @@ signal(){
         wlog yellow:1 [ $2 ] -- ${@:3}
     } || wlog yellow:1 [ success ] -- $@
 }
+warning(){
+  :
+}
 
 wlog_parsing(){
     local i source source target=\"${!#}\"

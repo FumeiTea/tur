@@ -1,2 +1,4 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
+chmod 400 $PREFIX/share/rish/rish_shizuku.dex
+#/data/data/com.termux/files/usr/share/rish/rish_shizuku.dex

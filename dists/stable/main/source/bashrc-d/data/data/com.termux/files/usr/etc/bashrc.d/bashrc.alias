@@ -395,53 +395,6 @@ call(){
     [[ $# == 0 ]] && am start -n 'com.google.android.dialer/.extensions.GoogleDialtactsActivity' --user 0 &> /dev/null && return 0
     [[ ${#1} == 11 ]] && rish -c "am start -a android.intent.action.CALL -d tel:1$1"
 }
-tel(){
-    local _stateDir=~/.qq \
-        _stateDirShow='~/.qq' \
-        _hint_tel=$(printf "\033[32m%b\033[0m# " [tel])
-        #_hint_sms=$(printf "\033[32m%b\033[0m# " [sms])
-        #_hint_call=$(printf "\033[32m%b\033[0m# " [call])
-        #_hint=$(printf "\033[32m%b\033[0m# " [call])
-        _hint=$_hint_tel
-
-        _q=qq
-    echo "StateDirectory: $_stateDirShow"
-    while read -p "$_hint" _command; do
-        #while [[ x"$_command" != x ]]; do
-        case "$_command" in
-            [0-9]*[0-9] )
-                echo call $_command
-                break
-                ;;
-            q | exit )
-                return
-                ;;
-            scan )
-                echo scan
-                ;;
-            [0-9]*[0-9]" "s | [0-9]*[0-9]" "search )
-                _c=($(get_contact -l |grep ${_command%% *}))
-
-                [[ ${#_c[@]} == 0 ]] && :
-                [[ ${#_c[@]} -le 2 ]] && :
-                [[ ${#_c[@]} -gt 2 ]] && printf "%s %s\n" "${_c[@]}" |nl -v 0 
-                #read -h "" _clindex
-
-                ;;
-            * )
-                _command=
-                ;;
-        esac
-        #done
-    #adb shell am start -a android.intent.action.INSERT -t vnd.android.cursor.dir/contact \
-    #-e name "John Doe" \
-    #-e phone "1234567890" \
-    #-e email "john.doe@example.com"
-
-        #am start -a android.intent.action.CALL -d tel:10086
-    done
-    echo $_q
-}
 
 ## aria2 ##
 aria2c-bt-up(){
@@ -454,12 +407,33 @@ aria2c-bt-up(){
     sed -i "s#bt-tracker=.*#bt-tracker=${_tl}#" ~/.config/aria2/aria2.conf
 }
 
-## cd ##
+## coreutils ##
+
+##- cd
+
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias .......='cd ../../../../../..'
+alias ........='cd ../../../../../../..'
+alias .........='cd ../../../../../../../..'
+
+alias ..2='cd ../..'
+alias ..3='cd ../../..'
+alias ..4='cd ../../../..'
+alias ..5='cd ../../../../..'
+alias ..6='cd ../../../../../..'
+alias ..7='cd ../../../../../../..'
+alias ..8='cd ../../../../../../../..'
+alias ..9='cd ../../../../../../../../..'
+
+
 
 declare -A L_CD=(
-    [sdcard]="/sdcard"
-    [root]="$PREFIX"
-    [/]="$PREFIX"
+  [sdcard]="/sdcard"
+  [root]="$PREFIX"
+  [/]="$PREFIX"
 )
 
 #[]=""
@@ -536,6 +510,11 @@ cdj(){
 #cd2
 #cd3
 #cd4
+
+
+##- cp
+
+alias cpr="cp -r"
 
 ## clash ##
 

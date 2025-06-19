@@ -18,10 +18,10 @@ Version: 1.0
 Architecture: all
 Maintainer: fumei wwb.cici@gmail.com
 Filename: pool/main/rish.deb
-Size: 4268
-MD5sum: d51f2b845eac277da63d19aff445cb4a
-SHA1: c65d294e4dae47511c658ee45d4b2faeef34e6e0
-SHA256: ad07c7ab13e866bd812f5d63b43c9ac845dfe58ce9a786924f9a140ea02be28b
+Size: 4304
+MD5sum: 6a7711822dabda1964dc1e1b8a46ee45
+SHA1: 1eba5bee78993bd90af0810f32fef47b50872c6d
+SHA256: 5125c1e2e28a0abfc38527dae4d956e90c8cd7ea396e4ce72aabbe42ed91f164
 Section: base
 Priority: optional
 Description: rish [shizuku]  # Using Shizuku in Termux

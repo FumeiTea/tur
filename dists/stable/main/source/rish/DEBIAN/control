@@ -1,7 +1,7 @@
-Package: service-clashd
+Package: rish
 Version: 1.0
 Section: base
 Priority: optional
 Architecture: all
 Maintainer: fumei wwb.cici@gmail.com
-Description: service [service-clashd]
+Description: rish [shizuku]  # Using Shizuku in Termux

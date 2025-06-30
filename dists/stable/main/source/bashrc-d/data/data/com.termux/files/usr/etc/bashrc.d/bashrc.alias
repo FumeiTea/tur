@@ -8,6 +8,9 @@
 
 [[ $__SH_wlog == 0 ]] || . $PREFIX//opt/sh/wlog.sh
 
+
+: com.android.settings/com.android.settings.Settings\$AppBatteryUsageActivity
+
 #
 # public function
 #
@@ -622,7 +625,8 @@ alias alpine-remove="proot-distro remove alpine"
 
 ## rish & shizuku ##
 rishc(){
-    [[ $# == 0 ]] || rish -c "$*"
+    #[[ $# == 0 ]] || rish -c "$*"
+    [[ $# == 0 ]] || rish <<<"$@"
 }
 
 #- input

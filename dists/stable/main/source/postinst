@@ -6,7 +6,7 @@ _DIR=$PREFIX/var/service/$_PKG
 
 echo set svlogger
 mkdir -pv $_DIR/log
-ln -sfv $PREFIX/share/termux-services/svlogger $_DIR/log/run
+ln -sf $PREFIX/share/termux-services/svlogger $_DIR/log/run &>/dev/null
 
 read -p "Want to enable \`$_PKG\` service now? [N/y] : " -t10 -n1 isEn
 if [[ $isEn == y || $isEn == Y ]] ;then

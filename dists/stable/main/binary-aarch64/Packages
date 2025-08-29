@@ -110,10 +110,10 @@ Version: 1.0
 Architecture: all
 Maintainer: fumei wwb.cici@gmail.com
 Filename: pool/main/wlog.deb
-Size: 2444
-MD5sum: 29e9a07e3bdef322122f038851e7b51a
-SHA1: 73a76652c8e0798d5ba5327943fb06d66f2027d0
-SHA256: 55c3313267afc55da2e4bdaa5ea57482d2ca31eb2a8e884804080e1f86170f4a
+Size: 2532
+MD5sum: fb2ccb5a609f12bcf796f970100e4a7a
+SHA1: c851b503a2fe88604a759e644f6fdf3caa223e9a
+SHA256: 6be6e6043a7b9e784f9c4d848edf1c73613a6627e92418a37cb65d0dff223df8
 Section: base
 Priority: optional
 Description: wlog [sh]

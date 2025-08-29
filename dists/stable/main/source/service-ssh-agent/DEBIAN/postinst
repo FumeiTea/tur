@@ -1,0 +1,9 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+read -p "Want to enable \`ssh-agent\` service now? [yes/y] : " -t10 -n3 isEn
+if [[ $isEn == yes || $isEn == y ]] ;then
+  [[ -f /data/data/com.termux/files/usr/var/service//ssh-agent/down ]] && rm /data/data/com.termux/files/usr/var/service//ssh-agent/down
+else
+  [[ -f /data/data/com.termux/files/usr/var/service//ssh-agent/down ]] || touch /data/data/com.termux/files/usr/var/service//ssh-agent/down
+fi
+

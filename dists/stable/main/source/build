@@ -2,6 +2,6 @@
 
 chmod -R go-w $1   # 移除 group/other 写权限
 chmod 755 $1/DEBIAN
-chmod 644 $1/DEBIAN/
+chmod 755 $1/DEBIAN/*
 dpkg-deb --build $1
 mv -v $(basename $1).deb ../../../../pool/main/

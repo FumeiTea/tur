@@ -1,0 +1,17 @@
+Date: Fri, 29 Aug 2025 06:11:38 +0000
+MD5Sum:
+ c1f1450e05b16493b9bf8e1744d4e10d               38 Release
+ 4801366c7633eada0e6c33c3b5e9ed04             3783 main/binary-aarch64/Packages
+ b2899af4de7fb5e779acca1114ed944c             1390 main/binary-aarch64/Packages.gz
+SHA1:
+ 02fd81856fb18e241c4ad887a843760e058c179f               38 Release
+ 0f45c46351499e48026dba144f32d01700948ea4             3783 main/binary-aarch64/Packages
+ a69cd727908ef9dc7f6aae70257b10dc0c0a0b13             1390 main/binary-aarch64/Packages.gz
+SHA256:
+ 7c96cf08aaacf14e79810987ccb44ca42b600ad0ff1eec35109af35f8c837be9               38 Release
+ 8e7983ebcbf586a4f1d5c9c423c6f27e80fd4058063f00af99278545f97fbe35             3783 main/binary-aarch64/Packages
+ f698dfe5306047127040900873307ee65a2c732affd631da7c99e35b2417584f             1390 main/binary-aarch64/Packages.gz
+SHA512:
+ a84f59c21ed800ea064d38a35c5ba24bc4566a46a495ef045b21135c1fb116732e036e2f17ef9e20535214fec74ee6209b6d64434b57c07344b914fb40da91ba               38 Release
+ e23f639e7028bb1e5bc6db787bc5f18894ebcdfea3f49614d3b0f36dc04886ffc4a284d24581f127af4a59a8b3de8a7481dec9a6885825b97c56c2ad5bd25647             3783 main/binary-aarch64/Packages
+ fa239861349e4ae4624d0294f24ef3ce4ff1aa66f7d84a1647a2ad007cb85e100b9ac9e734798171dfa9567a42024197643f0ae2f4b163b44011586d382c7d51             1390 main/binary-aarch64/Packages.gz

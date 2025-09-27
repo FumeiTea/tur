@@ -637,10 +637,17 @@ done
 
 (( ${is_return:-1} <= 0 )) && exit
 
-[[ $user_id == 0 ]] && _sh=bash || _sh=rish
 [[ -z "$action" ]] || action="-a $action"
 [[ -z $component_name ]] || component_name="-n $component_name"
 
-$_sh -c "am start --user $user_id $action $component_name $stdin_data $_ext_data"
+if [[ "$PREFIX" = "/data/data/com.termux/files/usr" ]] ;then
+  [[ $user_id == 0 ]] && _sh="bash -c" || _sh="rish -c"
+elif [[ "$(uname -n)" == penguin ]] ;then
+  _sh="adb shell"
+else
+  :
+fi
+
+$_sh "am start --user $user_id $action $component_name $stdin_data $_ext_data"
 
 # vim: set ft=sh ts=2 sw=2 sts=2 et :

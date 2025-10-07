@@ -22,9 +22,13 @@
 
 </div>
 
+<div>
+    
 > ⚠️ **Warning**
 >
 > 操作前请做好相应备份。
+
+</div>
 
 
 termux user repository  
@@ -39,6 +43,10 @@ termux user repository
 #### 
 
 ### Debian-Bullseye <span id="Debian-Bullseye"/>
+`deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/debian/ stable main`
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ trixie main contrib non-free non-free-firmware
+
+
 ### Arch <span id="Arch"/>
 ### ChromeOS-Crostini <span id="ChromeOS-Crostini"/>
 ###  <span id=""/>

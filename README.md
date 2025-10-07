@@ -10,9 +10,13 @@
 <div>
 
 [![Debian:Trixie](https://img.shields.io/badge/Debian:Trixie-A81D33?style=for-the-badge&logo=debian&logoColor=white)](#Debian-Trixie)
+
 [![Debian:Bullseye](https://img.shields.io/badge/Debian:Bullseye-A81D33?style=for-the-badge&logo=debian&logoColor=white)](Debian-Bullseye)
+
 [![Arch](https://img.shields.io/badge/Arch_Linux-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white)](Arch)
+
 [![ChromeOS:Crostini](https://img.shields.io/badge/ChromeOS:Crostini-4285F4?style=for-the-badge&logo=Google-chrome&logoColor=white)](ChromeOS-Crostini)
+
 [![]()](./)
 [![]()](./)
 
@@ -27,6 +31,17 @@
         操作前请做好相应备份。
     </p>
 </div>
+
+<!-- HTML div 版本（带橙色边框）-->
+<div style="border:2px solid #ff8c00; border-left:6px solid #ff8c00; padding:12px 14px; border-radius:6px; font-family:system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; line-height:1.4;">
+  <strong style="display:inline-flex;align-items:center;gap:8px;font-size:1.05em;">
+    <span aria-hidden="true">⚠️</span> Warning
+  </strong>
+  <div style="margin-top:6px;">
+    操作前请做好相应备份。
+  </div>
+</div>
+
 
 termux user repository  
 这是一个 termux用户仓库。

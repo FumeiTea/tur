@@ -22,25 +22,9 @@
 
 </div>
 
-<div style="border: 2px solid #FFA500; padding: 10px; border-radius: 5px; background-color: #FFF3E0;">
-    <p style="margin: 0; font-weight: bold; color: #E65100;">
-        &#9888; Warning
-    </p>
-    <hr style="border-top: 1px solid #FFCC80; margin: 5px 0;">
-    <p style="margin: 0; color: #000;">
-        操作前请做好相应备份。
-    </p>
-</div>
-
-<!-- HTML div 版本（带橙色边框）-->
-<div style="border:2px solid #ff8c00; border-left:6px solid #ff8c00; padding:12px 14px; border-radius:6px; font-family:system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; line-height:1.4;">
-  <strong style="display:inline-flex;align-items:center;gap:8px;font-size:1.05em;">
-    <span aria-hidden="true">⚠️</span> Warning
-  </strong>
-  <div style="margin-top:6px;">
-    操作前请做好相应备份。
-  </div>
-</div>
+> ⚠️ **Warning**
+>
+> 操作前请做好相应备份。
 
 
 termux user repository  

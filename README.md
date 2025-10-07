@@ -38,14 +38,17 @@ termux user repository
 
 ### Debian:Trixie <span id="Debian-Trixie"/>
 
+`deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/debian/ stable trixie sh main`
+
 #### 收录架构
 
 #### 
 
 ### Debian-Bullseye <span id="Debian-Bullseye"/>
-`deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/debian/ stable main`
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ trixie main contrib non-free non-free-firmware
+`deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/debian/ stable bullseye sh main`
 
+### termux <span id="termux"/>
+`deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/debian/ stable termux sh main`
 
 ### Arch <span id="Arch"/>
 ### ChromeOS-Crostini <span id="ChromeOS-Crostini"/>
@@ -53,8 +56,6 @@ deb https://mirrors.tuna.tsinghua.edu.cn/debian/ trixie main contrib non-free no
 ###  <span id=""/>
 
 
-# 多语言 <a name="i8k">
-[__en__](README.en.md)
 
 # 使用 <a name="use"/>
 - 在源文件中添加：`deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/ stable main`  

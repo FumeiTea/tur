@@ -1,7 +1,50 @@
-# tur
+<div>
+    
+[**English**](README_en-US.md)
+[**Japanese**](README_ja-JP.md)
+
+</div>
+
+## tur
+
+<div>
+
+[![Debian:Trixie](https://img.shields.io/badge/Debian:Trixie-A81D33?style=for-the-badge&logo=debian&logoColor=white)](#Debian-Trixie)
+[![Debian:Bullseye](https://img.shields.io/badge/Debian:Bullseye-A81D33?style=for-the-badge&logo=debian&logoColor=white)](Debian-Bullseye)
+[![Arch](https://img.shields.io/badge/Arch_Linux-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white)](Arch)
+[![ChromeOS:Crostini](https://img.shields.io/badge/ChromeOS:Crostini-4285F4?style=for-the-badge&logo=Google-chrome&logoColor=white)](ChromeOS-Crostini)
+[![]()](./)
+[![]()](./)
+
+</div>
+
+<div style="border: 2px solid #FFA500; padding: 10px; border-radius: 5px; background-color: #FFF3E0;">
+    <p style="margin: 0; font-weight: bold; color: #E65100;">
+        &#9888; Warning
+    </p>
+    <hr style="border-top: 1px solid #FFCC80; margin: 5px 0;">
+    <p style="margin: 0; color: #000;">
+        操作前请做好相应备份。
+    </p>
+</div>
+
 termux user repository  
 这是一个 termux用户仓库。
 [跳转到目录](#contents)
+
+
+### Debian:Trixie <span id="Debian-Trixie"/>
+
+#### 收录架构
+
+#### 
+
+### Debian-Bullseye <span id="Debian-Bullseye"/>
+### Arch <span id="Arch"/>
+### ChromeOS-Crostini <span id="ChromeOS-Crostini"/>
+###  <span id=""/>
+###  <span id=""/>
+
 
 # 多语言 <a name="i8k">
 [__en__](README.en.md)

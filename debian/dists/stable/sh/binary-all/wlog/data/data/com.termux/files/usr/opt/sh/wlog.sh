@@ -186,15 +186,38 @@ wlog_mkdir(){
     _err=$(mkdir ${_arrs%%--*} 2>&1) && succ -- mkdir $_paras "$@" || err -- mkdir ${_arrs%%--*} " $WLOG_RedArrow " $_err
 }
 
+declare -A cmd
+cmd[wlog]=wlog
+cmd[type]=wlog_type
+cmd[succ]=succ
+cmd[err]=err
+cmd[signal]=signal
+cmd[warning]=warning
+cmd[parsing]=wlog_parsing
+cmd[cp]=wlog_cp
+cmd[mv]=wlog_mv
+cmd[ln]=wlog_ln
+cmd[create]=wlog_create
+cmd[mkdir]=wlog_mkdir
 
+# echo $BASH_SOURCE $0
 if [[ $0 == "$BASH_SOURCE" ]]; then
-    #echo $BASH_SOURCE $0
+  (( $# > 0 )) || {
     get-help -h --uncomment
+    exit
+  }
+    cmdTmp=${cmd[$1]} 
+    shift
+    [[ -n $cmdTmp ]] && $cmdTmp $@
 else
     succ -- include $BASH_SOURCE:$0
 fi
+
+
 
 #?:help
 #@    [succ|err|signal] [--|prompt] content
 #@    wlog_[cp|mv|ln|type|create]
 #?:help
+
+# vim: set ft=sh ts=2 sw=2 sts=2 et : " :syn clear shHereDoc

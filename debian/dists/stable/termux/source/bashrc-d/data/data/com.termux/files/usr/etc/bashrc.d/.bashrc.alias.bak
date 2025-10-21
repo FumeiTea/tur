@@ -1,0 +1,1280 @@
+
+#
+# include
+#
+
+. wlog.sh
+
+#
+# public function
+#
+
+#signal(){
+#    echo "$@"
+#}
+#
+#succ(){
+#    echo "$@"
+#}
+#
+#err(){
+#    echo "$@"
+#}
+
+
+#
+# ##
+#
+
+
+
+alias back="cd ~ && tar -zvcf back.tar.gz --exclude=.git back/ && cp back.tar.gz /sdcard/ && cd - "
+
+alias_do(){
+    $(alias $1 |sed "s/.*=//g;s/'//g")
+}
+
+alias get-lang="getprop persist.sys.locale"
+
+## cat ##
+alias cat-git="cat ~/._git |termux-clipboard-set"
+
+## gradlew
+alias gradlew="bash gradlew "
+alias gradlew-debug="bash gradlew debug --test "
+
+## call ##
+1(){
+    [[ $# == 0 ]] && am start -n 'com.google.android.dialer/.extensions.GoogleDialtactsActivity' --user 0 &> /dev/null && return 0
+    [[ ${#1} == 10 ]] && rish -c "am start -a android.intent.action.CALL -d tel:1$1"
+    [[ ${#1} == 11 ]] && rish -c "am start -a android.intent.action.CALL -d tel:$1"
+}
+call(){
+    [[ $# == 0 ]] && am start -n 'com.google.android.dialer/.extensions.GoogleDialtactsActivity' --user 0 &> /dev/null && return 0
+    [[ ${#1} == 11 ]] && rish -c "am start -a android.intent.action.CALL -d tel:1$1"
+}
+
+
+## cd ##
+
+alias cdd="cd /sdcard"
+alias cd-='cd_(){
+    cd "$PREFIX/$@"
+};
+cd_ "$@"'
+alias cd-sh="cd $PREFIX/opt/sh"
+alias cd-root="cd $PREFIX"
+alias cd-etc="cd $PREIFX/etc"
+cdk_(){
+    local cdd=$(ls -1d ../*/ |tr '\n' ' ' |sed 's/.$//')
+    local path=$(echo " $cdd " | sed -n "s/.* \([^ ]\+\) \.\.\/$(basename "$(pwd)")\/ .*/\1/p")
+    [[ $path ]] || path=${cdd##* }
+    [[ $path ]] && cd ${path}
+}
+cdj_(){
+    local cdd=$(ls -1d ../*/ |tr '\n' ' ' |sed 's/.$//')
+    local path=$(echo " $cdd" | sed -n "s/.* \.\.\/$(basename "$(pwd)")\/ \([^ ]\+\) .*/\1/p")
+    [[ $path ]] || path=${cdd%% *}
+    [[ $path ]] && cd ${path}
+}
+
+cdk(){
+    local cdd name count increment=1 p inc
+
+    [[ $2 && $2 != 0 && $2 != 1 ]] && {
+        for _ in $(seq $(( $2 - 1 )) ); do
+            p="${p}../"
+        done
+        inc=0
+    }
+    cdd=$(ls -1d $p../*/)
+    [[ $2 && $1 == - ]] && echo "$cdd" && return
+    [[ $1 != 1 && $1 != 0 ]] && increment=$1
+    count=$(echo $cdd |wc -w)
+    name=$(basename $(pwd))
+    [[ $inc ]] || increment=$(( $(echo "$cdd" |grep -n ../$name/ |cut -d: -f1) + $increment ))
+    increment=$(( $increment % $count ))
+    [[ $increment == 0 ]] && increment=$count
+    cd $(echo "$cdd" |sed -n "${increment}p") || cd $p
+}
+cdj(){
+    local cdd name count increment=1
+    cdd=$(ls -1rd ../*/)
+    count=$(echo $cdd |wc -w)
+    name=$(basename $(pwd))
+    [[ $# == 0 || $1 == 1 ]] || increment=$1
+    increment=$(( ( $increment + $(echo "$cdd" |grep -n ../$name/ |cut -d: -f1) ) % $count ))
+    [[ $increment == 0 ]] && increment=$count
+    cd $(echo "$cdd" |sed -n "${increment}p")
+}
+
+#cd1
+#cd2
+#cd3
+#cd4
+
+## clash ##
+
+alias clash="clash -d ~/.config/clash"
+
+alias clash_changer="sed -i \"s/external-controller:.*/external-controller: '0.0.0.0:7513'/;s/secret:.*/secret: 'colemark'/\"  '.config/clash/config.yaml'"
+
+clash-sublink-up(){
+    local confTmp="$HOME/.config/clash/config.yaml"
+    [[ -n "$CLASH_SUB_LINK" ]] && curl $CLASH_SUB_LINK > $confTmp.tmp
+    [[ -s $confTmp.tmp ]] && mv $confTmp.tmp $confTmp && succ -- mv $confTmp.tmp $confTmp
+}
+
+
+
+
+## get android version ##
+gav="getprop ro.build.version.release"
+
+
+##
+
+
+
+
+## keyboard ##
+key(){
+    local conf=~/.termux/termux.properties.$1
+    [[ -f $conf ]] && {
+        rm ~/.termux/termux.properties
+        cp $conf ~/.termux/termux.properties
+        termux-reload-settings
+    }
+}
+
+
+## lock ##
+
+slock(){
+	type cmatrix || return 12
+    rish -c "input keyevent KEYCODE_BACK" &>/dev/null
+    cp ~/.termux/termux.properties ~/.termux/termux.properties.bak
+    cp ~/.termux/termux.properties.none ~/.termux/termux.properties
+    termux-reload-settings
+    while : ; do
+        cmatrix
+        termux-fingerprint |grep "AUTH_RESULT_SUCCESS" &>/dev/null && break
+    done
+    cp ~/.termux/termux.properties.bak ~/.termux/termux.properties
+    termux-reload-settings
+}
+
+# lock screen
+alias lock="rish -c 'input keyevent 223'"
+alias gg="rish -c 'input keyevent 223'"
+
+## ls ##
+alias ll="ls -lh"
+alias lla="ls -lha"
+
+
+alias yyy="yes '' |"
+
+
+## proot-distro ##
+#- login
+alias debian="proot-distro login debian"
+alias arch="proot-distro login archlinux"
+alias manjaro="proot-distro login manjaro"
+alias void="proot-distro login void"
+alias ubuntu="proot-distro login ubuntu"
+alias opensuse="proot-distro login opensuse"
+alias fedora="proot-distro login fedora"
+alias deepin="proot-distro login deepin"
+alias alpine="proot-distro login alpine"
+
+#- remove
+alias debian-remove="proot-distro remove debian"
+alias manjaro-remove="proot-distro remove manjaro"
+alias void-remove="proot-distro remove void"
+alias ubuntu-remove="proot-distro remove ubuntu"
+alias opensuse-remove="proot-distro remove opensuse"
+alias fedora-remove="proot-distro remove fedora"
+alias deepin-remove="proot-distro remove deepin"
+alias alpine-remove="proot-distro remove alpine"
+
+## rish & shizuku ##
+rishc(){
+    [[ $# == 0 ]] || rish -c "$*"
+}
+
+#- app activation
+rish-hy(){
+    rish -c 'output=$(pm path me.piebridge.brevent); export CLASSPATH=${output#*:}; app_process /system/bin me.piebridge.brevent.server.BreventServer bootstrap; /system/bin/sh /data/local/tmp/brevent.sh'
+}
+rish-powerampp(){
+    rish -c 'pm grant com.maxmpz.equalizer android.permission.SET_VOLUME_KEY_LONG_PRESS_LISTENER'
+    rish -c 'pm grant com.maxmpz.equalizer android.permission.DUMP'
+}
+
+alias r-="rishc "
+
+#- process operations
+alias rtop="rishc top "
+alias rkill="rishc kill "
+alias rkillall="rishc killall "
+alias rps="rishc ps "
+
+
+alias rdisable-list="rishc pm list packages -d -u"
+
+alias rish-uninstall-disable="rish -c \"pm list package -d |sed 's/package://' |grep -v com.oplus.appplatform |xargs -n 1 pm uninstall --user 0\""
+
+alias szk-shizuku-get="termux-clipboard-set 'sh /sdcard/Android/data/moe.shizuku.privileged.api/start.sh'"
+
+#- power management
+alias reboot="rish -c reboot"
+alias shutdown="rish -c 'svc power shutdown'"
+
+
+
+#- pause/resume playback
+alias a="rishc input keyevent 85"
+
+
+## vim ##
+alias vi-alias="vim $HOME/.bashrc.alias"
+alias vi-bashrc="vim $HOME/.bashrc"
+alias vi-bashrc:etc="vim $PREFIX/etc/bash.bashrc"
+alias vi-do="vim $HOME/.do"
+alias vi-env="vim $PREFIX/etc/profile.d/envar.sh"
+#
+#vi-...
+
+
+
+## x11 ##
+
+alias x11-kill="kill -9 \$(ps aux |grep -e 'com.termux.x11.Loader' |grep -v grep |cut -d ' ' -f3)"
+alias x11="am start --user 0 -n com.termux.x11/com.termux.x11.MainActivity"
+alias x11-dwm="termux-x11 :0 -xstartup 'exec dwm'"
+
+
+## termux-api ##
+
+alias t0="termux-torch on"
+alias t="termux-torch on"
+alias t1="termux-torch off"
+alias tt="termux-torch off"
+
+
+
+
+
+
+
+## ##
+
+#- Close Phantom processes
+cp9(){
+    ANDROID_VERSION=${ANDROID_VERSION:-$(getprop ro.build.version.release)}
+    case $1 in
+        dis | disable )
+            case $ANDROID_VERSION in
+                13 | 12 )
+                    # For Android 12L & Android 13:
+                    rish -c "settings put global settings_enable_monitor_phantom_procs false"
+                    ;;
+            esac
+            ;;
+        en | enable )
+            case $ANDROID_VERSION in
+                13 | 12 )
+                    # For Android 12L & Android 13:
+                    rish -c "settings put global settings_enable_monitor_phantom_procs true"
+                    ;;
+            esac
+            ;;
+        get )
+            rish -c "settings get global settings_enable_monitor_phantom_procs"
+
+            ;;
+    esac
+
+
+# For Android 12：
+rish -c "/system/bin/device_config set_sync_disabled_for_tests persistent; /system/bin/device_config put activity_manager max_phantom_processes 2147483647"
+
+}
+
+
+## iem ##
+ime(){
+    user=$(echo "$*" | sed -n 's/.*--user \([0-9]\+\).*/\1/p')
+    [[ $user =~ ^[0-9]+$ ]] || user=0
+    [[ $# == 0 ]] && rish -c "ime list -s" &&return 0
+    case $1 in
+        list )
+            rish -c "ime list -s"
+            ;;
+        list-all )
+            rish -c "ime list -a"
+            ;;
+        enable | en )
+            rish -c "ime enable --user $user $2"
+            ;;
+        disable | dis )
+            rish -c "ime disable --user $user $2"
+            ;;
+        set )
+            [[ $2 == 0 ]] && ime="com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME" || {
+            [[ $2 =~ ^[0-9]*$ ]] && \
+                ime=$(rish -c "ime list -s" |sed -n "${2}p") || \
+                ime=$2
+            }
+            rish -c "ime set --user $user $ime"
+            ;;
+    esac
+}
+
+
+## other ##
+
+
+
+
+battery_whitelist(){
+    [[ $@ ]] || rish -c "dumpsys deviceidle whitelist"
+    [[ $1 == + ]] && rish -c "dumpsys deviceidle whitelist +$2"
+    [[ $1 == - ]] && rish -c "dumpsys deviceidle whitelist -$2"
+}
+
+
+
+
+alias ra="ranger"
+
+
+
+
+
+## select app ##
+
+## ARRAY
+
+
+declare -A L_CAMERA=(
+    [OPPO]="com.oplus.camera/.Camera"
+    [cam]="com.shamim.cam//android.media.action.STILL_IMAGE_CAMERA"
+    [gcam]="com.agc.gcam92//android.media.action.STILL_IMAGE_CAMERA"
+    [-]="//android.media.action.STILL_IMAGE_CAMERA"
+)
+declare -A L_STORE=(
+    [OPPO]="com.heytap.market/.activity.MainActivity"
+    [coolapk]="com.coolapk.market/.view.main.MainActivity"
+    [google]="com.android.vending/.AssetBrowserActivity"
+    [play]="com.android.vending/.AssetBrowserActivity"
+    [aurora]="com.aurora.store/.MainActivity"
+    [fdroid]="org.fdroid.fdroid/.views.main.MainActivity"
+    [f]="org.fdroid.fdroid/.views.main.MainActivity"
+)
+
+declare -A L_THEMESTORE=(
+    [OPPO]="com.heytap.themestore/com.nearme.themespace.activities.ThemeActivity"
+)
+declare -A L_CALENDAR=(
+    [OPPO]="com.coloros.calendar/com.android.calendar.AllInOneActivity"
+    [google]="com.google.android.calendar/com.android.calendar.AllInOneActivity"
+)
+declare -A L_BROWSER=(
+    [-]="com.android.chrome/com.google.android.apps.chrome.Main"
+    [SAMSUNG]="com.sec.android.app.sbrowser/.SBrowserMainActivity"
+    [chrome]="com.android.chrome/com.google.android.apps.chrome.Main"
+    [kiwi]="com.kiwibrowser.browser/com.google.android.apps.chrome.Main"
+    [samsung]="com.sec.android.app.sbrowser/.SBrowserMainActivity"
+    [s]="com.sec.android.app.sbrowser/.SBrowserMainActivity"
+    [einkbro]="info.plateaukao.einkbro/info.plateaukao.einkbro.activity.BrowserActivity"
+    [yandex]="com.yandex.browser/com.yandex.browser.YandexBrowserActivity"
+    [sleipnir]="jp.co.fenrir.android.sleipnir/com.fenrir_inc.sleipnir.main.MainActivity"
+    [firefox]="org.mozilla.firefox/.App"
+
+)
+
+
+declare -A L_RECENTS=(
+    [HANVON]="com.hanvon.recents/com.hanvon.recents.MainActivity"
+
+)
+declare -A L_AUNCHER=(
+    [HANVON]="hanvon.aebr.hvLauncher/hanvon.aebr.hvLauncher.core.navigation.ui.NavigationActivity"
+)
+
+
+## FUNCTION
+
+select_app:brand(){
+    local listname activity listkey brand dp
+    dp=$(declare -p L_$1) 
+
+    [[ $1 && ${#1} -le 10 && "$(echo "$dp" |cut -d ' ' -f 2)" =~ -[aA]? ]] && {
+        [[ $2 == -l ]] \
+            && echo "$dp" |sed -e 's/[^=]*=(//' -e 's/[ ]*)[ ]*//' -e 's/ \[/\n\[/g' \
+            && return 
+
+        listname=L_$1
+        shift
+    } || return
+
+    [[ $1 == - ]] && activity=$(eval echo \${$listname[-]}) && shift || {
+        listkey=$(eval echo \${!$listname[@]})
+        [[ ${#1} -le 10 && "$listkey" =~ $1 ]] && brand=$1 && shift || {
+            brand=$(getprop ro.product.brand)
+            [[ "$listkey" =~ $brand ]] || brand='-'
+        }
+        activity=$(eval echo \${$listname[$brand]})
+    }
+    echo $brand am_start $activity $@
+    am_start $activity $@
+}
+
+
+get_contact(){
+    local nl
+        [[ $1 =~ ^[0-9]+$ ]] && last_contact=$1
+        contact_list="$(termux-contact-list |grep -A 1 "name\": \".*$1.*" |tr -d '\n "' |sed -e 's/--/\n/g' -e 's/,number//g' -e 's/name://g')"
+        [[ $(echo "$contact_list" |wc -l) -ge 2 ]] && {
+            echo "$contact_list" |nl -n ln #|tr -d ' ' |tr '\t' ' ' 
+            read -t 5 -n2 -p "Enter line number: " nl
+            [[ $nl =~ ^[0-9]+$ ]] && contact_list=$(echo "$contact_list" |sed -n "${nl}p") || return 9
+    }
+    last_contact=$(echo $contact_list |cut -d: -f2 |tr -d '-')
+
+}
+
+#termux-contact-list |grep -A 1 "name\": \"王瑞" |sed -n '/"number":/ s/.*"number": "//;s/"$//p'
+sms(){
+    local last_contact sms_body
+    [[ $1 ]] && {
+        [[ $2 ]] && sms_body="--es sms_body ${@:2}" || sms_body=''
+        get_contact $1
+    }
+    [[ $last_contact ]] \
+        && am_start //android.intent.action.SENDTO -d sms:$last_contact $sms_body --ez exit_on_sent true \
+        || am_start com.google.android.apps.messaging/com.google.android.apps.messaging.ui.ConversationListActivity///zh-CN:信息:en-US:sms $@
+}
+
+alias camera="select_app:brand CAMERA"
+alias store="select_app:brand STORE"
+alias themestore="select_app:brand THEMESTORE"
+alias calendar="select_app:brand CALENDAR"
+alias browser="select_app:brand BROWSER"
+
+
+alias mm="select_app:brand AUNCHER"
+alias rl="select_app:brand RECENTS"
+alias rr="select_app:brand RECENTS"
+
+
+
+## inner link & URL Scheme & deep link ##
+am_nd(){
+    local n d a user other
+    #[[ $@ =~ " -- " ]] && other=$(echo $@ |sed "s/.* -- //")
+    [[ $1 == - ]] && local n='' || {
+        a=$(echo $1 |cut -d / -f 3)
+        n=$(echo $1 |cut -d / -f 1,2)
+        user=$(echo $1 |cut -d / -f 4) 
+        [[ $a ]] && a="-a $a"
+        [[ $n =~ ^/.*$ ]] && n='' || n="-n $n"
+        [[ $user =~ ^[0-9]+$ ]] && user="--user $user" || user="--user 0"
+    }
+    [[ $2 ]] && d="-d $2"
+    shift 2
+    am_start $user $a $n $d $@ #&>/dev/null
+}
+
+f(){
+    com.android.documentsui/com.android.documentsui.files.FilesActivity
+content://media/external/downloads
+content://com.android.providers.media.documents/root/images_root
+content://com.android.providers.media.documents/root/audio_root
+content://com.android.providers.media.documents/root/video_root
+}
+
+file_manage(){
+
+    [[ $# == 0 ]] && return 9
+    echo $@
+    
+    local a mime_type
+    declare -a a[{0..6}]=
+    a=($(echo $1 |tr '/' ' ') "${a[@]}") && shift
+    [[ $1 && $1 =~ ^[0-9]+$ ]] && a[3]=$1 && shift
+    
+    mime_type=$(file -b --mime-type $1 2>/dev/null)
+    [[ $mime_type =~ ' ' ]] || a[5]="$mime_type"
+    case $mime_type in
+        inode/directory )
+            a[1]=
+            a[2]=android.intent.action.OPEN_DOCUMENT
+            a[5]='*/*'
+            ;;
+        image/* )
+            a[1]=
+            a[2]=android.intent.action.VIEW
+            set -- "file://$(realpath $1)" "${@:2}"
+            ;;
+        text/* )
+            a[1]=
+            a[2]=android.intent.action.EDIT
+            set -- "file://$(realpath $1)" "${@:2}"
+            ;;
+        * )
+            ;;
+    esac
+    a=$(echo "${a[@]}" |tr ' ' '/')
+    echo 1 am_start $a $@ 
+    am_start $a $@ 
+
+}
+
+alias fa="file_manage me.zhanghai.android.files/.filelist.FileListActivity"
+alias x4e="file_manage com.lonelycatgames.Xplore/.Browser"
+
+
+#+ settings && open
+
+alias open-battery-optimization="am_start //android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS"
+alias open-wifi-settings="am_start //android.settings.WIFI_SETTINGS"
+alias open-bluetooth-settings="am_start //android.settings.BLUETOOTH_SETTINGS"
+alias open-sound-settings="am_start //android.settings.SOUND_SETTINGS"
+alias open-display-settings="am_start //android.settings.DISPLAY_SETTINGS"
+alias open-vpn-settings="am_start //android.settings.VPN_SETTINGS"
+alias open-default-application-settings="am_start com.android.permissioncontroller/com.android.permissioncontroller.role.ui.DefaultAppListActivity"
+
+
+
+alias change-wallpaper="am_start com.android.settings/com.android.settings.wallpaper.StyleSuggestionActivity/android.intent.action.MAIN"
+alias change-default-launcher="am_start //android.settings.HOME_SETTINGS"
+
+alias show-allapp-info="am_start com.android.settings/com.android.settings.Settings\\\$ManageApplicationsActivity/android.intent.action.MAIN"
+alias open-allapp-info='am_start com.android.settings/com.android.settings.Settings\$ManageApplicationsActivity/android.intent.action.MAIN'
+
+alias open-accessibility='am_start com.android.settings/com.android.settings.Settings\$AccessibilitySettingsActivity/android.intent.action.MAIN'
+alias open-displaysettings='am_start com.android.settings/com.android.settings.Settings$DisplaySettingsActivity/android.settings.DISPLAY_SETTINGS'
+alias open-storage-dashboard='am_start com.android.settings/com.android.settings.Settings$StorageDashboardActivity/android.settings.INTERNAL_STORAGE_SETTINGS'
+alias open-security-dashboard='am_start com.android.settings/com.android.settings.Settings$SecurityDashboardActivity/android.settings.SECURITY_SETTINGS'
+alias open-account-dashboard='am_start com.android.settings/com.android.settings.Settings$AccountDashboardActivity/android.settings.SYNC_SETTINGS'
+alias open-network-dashboard='am_start com.android.settings/com.android.settings.Settings$NetworkDashboardActivity/android.settings.WIRELESS_SETTINGS'
+
+
+
+
+#am start -a android.intent.action.VIEW -d tg://resolve?domain=fumeiTea"
+
+
+alias clean-downloads:apps="am start -n com.android.storagemanager/com.android.storagemanager.deletionhelper.DeletionHelperActivity"
+
+mx_play(){
+    [[ $1 ]] && am_start "com.mxtech.videoplayer.pro/com.mxtech.videoplayer.ActivityScreen" $1 
+}
+
+# surfboard state toggle
+
+
+
+
+alias shazam-splash="am_start com.shazam.android/com.shazam.android.activities.SplashActivity shazam://startautotagging?origin=appshortcuts"
+
+alias contacts-new="am_start 'content://com.android.contacts/contacts'"
+alias c-new="am_start //android.intent.action.INSERT 'content://com.android.contacts/contacts'"
+
+alias one-search="am_start 'com.One.WoodenLetter/com.One.WoodenLetter.activitys.search.SearchActivity'"
+
+#+ sleep-zz
+alias sleep-start="am_start com.urbandroid.sleep/com.urbandroid.sleep.appactions.OpenFeatureActivity https://sleep-as-android/feature/start-tracking"
+alias sleep-stop="am_start com.urbandroid.sleep/com.urbandroid.sleep.appactions.OpenFeatureActivity https://sleep-as-android/feature/stop-tracking"
+alias sleep-last="am_start com.urbandroid.sleep/com.urbandroid.sleep.appactions.OpenFeatureActivity https://sleep-as-android/feature/last-sleep"
+
+#+ fa
+alias fa-ftp="am_start me.zhanghai.android.files/me.zhanghai.android.files.ftpserver.FtpServerActivity"
+alias fa-download="am_start me.zhanghai.android.files/me.zhanghai.android.files.filelist.FileListActivity"
+
+alias oto-search="am_start com.piyush.music/com.piyush.music.activities.shortcut.ShortcutTrampolineActivity"
+alias vanilla-search="am_start com.kyant.vanilla/com.piyush.music.activities.shortcut.ShortcutTrampolineActivity"
+
+#+ spotify
+spotify_search(){
+    [[ -n $1 ]] && local query="--es query $1"
+    am start -a android.intent.action.SEARCH -n com.spotify.music/com.spotify.music.SpotifyMainActivity $query &>/dev/null
+}
+
+alias spotify-search="spotify_search"
+
+
+#+ wechat
+#?:wechat-code:zh
+#- set URL type user   设置wechat相关的二维码
+#?:wechat-code:zh
+#
+wechat-code(){
+    local path type=friend user=0 set
+    [[ $1 == set ]] && shift && set=0
+    [[ $1 =~ ^[0-9]+$ ]] && user=$1
+    [[ $1 =~ ^[a-z]+$ ]] && type=$1
+    [[ $2 =~ ^[0-9]+$ ]] && user=$2
+    [[ $2 =~ ^[a-z]+$ ]] && type=$path="$HOME/.wechat.qr.$type.$user"
+    path="/storage/emulated/0/Pictures/wechat.qr.$type.$user.png"
+    [[ $@ ]] && {
+        [[ $(read -n 3 -t 5 -p "entry [ y/yes ] : " line && echo $line) =~ ^(y|yea)$ ]] && echo cp ${!#} $path && cp ${!#} $path
+    } || am_start com.google.android.apps.photos//android.intent.action.VIEW///image/* file://$path -f 0x00000001
+
+    #-t image/* -f 0x00000001
+}
+
+
+
+
+#+ telegram
+tg_domain(){
+    [[ $2 ]] && local domain=$(grep $2 ~/.tg.domain.conf |cut -d ':' -f 1) || local domain=$1
+    domain=$(echo $domain |tr -d '@')
+    echo $domain
+    am_start //android.intent.action.VIEW tg://resolve?domain=$domain
+}
+
+#+ pay
+alias pay-scan="am_start - alipayqr://platformapi/startapp?saId=10000007"
+alias pay-skcode="am_start - alipayqr://platformapi/startapp?saId=20000123"
+alias pay-fkcode="am_start - alipayqr://platformapi/startapp?appId=20000056"
+alias zfk="am_start - alipayqr://platformapi/startapp?appId=20000056"
+alias pay-cxcode="am_start - alipayqr://platformapi/startapp?appId=200011235"
+alias pay-su="am_start - alipayqr://platformapi/startapp?appId=20000027"
+alias pay-accounting="am_start - alipayqr://platformapi/startapp?appId=20000168"
+alias pay-search="am_start - alipayqr://platformapi/startapp?appId=20001003"
+alias pay-bicycle="am_start - alipayqr://platformapi/startapp?appId=60000155"
+
+#+qq
+qq_add_friend(){
+    [[ $1 =~ ^[0-9]+$ ]] && am_d mqqapi://card/show_pslcard?src_type=internal&version=1&uin=$1
+}
+alias qq-add-friend="qq_qq-add-friend "
+qq_add_group(){
+    [[ $1 =~ ^[0-9]+$ ]] && am_start - mqqapi://card/show_pslcard?src_type=internal&version=1&card_type=group&uin=$1
+}
+alias qq-add-group="qq_qq-add-group "
+alias qq-home-page="am_start - mqqapi://card/show_pslcard"
+
+#+taobao
+alias taobao-scan="am_start - taobao://tb.cn/n/scancode"
+
+#+meituan
+alias meituan-scan="am_start - 'imeituan://www.meituan.com/page/scanQRCodeForMBarResult?openAR=0&shortcuts=true&lch=mhqRLXSDxdm6BfP-x2WvMo2Cw'"
+alias meituan-bicycle="am_start - imeituan://www.meituan.com/bike/scan?lc-callback=imeituan://www.meituan.com/bike/inscan"
+alias meituan-fkcode="am_start - imeituan://www.meituan.com/search?q=付款码"
+meituan_search(){
+    [[ $@ ]] && am_start - imeituan://www.meituan.com/search?q=$1 || am_start - imeituan://www.meituan.com/page/search/home?lch=mhq0lV4qPTqkOwMXUnt7H3nSQ&entrance=4
+}
+alias meituan-search="meituan_search "
+
+#+bili
+alias bili-scan="am_start - bilibili://qrcode"
+alias bili-search="am_start - bilibili://search"
+alias bili-collection="am_start - bilibili://main/favorite"
+bili-vedio(){
+    am_start - bilibili://video/$(echo $1 |sed -n -E "s/.*(BV|AV)([0-9a-zA-Z]*).*/\1\2/p")
+}
+
+#+surfboard
+alias surfboard-toggle="am_start com.getsurfboard/com.getsurfboard.ui.activity.DeeplinkActivity surfboard:///toggle"
+alias surfboard-toggle="am_start - surfboard:///toggle"
+alias s-t="am_start com.getsurfboard/com.getsurfboard.ui.activity.DeeplinkActivity surfboard:///toggle"
+alias surfboard-start="am_start - surfboard://start"
+alias surfboard-stop="am_start - surfboard://stop"
+surfboard-add-subscription(){
+    [[ -n $1 ]] && am_start - surfboard:///install-config?url=$1 || {
+        [[ "$(termux-clipboard-get)" =~ ^http[s]?:// ]] && am_start - surfboard:///install-config?url="$(termux-clipboard-get)"
+    }
+}
+
+#+clash
+clash-add-subscription(){
+    [[ -n $1 ]] && am_start - clash://install-config?url=$1
+}
+
+#+kdeconnect
+#alias kde-share="am start -a android.intent.action.SEND -n org.kde.kdeconnect_tp/org.kde.kdeconnect.Plugins.SharePlugin.ShareActivity -c android.intent.category.DEFAULT -d file:///storage/emulated/0/Download/8tUgu38.jpg"
+kdeconnect-share(){
+    [[ -n $1 ]] && rish -c "am start -a android.intent.action.SEND -n org.kde.kdeconnect_tp/org.kde.kdeconnect.Plugins.SharePlugin.ShareActivity -t image/jpeg -c android.intent.category.DEFAULT --es android.intent.extra.MIME_TYPES "image/jpeg,image/png" --es android.intent.extra.STREAM file://$(realpath $1) -f 0xb080001 --ez launchflag 0xb080001 "
+    #--es referrerPackage me.zhanghai.android.files
+}
+
+
+photos-edit(){
+    am_start //android.intent.action.EDIT/999 file://$(realpath $1) -t image/* -f 0x00000001
+}
+
+
+
+## am_start ##
+
+APP=(
+    APP_MUSIC
+    APP_STORE
+    APP_APKTOOL
+    APP_SHOPPING
+    APP_BROWSER
+)
+APP_MUSIC=(
+    oto
+    vanilla
+    usbaudioplayerpro
+    poweramp
+    spotify
+    aimp
+    shanling
+    dl-sound
+)
+APP_BROWSER=(
+    sbrowser
+    sleipnir
+    yandex-browser
+    chrome
+    chrome-beta
+    dlbrowser
+    einkbro-browser
+    firefox
+    kiwi-browser
+)
+APP_STORE=(
+    aurora-store
+    hstore
+    pstore
+    f-droid
+)
+APP_SHOPPING=(
+    jingdong
+    meituan
+    pdd
+    taobao
+)
+APP_APKTOOL=(
+    apkanalyzer
+    apkextractor
+    apktool
+    android-dev-toolbox
+    libchecker
+    androidide
+
+)
+
+#?:app:zh
+#- -l | --list | list  显示全部类别
+#- -ll | --list-all | list-all  显示全部类别及values
+#?:app:zh
+app(){
+    [[ $@ ]] || set -- -ll
+    case $1 in
+        -l | --list | list )
+            #eval echo "$(printf "\${%s[@]}\n" "${APP[@]}")"
+            [[ $2 ]] && eval echo "$2 : \${$2[@]}" || echo ${APP[@]}
+                ;;
+        -ll | --list-all | list-all )
+                for p in ${APP[@]}; do
+                    eval echo "$p : \${$p[@]}"
+                done
+            ;;
+        * )
+            [[ "${APP[@]}" =~ $1 ]] && {
+                echo $1
+            }
+            ;;
+    esac
+}
+
+
+#?:app_launcher
+<<@
+
+ call-function callback package-name/class-name[]
+
+@
+#?:app_launcher
+
+app_launcher(){
+    local item
+    for item in ${@:3}; do
+        echo $item
+        [[ $($1 $item 2>&1 >/dev/null) ]] || break
+    done
+}
+
+#?:am_start:zh
+<<@
+package-name/class-name/action/user-id/app-name/type1/type2
+
+格式：
+    packageName/className/action/user/Language-Region:appName/fileType/suffix
+
+  --install | in            安装应用
+  --uninstall|unin|uni <user>   卸载应用
+  --install-existing | in-ex  重新安装应用
+  --disable | dis  冻结应用
+  --enable | e  启用应用
+  --help | -h               帮助文档
+
+        --install | in )
+        --uninstall | unin | uni )
+        --uninstall-j | unin-k | uni-k | unik | uk )
+        --install-existing | in-ex )
+        --disable | dis )
+        --enable | en | e )
+        --package-name | cat )
+        --package-name-all | cat-all )
+        --info | info )
+        --ext | ext )
+        --app-name | --name | appname | name | n )
+        --battery-whitelist-add | bw+ )
+        --battery-whitelist-remove | bw- )
+        - )
+        * | --help | -h )
+@
+#?:am_start:zh
+
+#- 
+
+#- rishc dumpsys deviceidle whitelist +com.google.android.deskclock
+am_start(){
+    local n user _user package_name package_name_all action _action appname ttype _ttype
+    unset n user _user package_name package_name_all action _action appname ttype _ttype
+
+    [[ "$1" && "$1" != - ]] && {
+        package_name=$(echo $1 |cut -d / -f 1)
+        #class_name=$(echo $1 |cut -d / -f 2)
+        package_name_all=$(echo $1 |cut -d / -f 1,2)
+        action=$(echo "$1" |cut -d / -f 3)
+        appname=$(echo "$1" |cut -d / -f 5)
+        ttype=$(echo "$1" |cut -d / -f 6,7)
+    }
+    [[ "$ttype" =~ ^[a-z*]+/[a-z*]+$ ]] && {
+        _ttype[1]="-t"
+        _ttype[2]="$ttype"
+    }
+    [[ "$2" =~ ^[0-9]+$ ]] && {
+        user=$2
+        _user="--user $user"
+        set -- "$1" - "${@:3}"
+    } || user=$(echo $1 |cut -d / -f 4)
+    [[ $user =~ ^[0-9]+$ ]] && _user="--user $user" || {
+        user=0
+        _user="--user 0"
+    }
+    [[ $3 =~ ^[0-9]+$ ]] && _user="--user $3" && set -- "${@:1:2}" "${@:4}"
+
+    [[ $action ]] && _action="-a $action"
+
+    [[ $package_name ]] && {
+        [[ ${package_name_all: -1} == '/' ]] && n="$package_name" || n="-n $package_name_all"
+    }
+
+    [[ $2 ]] || set -- "$1" -
+    case "$2" in
+        --install | in )
+            [[ $user == 0 ]] && \
+            #am start -a android.intent.action.VIEW -d "market://search?q=pname:${1%/*}" 2>/dev/null
+                am start $_user -a android.intent.action.VIEW -d "market://details?id=$package_name" 2>/dev/null || \
+                rish -c "am start $_user -a android.intent.action.VIEW -d \"market://details?id=$package_name\" " 2>/dev/null
+            return
+            ;;
+        --uninstall | unin | uni )
+            rish -c "pm uninstall $_user $package_name"
+            return
+            ;;
+        --uninstall-j | unin-k | uni-k | unik | uk )
+            rish -c "pm uninstall $_user $package_name"
+            return
+            ;;
+        --install-existing | in-ex )
+            rish -c "pm install-existing $_user $package_name"
+            return
+            ;;
+        --disable | dis )
+            rish -c "pm disable-user $_user $package_name"
+            return
+            ;;
+        --enable | en | e )
+            rish -c "pm enable $_user $package_name"
+            return
+            ;;
+        --package-name | cat )
+            echo $package_name
+            return
+            ;;
+        --package-name-all | cat-all )
+            echo $package_name_all
+            return
+            ;;
+        --info | info )
+            [[ $user == 0 ]] && \
+                am start -a android.settings.APPLICATION_DETAILS_SETTINGS -n com.android.settings/com.android.settings.applications.InstalledAppDetails -d package:$package_name $_user &>/dev/null || \
+                rish -c "am start -a android.settings.APPLICATION_DETAILS_SETTINGS -n com.android.settings/com.android.settings.applications.InstalledAppDetails -d package:$package_name $_user" &>/dev/null
+            return
+            ;;
+        --ext | ext )
+            [[ $user == 0 ]] && \
+                am start -a android.intent.action.VIEW $_action $_user $3 &>/dev/null || \
+                rish -c "am start -a android.intent.action.VIEW $_action $_user $3" &>/dev/null
+            return
+            ;;
+        --app-name | --name | appname | name | n )
+            [[ $3 =~ ^[a-z]{2}-[A-Z]{2}$ ]] && lang=$3 || \
+            lang=$(getprop persist.sys.locale)
+            appname_tmp=$(echo $appname |sed -n "s/.*${lang}:\([^:]\+\).*/\1/p" |tr -d ' \t\n\r')
+            [[ ${appname_tmp} ]] && echo ${appname_tmp} || echo $appname
+            return
+            ;;
+        --battery-whitelist-add | bw+ )
+            battery_whitelist + $package_name
+            return
+            ;;
+        --battery-whitelist-remove | bw- )
+            battery_whitelist - $package_name
+            return
+            ;;
+        - )
+            echo - am start $_user $n $_action
+            [[ $user == 0 ]] && \
+                am start $_user $n $_action &> /dev/null || \
+                rish -c "am start $_user $n $_action" &> /dev/null
+            return
+            ;;
+        * | --help | -h )
+
+            [[ $2 && ! $2 =~ ^- ]] && d="-d $2" || d="$2"
+            echo am start $_user $_action "${_ttype[@]}" $d ${@:3} $n #&>/dev/null
+            am start $_user $_action "${_ttype[@]}" $d ${@:3} $n &>/dev/null
+            return
+            ;;
+    esac
+
+}
+
+pikpak(){
+    [[ $1 =~ [a-z]:? ]] && {
+        am_start com.pikcloud.pikpak/com.pikcloud.router.share.SystemShareActivity --ext "-c android.intent.category.DEFAULT -c android.intent.category.BROWSABLE  -d \"$1\""
+    } || {
+        #echo am_start com.pikcloud.pikpak/com.pikcloud.app.SplashActivity
+        am_start com.pikcloud.pikpak/com.pikcloud.app.SplashActivity $@
+    }
+}
+
+# 0x14000000 是 FLAG_ACTIVITY_CLEAR_TASK 和 FLAG_ACTIVITY_NEW_TASK 的十六进制表示。
+fy(){
+    local fycon
+
+    [[ $@ ]] && {
+        [[ $1 == - ]] && fycon="$(termux-clipboard-get)" || fycon="$*"
+        am_start com.google.android.apps.translate/.copydrop.gm3.TapToTranslateActivity/android.intent.action.TRANSLATE --ext " -e android.intent.extra.PROCESS_TEXT \"$fycon\" -f 0x14000000 "
+    } || am_start com.google.android.apps.translate/.TranslateActivity
+}
+
+chrome-android(){
+    local para=
+    local SEARCH CODING_EXPRESSION="$@"
+    declare -A SEARCH
+
+    local url_regex="^[^.]+\.[^.]+\.[^.]+"
+
+   SEARCH["Google"]=https://www.google.com/search?q=%s
+   SEARCH["Baidu"]=https://www.baidu.com/s?wd=%s
+   SEARCH["Bing"]=https://www.bing.com/search?q=%s
+   SEARCH["Sougou"]=https://www.sogou.com/web?query=%s
+   SEARCH["360"]=https://www.so.com/s?q=%s
+   SEARCH["Yahoo"]=https://search.yahoo.com/search?p=%s
+   SEARCH["DuckDuckGo"]=https://duckduckgo.com/?q=%s
+   SEARCH["Ask"]=https://www.ask.com/web?q=%s
+   SEARCH["Aol"]=https://search.aol.com/aol/search?q=%s
+   SEARCH["Yandex"]=https://www.yandex.com/search/?text=%s
+   SEARCH["Quark"]=https://quark.sm.cn/s?q=%s
+
+
+
+   ESCAPE=(
+       " %20"
+       "!%21"
+       "#%23"
+       "$%24"
+       "&%26"
+       "'%27"
+       "(%28"
+       ")%29"
+       "\*%2A"
+       "+%2B"
+       ",%2C"
+       "/%2F"
+       ":%3A"
+       ";%3B"
+       "=%3D"
+       "?%3F"
+       "@%40"
+       "\[%5B"
+       "]%5D"
+       )
+   
+    [[ $1 ]] && {
+        [[ "$1" == *"://"* || "$1" =~  $url_regex ]] && CODING_EXPRESSION="-d $1" || {
+       for((i=0;i<${#ESCAPE[@]};i++)); do
+           echo  "s|${ESCAPE[i]%%%*}|%${ESCAPE[i]#*%}|g"
+           CODING_EXPRESSION=$(echo $CODING_EXPRESSION |sed  "s|%${ESCAPE[i]%%%*}|${ESCAPE[i]#*%}|g")
+       done
+       #CODING_EXPRESSION=$(echo $CODING_EXPRESSION |sed "s|%s|"$CODING_EXPRESSION"|")
+
+        [[ $# -ge 2 ]] && {
+            case $1 in
+
+
+  # SEARCH["Google"]=https://www.google.com/search?q=%s
+  # SEARCH["Baidu"]=https://www.baidu.com/s?wd=%s
+  # SEARCH["Bing"]=https://www.bing.com/search?q=%s
+  # SEARCH["Sougou"]=https://www.sogou.com/web?query=%s
+  # SEARCH["360"]=https://www.so.com/s?q=%s
+  # SEARCH["Yahoo"]=https://search.yahoo.com/search?p=%s
+  # SEARCH["DuckDuckGo"]=https://duckduckgo.com/?q=%s
+  # SEARCH["Ask"]=https://www.ask.com/web?q=%s
+  # SEARCH["Aol"]=https://search.aol.com/aol/search?q=%s
+  # SEARCH["Yandex"]=https://www.yandex.com/search/?text=%s
+  # SEARCH["Quark"]=https://quark.sm.cn/s?q=%s
+                g)
+                CODING_EXPRESSION=$(echo ${SEARCH[Google]} |sed "s|%s|$CODING_EXPRESSION|")
+                echo
+                    ;;
+                bd)
+
+                    ;;
+
+            esac
+    }
+   }
+   echo am start -a android.intent.action.VIEW $CODING_EXPRESSION com.android.chrome
+   am start -a android.intent.action.VIEW $CODING_EXPRESSION com.android.chrome
+    } || {
+        am start -n 'com.android.chrome/com.google.android.apps.chrome.Main' --user 0 &> /dev/null
+    }
+}
+
+alias chrome="chrome-android $@"
+
+#am start -n 'com.google.android.youtube/.app.honeycomb.Shell$HomeActivity' --user 0 &> /dev/null
+youtube(){
+    am start -n 'com.google.android.youtube/.app.honeycomb.Shell$HomeActivity' --user 0 &> /dev/null
+}
+
+alias gfiles="am_start com.google.android.apps.nbu.files/com.google.android.apps.nbu.files.home.HomeActivity"
+alias t2s="am_start hesoft.T2S/hesoft.T2S.AppActivity"
+alias oto="am_start com.piyush.music/com.piyush.music.activities.main.MainActivity"
+alias aimp="am_start com.aimp.player/com.aimp.player.ui.activities.main.MainActivity"
+alias ladb="am_start com.draco.ladb/com.draco.ladb.views.MainActivity"
+
+alias androidide="am_start com.itsaky.androidide/com.itsaky.androidide.activities.SplashActivity"
+alias ani="am_start tw.com.gamer.android.animad/tw.com.gamer.android.animad.AnimadActivity"
+alias apkanalyzer="am_start sk.styk.martin.apkanalyzer/sk.styk.martin.apkanalyzer.ui.main.MainActivity"
+alias apkextractor="am_start com.ytheekshana.apkextractor/com.ytheekshana.apkextractor.MainActivity"
+alias apkpure="am_start com.apkpure.aegon/.main.activity.SplashActivity"
+alias apktool="am_start ru.maximoff.apktool/ru.maximoff.apktool.SplashActivity"
+alias shanling="am_start com.shanling.MusicApp/com.shanling.MusicApp.gui.Activity.SplashActivity"
+alias dlbrowser="am_start fm.dlb.dlbrowser/fm.dlb.dlbrowser.MainActivity"
+alias android-dev-toolbox="am_start com.su.assistant.pro/com.su.assistant.ui.main.SplashActivity"
+alias applauncher="am_start com.simplemobiletools.applauncher/com.simplemobiletools.applauncher.activities.SplashActivity.Orange"
+alias appops="am_start rikka.appops/.home.HomeActivity"
+alias appservices="am_start com.oplus.appplatform/"
+alias aurora-store="am_start com.aurora.store/.MainActivity"
+alias authenticator-google="am_start com.google.android.apps.authenticator2/com.google.android.apps.authenticator.AuthenticatorActivity"
+alias authenticator-microsoft="am_start com.azure.authenticator/.ui.LaunchActivity"
+alias bbing="am_start com.microsoft.bing/com.microsoft.clients.bing.voice.VoiceActivity"
+alias bili="am_start tv.danmaku.bili/tv.danmaku.bili.MainActivityV2"
+alias bing="am_start com.microsoft.bing/com.microsoft.sapphire.app.main.SapphireMainActivity"
+alias browser-einkbro="am_start info.plateaukao.einkbro/info.plateaukao.einkbro.activity.BrowserActivity"
+alias browser-kiwi="am_start com.kiwibrowser.browser/com.google.android.apps.chrome.Main"
+alias browser-sanxing="am_start com.sec.android.app.sbrowser/.SBrowserMainActivity"
+alias browser-sleipnir="am_start jp.co.fenrir.android.sleipnir/com.fenrir_inc.sleipnir.main.MainActivity"
+alias browser-yandex="am_start com.yandex.browser/com.yandex.browser.YandexBrowserActivity"
+alias C-apkanalyzer="am_start sk.styk.martin.apkanalyzer/sk.styk.martin.apkanalyzer.ui.main.MainActivity"
+alias C-appops="am_start rikka.appops/.home.HomeActivity"
+alias C-battery-guru="am_start com.paget96.batteryguru/.activities.SplashScreen"
+alias battery-guru="am_start com.paget96.batteryguru/.activities.SplashScreen"
+alias C-compass="am_start com.coloros.compass2/com.coloros.compass.flat.FlatCompass"
+alias C-device-info="am_start com.toralabs.deviceinfo/.activities.SplashActivity"
+alias C-lspatch="am_start org.lsposed.lspatch/.ui.activity.MainActivity"
+alias C-one="am_start com.One.WoodenLetter/.LetterActivity"
+alias C-repainter="am_start dev.kdrag0n.dyntheme/dev.kdrag0n.dyntheme.ui.main.MainActivity"
+alias C-shazam="am_start com.shazam.android/.activities.SplashActivity"
+alias C-shizuku="am_start moe.shizuku.privileged.api/moe.shizuku.manager.MainActivity"
+alias C-shizukurunner="am_start com.shizuku.uninstaller/.MainActivity"
+alias C-shortcut-maker="am_start rk.android.app.shortcutmaker/.CommonMethods.SplashScreenActivity"
+alias C-systemui-tuner="am_start com.zacharee1.systemuituner/.MainActivity"
+alias C-tasker="am_start net.dinglisch.android.taskerm/.Tasker"
+alias C-zarchiver="am_start ru.zdevs.zarchiver.pro/.ZArchiver"
+alias calculator="am_start com.google.android.calculator/com.android.calculator2.Calculator"
+alias camera-oplus="am_start com.oplus.camera/.Camera"
+alias cfa="am_start com.github.kr328.clash/.MainActivity"
+alias chatgpt="am_start com.openai.chatgpt/.MainActivity"
+alias chrome-beta="am_start com.chrome.beta/com.google.android.apps.chrome.Main"
+alias Chrome="am_start com.android.chrome/com.google.android.apps.chrome.Main"
+#alias chrome="am_start com.android.chrome/com.google.android.apps.chrome.Main"
+alias clash-for-android="am_start com.github.kr328.clash/.MainActivity"
+alias compass="am_start com.coloros.compass2/com.coloros.compass.flat.FlatCompass"
+alias contacts="am_start com.google.android.contacts/com.android.contacts.activities.PeopleActivity"
+alias coolapk="am_start com.coolapk.market/.view.main.MainActivity"
+alias cpu-x="am_start com.abs.cpu_z_advance/.MainActivity"
+alias deskclock="am_start com.google.android.deskclock/com.android.deskclock.DeskClock"
+alias device-info="am_start com.toralabs.deviceinfo/.activities.SplashActivity"
+alias dialer="am_start com.google.android.dialer/.extensions.GoogleDialtactsActivity"
+alias DiskInfo="am_start com.drhowdydoo.diskinfo/.activity.MainActivity"
+alias diskinfo="am_start com.drhowdydoo.diskinfo/.activity.MainActivity"
+alias dl-sound="am_start jp.co.eisys.dlsitesound/jp.co.eisys.dlsitesound.MainActivity"
+#alias Easy-Japanese|easy-japanese="am_start mobi.eup.jpnews/.activity.MainActivity"
+alias einkbro-browser="am_start info.plateaukao.einkbro/info.plateaukao.einkbro.activity.BrowserActivity"
+alias f-droid="am_start org.fdroid.fdroid/.views.main.MainActivity"
+alias fag="am_start com.android.documentsui/.LauncherActivity"
+alias fanyi="am_start com.google.android.apps.translate/.TranslateActivity"
+alias file2="am_start com.karthek.android.s.files2/com.karthek.android.s.files2.MainActivity"
+alias filelist-android-G="am_start com.android.documentsui/.LauncherActivity"
+alias filelist-android="am_start me.zhanghai.android.files/.filelist.FileListActivity"
+alias firefox="am_start org.mozilla.firefox/.App"
+#alias fy="am_start com.google.android.apps.translate/.TranslateActivity"
+alias G-authenticator="am_start com.google.android.apps.authenticator2/com.google.android.apps.authenticator.AuthenticatorActivity"
+alias G-book="am_start com.google.android.apps.books/.app.BooksActivity"
+alias G-calculator="am_start com.google.android.calculator/com.android.calculator2.Calculator"
+alias G-deskclock="am_start com.google.android.deskclock/com.android.deskclock.DeskClock"
+alias G-dialer="am_start com.google.android.dialer/.extensions.GoogleDialtactsActivity"
+alias G-drive="am_start com.google.android.apps.docs/.app.NewMainProxyActivity"
+alias G-lens="am_start com.google.ar.lens/com.google.vr.apps.ornament.app.lens.LensLauncherActivity"
+alias G-messaging="am_start com.google.android.apps.messaging/.ui.ConversationListActivity"
+alias G-photos="am_start com.google.android.apps.photos/.home.HomeActivity"
+alias G-play-store="am_start com.android.vending/.AssetBrowserActivity"
+alias G-sms="am_start com.google.android.apps.messaging/com.google.android.apps.messaging.ui.ConversationListActivity"
+alias G-tasks="am_start com.google.android.apps.tasks/com.google.android.apps.tasks.ui.TaskListsActivity"
+alias gallery="am_start org.Gallery.Pro/org.Gallery.Pro.activities.SplashActivity.Orange"
+alias game-きゃらデン="am_start jp.ne.mkb.voice/.ui.activity.NotificationActivity"
+alias game-となかいｗ時計-志穂="am_start com.prekano.tonakaiwwatch_gp/com.ies_net.artemis.ArtemisActivity"
+alias game-ローマ字チャレンジ="am_start com.gloding.android.RomajiChallengeFree/com.unity3d.player.UnityPlayerActivity"
+alias game-太鼓之达人="am_start com.linecorp.LGTAIKO/com.linecorp.trident.unity.TridentUnityPlayerActivity"
+alias game-王者荣耀="am_start com.tencent.tmgp.sgame/.SGameActivity"
+alias gamecenter="am_start com.nearme.gamecenter/.ui.activity.SplashActivity"
+alias gboard="am_start com.google.android.inputmethod.latin/com.google.android.libraries.inputmethod.launcher.LauncherActivity"
+alias gdrive="am_start com.google.android.apps.docs/.app.NewMainProxyActivity"
+alias github="am_start com.github.android/.activities.MainActivity"
+alias gkd="am_start li.songe.gkd/li.songe.gkd.MainActivity"
+alias gmail="am_start com.google.android.gm/.ConversationListActivityGmail"
+alias google="am_start com.google.android.googlequicksearchbox/.GoogleAppImplicitMainInfoGatewayInternal"
+alias H-jmcomic2="am_start com.jiaohua_browser/.MainActivity"
+alias hcalendar="am_start com.coloros.calendar/com.android.calendar.AllInOneActivity"
+alias hiby="am_start com.hiby.music/com.hiby.music.Activity.StartActivity"
+alias hstore="am_start com.heytap.market/.activity.MainActivity"
+alias htheme="am_start com.heytap.themestore/com.nearme.themespace.activities.ThemeActivity"
+alias hy="am_start me.piebridge.brevent/.ui.BreventActivity"
+alias icebox="am_start com.catchingnow.icebox/.activity.mainActivity.MainAppActivity"
+alias jingdong="am_start com.jingdong.app.mall/.main.MainActivity" #京东
+alias jd="am_start com.jingdong.app.mall/.main.MainActivity" #京东
+alias jmcomic2="am_start com.jiaohua_browser/.MainActivity"
+alias kakuyomu="am_start jp.kadokawa.el.kakuyomu/.activity.RootActivity"
+alias kde-connect="am_start org.kde.kdeconnect_tp/org.kde.kdeconnect.UserInterface.MainActivity"
+alias kdeconnect="am_start org.kde.kdeconnect_tp/org.kde.kdeconnect.UserInterface.MainActivity"
+alias kiwi-browser="am_start com.kiwibrowser.browser/com.google.android.apps.chrome.Main"
+alias kodi="am_start org.xbmc.kodi/org.xbmc.kodi.Splash"
+alias kore="am_start org.xbmc.kore/.ui.sections.remote.RemoteActivity"
+alias kore="am_start org.xbmc.kore/org.xbmc.kore.ui.sections.remote.RemoteActivity"
+alias koreader="am_start org.koreader.launcher/.MainActivity"
+alias lens="am_start com.google.ar.lens/com.google.vr.apps.ornament.app.lens.LensLauncherActivity"
+alias libchecker="am_start com.absinthe.libchecker/com.absinthe.libchecker.features.home.ui.MainActivity"
+alias lspatch="am_start org.lsposed.lspatch/.ui.activity.MainActivity"
+alias map="am_start com.autonavi.minimap/com.autonavi.map.activity.SplashActivity"
+alias mega="am_start mega.privacy.android.app/.main.ManagerActivity"
+alias meituan="am_start com.sankuai.meituan/com.meituan.android.pt.homepage.activity.MainActivity"
+alias messaging="am_start com.google.android.apps.messaging/.ui.ConversationListActivity"
+alias moonreaderp="am_start com.flyersoft.moonreaderp/.ActivityMain"
+alias mt="am_start bin.mt.plus/bin.mt.plus.MainLightIcon"
+alias mx-player="am_start com.mxtech.videoplayer.pro/.ActivityMediaList"
+alias niagara-launcher="am_start bitpit.launcher/.ui.HomeActivity"
+alias Nix-android="am_start com.termux.nix/com.termux.app.TermuxActivity"
+alias nix-android="am_start com.termux.nix/com.termux.app.TermuxActivity"
+alias obsidian="am_start md.obsidian/.MainActivity"
+alias office="am_start com.microsoft.office.officehubrow/com.microsoft.office.officesuite.OfficeSuiteActivity"
+alias one="am_start com.One.WoodenLetter/.LetterActivity"
+alias onedrive="am_start com.microsoft.skydrive/com.microsoft.skydrive.MainActivity"
+alias open-battery-optimization="am_start //android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS"
+alias outlook="am_start com.microsoft.office.outlook/.MainActivity"
+alias pay="am_start com.eg.android.AlipayGphone/.AlipayLogin"
+alias pbook="am_start com.google.android.apps.books/.app.BooksActivity"
+alias pcalendar="am_start com.google.android.calendar/com.android.calendar.AllInOneActivity"
+alias pdd="am_start com.xunmeng.pinduoduo/com.xunmeng.pinduoduo.ui.activity.MainFrameActivity"
+alias photos="am_start com.google.android.apps.photos/.home.HomeActivity"
+alias play-book="am_start com.google.android.apps.books/.app.BooksActivity"
+alias play-store="am_start com.android.vending/.AssetBrowserActivity"
+alias poweramp="am_start com.maxmpz.audioplayer/com.maxmpz.audioplayer.rounded_play_inverted_mu"
+alias powerampp="am_start com.maxmpz.equalizer/com.maxmpz.audioplayer.standard_adaptive"
+alias pstore="am_start com.android.vending/.AssetBrowserActivity"
+alias qq="am_start com.tencent.mobileqq/.activity.SplashActivity"
+alias repainter="am_start dev.kdrag0n.dyntheme/dev.kdrag0n.dyntheme.ui.main.MainActivity"
+alias SAI="am_start com.aefyr.sai.fdroid/com.aefyr.sai.ui.activities.MainActivity"
+alias sbrowser="am_start com.sec.android.app.sbrowser/.SBrowserMainActivity"
+alias se="am_start ninja.sesame.app.edge/.activities.MainActivity"
+alias search="am_start ninja.sesame.app.edge/.activities.MainActivity"
+alias sesame="am_start ninja.sesame.app.edge/.activities.MainActivity"
+alias settings-android="am_start com.android.settings/.Settings"
+alias sgame="am_start com.tencent.tmgp.sgame/.SGameActivity"
+alias shazam="am_start com.shazam.android/.activities.SplashActivity"
+alias shizuku="am_start moe.shizuku.privileged.api/moe.shizuku.manager.MainActivity"
+alias shizukurunner="am_start com.shizuku.uninstaller/.MainActivity"
+alias shortcut-maker="am_start rk.android.app.shortcutmaker/.CommonMethods.SplashScreenActivity"
+alias sleep-zz="am_start com.urbandroid.sleep/.alarmclock.AlarmClock"
+alias sleepcloud="am_start com.urbandroid.sleep.addon.port/.CloudSettingsActivity"
+alias sleipnir="am_start jp.co.fenrir.android.sleipnir/com.fenrir_inc.sleipnir.main.MainActivity"
+alias spotify="am_start com.spotify.music/.MainActivity"
+alias store-aurora="am_start com.aurora.store/.MainActivity"
+alias store-heytap="am_start com.heytap.market/.activity.MainActivity"
+alias surfboard="am_start com.getsurfboard/.ui.activity.MainActivity"
+alias systemui-tuner="am_start com.zacharee1.systemuituner/.MainActivity"
+alias systemuituner="am_start com.zacharee1.systemuituner/com.zacharee1.systemuituner.MainActivity"
+alias taobao="am_start com.taobao.taobao/com.taobao.tao.welcome.Welcome"
+alias tasker="am_start net.dinglisch.android.taskerm/.Tasker"
+alias tasks="am_start com.google.android.apps.tasks/com.google.android.apps.tasks.ui.TaskListsActivity"
+alias telegram="am_start org.telegram.messenger/.DefaultIcon"
+#alias TermuxLauncher|termuxlauncher="am_start amsitlab.android.apps.termuxlauncher/.MainActivity"
+alias theme-heytap="am_start com.heytap.themestore/com.nearme.themespace.activities.ThemeActivity"
+alias translate="am_start com.google.android.apps.translate/.TranslateActivity"
+alias ttgk="am_start com.szttgk.audio/com.szttgk.audio.SplashActivity"
+alias usbaudioplayerpro="am_start com.extreamsd.usbaudioplayerpro/com.extreamsd.usbaudioplayershared.ScreenSlidePagerActivity"
+alias V-surfboard="am_start com.getsurfboard/.ui.activity.MainActivity"
+alias vanilla="am_start com.kyant.vanilla/com.kyant.vanilla.MainActivity"
+alias wechat="am_start com.tencent.mm/.ui.LauncherUI"
+alias wirelesssettings="am_start com.oplus.wirelesssettings/"
+alias x-plore="am_start com.lonelycatgames.Xplore/.Browser"
+alias x="am_start com.twitter.android/.StartActivity"
+alias XSDL="am_start x.org.server/.MainActivity"
+alias xserver-xsdl="am_start x.org.server/.MainActivity"
+alias yandex-browser="am_start com.yandex.browser/com.yandex.browser.YandexBrowserActivity"
+alias ZA="am_start ru.zdevs.zarchiver.pro/.ZArchiver"
+alias za="am_start ru.zdevs.zarchiver.pro/.ZArchiver"
+alias zarchiver="am_start ru.zdevs.zarchiver.pro/.ZArchiver"
+#alias 一个木函|一个木函="am_start com.One.WoodenLetter/.LetterActivity"
+#alias 中国银行|中国银行="am_start com.chinamworld.bocmbci/com.boc.bocsoft.mobile.bocmobile.buss.system.splash.SplashActivity"
+#alias 動畫瘋|動畫瘋="am_start tw.com.gamer.android.animad/.AnimadActivity"
+#alias 图库|图库="am_start org.Gallery.Pro/.activities.SplashActivity.Orange"
+#alias 文字转语音|文字转语音="am_start com.alpaca.android.readout/.MainActivity"
+#alias 海贝音乐|海贝音乐="am_start com.hiby.music/.Activity.StartActivity"
+#alias 美团|美团="am_start com.sankuai.meituan/com.meituan.android.pt.homepage.activity.MainActivity"
+#alias 遥控精灵|遥控精灵="am_start com.tiqiaa.remote/com.tiqiaa.icontrol.WelcomeActivity"
+#alias 静读天下专业版|静读天下专业版="am_start com.flyersoft.moonreaderp/.ActivityMain"
+#alias 黑阈|黑阈="am_start me.piebridge.brevent/.ui.BreventActivity"
+
+
+
+
+##  ##
+[[ $1 == '--' ]] && {
+    declare -f $2 &>/dev/null && {
+        echo function $2
+        $2 ${@:3}
+    }
+    alias $2 &>/dev/null && {
+        echo alias $2 
+        $2 ${@:3}
+    }
+
+}

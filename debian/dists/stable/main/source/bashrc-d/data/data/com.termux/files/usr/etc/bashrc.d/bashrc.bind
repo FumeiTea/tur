@@ -1,1 +1,0 @@
-bind '"\eh": "am_start com.miui.home/com.miui.home.recents.RecentsActivity\n"'

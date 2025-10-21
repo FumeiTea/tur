@@ -1,0 +1,3507 @@
+#!/bin/bash
+
+alias ra="ranger --choosedir=${TMPDIR:-/tmp}/rangerExitDwd;cd $(cat ${TMPDIR:-/tmp}/rangerExitDwd)"
+
+
+alias cl="clear"
+
+get_className(){
+    xprop | awk '
+      /^WM_CLASS/{sub(/.* =/, "instance:"); sub(/,/, "\nclass:"); print}
+      /^WM_NAME/{sub(/.* =/, "title:"); print}'
+}
+
+## cat ##
+
+cat_(){
+  cat ~/._$1 |$(getCliSetCmd)
+}
+
+alias cat-uuid="cat /proc/sys/kernel/random/uuid"
+
+alias cat-git="cat_ git"
+
+
+## clash ##
+
+alias clash-mmdb="curl -L 'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb' -o ~/.config/clash/Country.mmdb"
+alias clash-dashboard="git clone https://github.com/chmod777john/clash-dashboard.git ~/.config/clash/clash-dashboard"
+
+clash-config-down(){
+
+  (( $# <= 0 )) && return 1
+
+  local CLASH_UAS
+  declare -A CLASH_UAS
+  
+  CLASH_UAS["GO_HTTP"]='Go-http-client/1.1'
+  CLASH_UAS["CLASH_CORE"]='Clash/1.0.0'
+  CLASH_UAS["CLASH"]="Clash"
+  CLASH_UAS["CLASH_META"]="Clash.Meta"
+  CLASH_UAS["CLASH_META_V"]="Clash.Meta/1.18.0"
+  CLASH_UAS["CFW"]="Clash.for.Windows"
+  CLASH_UAS["CFW_V"]="Clash.for.Windows/0.20.39"
+  CLASH_UAS["CFW_META"]="Clash.Meta.for.Windows"
+  CLASH_UAS["CFW_META_V"]="Clash.Meta.for.Windows/1.18.0"
+  CLASH_UAS["CLASHX"]="ClashX"
+  CLASH_UAS["CLASHX_V"]="ClashX/1.120.0"
+  CLASH_UAS["CLASHXPRO"]="ClashX Pro"
+  CLASH_UAS["CLASHXPRO_V"]="ClashX Pro/1.120.0"
+  CLASH_UAS["CLASH_ANDROID"]="Clash.for.Android"
+  CLASH_UAS["CLASH_ANDROID_V"]="Clash.for.Android/2.8.7"
+  CLASH_UAS["META_ANDROID"]="Clash.Meta.for.Android"
+  CLASH_UAS["META_ANDROID_V"]="Clash.Meta.for.Android/2.8.7"
+  CLASH_UAS["VERGE"]="Clash Verge"
+  CLASH_UAS["VERGE_V"]="Clash Verge/1.3.0"
+  CLASH_UAS["VERGE_REBORN"]="Clash Verge Reborn"
+  CLASH_UAS["VERGE_REBORN_V"]="Clash Verge Reborn/1.3.0"
+  CLASH_UAS["PREMIUM"]="Clash Premium"
+  CLASH_UAS["PREMIUM_V"]="Clash Premium/3.0.0"
+  CLASH_UAS["DNF"]="ClashDotNetFramework"
+  CLASH_UAS["DNF_V"]="ClashDotNetFramework/2.1.9"
+  CLASH_UAS["CLASH_LINUX"]="Clash.for.Linux"
+  CLASH_UAS["CLASH_LINUX_V"]="Clash.for.Linux/1.17.0"
+
+
+  local UA url output isBak
+  UA=${CLASH_UAS["VERGE_V"]}
+  output=~/.config/clash/config.yaml
+
+  while [[ $# > 0 ]] ;do
+    case $1 in
+      -l | --list )
+        for key in "${!CLASH_UAS[@]}"; do
+          echo "  - $key: ${CLASH_UAS[$key]}"
+        done
+        ;;
+      -a | --UserAgent )
+        UA=${CLASH_UAS[$2]}
+        shift
+        ;;
+      -A | --FullUserAgent )
+        UA=$2
+        shift
+        ;;
+      -u | --url )
+        url=$2
+        shift
+        ;;
+      -o | -output )
+        output=$2
+        shift
+        ;;
+      -O )
+        output=~/.config/clash/$2
+        shift
+        ;;
+      -b | --bak )
+        isBak=0 
+        ;;
+      * )
+        url=$1
+        [[ $# == 2 ]] && output=$2 && shift
+        ;;
+    esac  
+
+    shift
+  done
+
+  [[ $isBak == 0 ]] && mv -v $output ${output}.bak
+
+  echo curl -s -L -H "User-Agent: ${UA}" -o "${output}" "${url}"
+
+}
+
+##### 以上是已经修改过的
+##### 以下是原本的文件
+
+
+#tput cup 0 0 && tput cr && tput el && printf qq && lines=$(tput lines) && tput cup $((lines - 1)) 0
+
+#
+# include
+#
+
+[[ $__SH_wlog == 0 ]] || . $PREFIX//opt/sh/wlog.sh
+
+
+: com.android.settings/com.android.settings.Settings\$AppBatteryUsageActivity
+
+#
+# public function
+#
+
+#3=(
+#"█ █ ■ ▓回"
+#"▂ ▃ ▄ ▅ ▆ ▇ █ █ ■ ▓ 回 □ 〓≡ ╝╚╔ ╗╬ ═ ╓ ╩ ┠ ┨┯ ┷┏ ┓┗ ┛┳⊥『』┌♀◆◇◣◢◥▲▼△▽⊿"
+#
+#)
+#
+#7=(
+#"#####"
+#"   # "
+#"  #  "
+#" #   "
+#"#    "
+#)
+#
+#8=(
+#" MMM "
+#"E   J"
+#" IMh "
+#"E   J"
+#" WWW "
+#)
+#
+#2=(
+#" ### "
+#"^   #"
+#"   # "
+#" ### "
+#"#####"
+#
+#)
+
+
+
+
+#(❀╹◡╹)
+
+
+#
+#1. 开心：
+#   - (＾▽＾)
+#   - (｡♥‿♥｡)
+#   - (✿◠‿◠)
+#
+#2. 难过：
+#   - (︶︹︺)
+#   - (｡•́︿•̀｡)
+#   - (T_T)
+#
+#3. 惊讶：
+#   - (⊙_⊙)
+#   - (°ロ°)
+#   - (ʘ‿ʘ)
+#
+#4. 生气：
+#   - (¬_¬)
+#   - (ಠ_ಠ)
+#   - (｀Д´)
+#
+#5. 爱心：
+#   - (♥ω♥*)
+#   - (♡˙︶˙♡)
+#   - (灬º‿º灬)♡
+#
+#6. 害羞：
+#   - (⁄ ⁄•⁄ω⁄•⁄ ⁄)
+#   - (〃▽〃)
+#   - (*/ω＼*)
+#
+#1. 开心：
+#   - (＾▽＾)
+#   - (´▽｀)
+#   - (^_^)
+#
+#2. 难过：
+#   - (；_；)
+#   - (T_T)
+#   - (；ω；)
+#
+#3. 惊讶：
+#   - (o_O)
+#   - (O_O)
+#   - (・o・)
+#
+#4. 爱心：
+#   - (♥_♥)
+#   - (♡˙︶˙♡)
+#   - (♥‿♥)
+#
+#5. 害羞：
+#   - (⁄⁄•⁄ω⁄•⁄⁄)
+#   - (´• blush•`)
+#   - (⌒_⌒;)
+
+
+
+export MV_ScreenshotsToTt=0
+
+CONFIG_DIR=
+
+# 前景色（30-37 标准颜色, 38 扩展颜色）
+FG_BLACK='\033[30m'        # 黑色
+FG_RED='\033[31m'          # 红色
+FG_GREEN='\033[32m'        # 绿色
+FG_YELLOW='\033[33m'       # 黄色
+FG_BLUE='\033[34m'         # 蓝色
+FG_MAGENTA='\033[35m'      # 洋红色
+FG_CYAN='\033[36m'         # 青色
+FG_WHITE='\033[37m'        # 白色
+FG_DEFAULT='\033[39m'      # 默认前景色
+FG_EXTENDED='\033[38;5;${n}m' # 扩展颜色，其中 ${n} 是 0-255 的颜色代码
+
+# 背景色（40-47 标准颜色, 48 扩展颜色）
+BG_BLACK='\033[40m'           # 黑色背景
+BG_RED='\033[41m'             # 红色背景
+BG_GREEN='\033[42m'           # 绿色背景
+BG_YELLOW='\033[43m'          # 黄色背景
+BG_BLUE='\033[44m'            # 蓝色背景
+BG_MAGENTA='\033[45m'         # 洋红色背景
+BG_CYAN='\033[46m'            # 青色背景
+BG_WHITE='\033[47m'           # 白色背景
+BG_DEFAULT='\033[49m'         # 默认背景色
+BG_EXTENDED='\033[48;5;${n}m' # 扩展背景颜色，其中 ${n} 是 0-255 的颜色代码
+
+# 高亮版前景色（90-97）
+FG_BRIGHT_BLACK='\033[90m'       # 高亮黑色
+FG_BRIGHT_RED='\033[91m'         # 高亮红色
+FG_BRIGHT_GREEN='\033[92m'       # 高亮绿色
+FG_BRIGHT_YELLOW='\033[93m'      # 高亮黄色
+FG_BRIGHT_BLUE='\033[94m'        # 高亮蓝色
+FG_BRIGHT_MAGENTA='\033[95m'     # 高亮洋红色
+FG_BRIGHT_CYAN='\033[96m'        # 高亮青色
+FG_BRIGHT_WHITE='\033[97m'       # 高亮白色
+
+
+FGB_BLACK='\033[90m'       # 高亮黑色
+FGB_RED='\033[91m'         # 高亮红色
+FGB_GREEN='\033[92m'       # 高亮绿色
+FGB_YELLOW='\033[93m'      # 高亮黄色
+FGB_BLUE='\033[94m'        # 高亮蓝色
+FGB_MAGENTA='\033[95m'     # 高亮洋红色
+FGB_CYAN='\033[96m'        # 高亮青色
+FGB_WHITE='\033[97m'       # 高亮白色
+
+
+# 高亮版背景色（100-107）
+BG_BRIGHT_BLACK='\033[100m'   # 高亮黑色背景
+BG_BRIGHT_RED='\033[101m'     # 高亮红色背景
+BG_BRIGHT_GREEN='\033[102m'   # 高亮绿色背景
+BG_BRIGHT_YELLOW='\033[103m'  # 高亮黄色背景
+BG_BRIGHT_BLUE='\033[104m'    # 高亮蓝色背景
+BG_BRIGHT_MAGENTA='\033[105m' # 高亮洋红色背景
+BG_BRIGHT_CYAN='\033[106m'    # 高亮青色背景
+BG_BRIGHT_WHITE='\033[107m'   # 高亮白色背景
+
+
+BGB_BLACK='\033[100m'   # 高亮黑色背景
+BGB_RED='\033[101m'     # 高亮红色背景
+BGB_GREEN='\033[102m'   # 高亮绿色背景
+BGB_YELLOW='\033[103m'  # 高亮黄色背景
+BGB_BLUE='\033[104m'    # 高亮蓝色背景
+BGB_MAGENTA='\033[105m' # 高亮洋红色背景
+BGB_CYAN='\033[106m'    # 高亮青色背景
+BGB_WHITE='\033[107m'   # 高亮白色背景
+
+# 字体样式
+FONT_STYLE_BOLD='\033[1m'          # 加粗
+FONT_STYLE_DIM='\033[2m'           # 暗淡
+FONT_STYLE_ITALIC='\033[3m'        # 斜体
+FONT_STYLE_UNDERLINE='\033[4m'     # 下划线
+FONT_STYLE_BLINK_SLOW='\033[5m'    # 慢闪烁
+FONT_STYLE_BLINK_FAST='\033[6m'    # 快闪烁
+FONT_STYLE_REVERSE='\033[7m'       # 反显
+FONT_STYLE_HIDDEN='\033[8m'        # 隐藏
+FONT_STYLE_STRIKE='\033[9m'        # 删除线
+FONT_STYLE_FONT_DEFAULT='\033[10m' # 默认字体
+FONT_STYLE_FONT_ALT1='\033[11m'    # 替代字体 1
+FONT_STYLE_FONT_ALT2='\033[12m'    # 替代字体 2
+FONT_STYLE_FRAMED='\033[51m'       # 框架
+FONT_STYLE_ENCIRCLED='\033[52m'    # 环绕
+FONT_STYLE_OVERLINE='\033[53m'     # 上划线
+
+
+FS_BOLD='\033[1m'          # 加粗
+FS_DIM='\033[2m'           # 暗淡
+FS_ITALIC='\033[3m'        # 斜体
+FS_UNDERLINE='\033[4m'     # 下划线
+FS_BLINK_SLOW='\033[5m'    # 慢闪烁
+FS_BLINK_FAST='\033[6m'    # 快闪烁
+FS_REVERSE='\033[7m'       # 反显
+FS_HIDDEN='\033[8m'        # 隐藏
+FS_STRIKE='\033[9m'        # 删除线
+FS_FONT_DEFAULT='\033[10m' # 默认字体
+FS_FONT_ALT1='\033[11m'    # 替代字体 1
+FS_FONT_ALT2='\033[12m'    # 替代字体 2
+FS_FRAMED='\033[51m'       # 框架
+FS_ENCIRCLED='\033[52m'    # 环绕
+FS_OVERLINE='\033[53m'     # 上划线
+
+# 重置样式
+RESET_ALL='\033[0m'           # 重置所有样式
+RESET_BOLD='\033[21m'         # 重置加粗
+RESET_DIM='\033[22m'          # 重置暗淡
+RESET_ITALIC='\033[23m'       # 重置斜体
+RESET_UNDERLINE='\033[24m'    # 重置下划线
+RESET_BLINK='\033[25m'        # 重置闪烁
+RESET_REVERSE='\033[27m'      # 重置反显
+RESET_HIDDEN='\033[28m'       # 重置隐藏
+RESET_STRIKE='\033[29m'       # 重置删除线
+
+
+RE_ALL='\033[0m'           # 重置所有样式
+RE_BOLD='\033[21m'         # 重置加粗
+RE_DIM='\033[22m'          # 重置暗淡
+RE_ITALIC='\033[23m'       # 重置斜体
+RE_UNDERLINE='\033[24m'    # 重置下划线
+RE_BLINK='\033[25m'        # 重置闪烁
+RE_REVERSE='\033[27m'      # 重置反显
+RE_HIDDEN='\033[28m'       # 重置隐藏
+RE_STRIKE='\033[29m'       # 重置删除线
+
+# 光标控制
+CURSOR_UP='\033[${n}A'        # 光标向上移动 n 行
+CURSOR_DOWN='\033[${n}B'      # 光标向下移动 n 行
+CURSOR_FORWARD='\033[${n}C'   # 光标向前移动 n 列
+CURSOR_BACK='\033[${n}D'      # 光标向后移动 n 列
+CURSOR_NEXT_LINE='\033[${n}E' # 光标向下移动 n 行，并移至行首
+CURSOR_PREV_LINE='\033[${n}F' # 光标向上移动 n 行，并移至行首
+CURSOR_HORIZONTAL_ABS='\033[${n}G' # 光标水平移动到第 n 列
+CURSOR_POSITION='\033[${n};${m}H'  # 移动光标到第 n 行，第 m 列
+CURSOR_HIDE='\033[?25l'       # 隐藏光标
+CURSOR_SHOW='\033[?25h'       # 显示光标
+
+
+CR_UP='\033[${n}A'        # 光标向上移动 n 行
+CR_DOWN='\033[${n}B'      # 光标向下移动 n 行
+CR_FORWARD='\033[${n}C'   # 光标向前移动 n 列
+CR_BACK='\033[${n}D'      # 光标向后移动 n 列
+CR_NEXT_LINE='\033[${n}E' # 光标向下移动 n 行，并移至行首
+CR_PREV_LINE='\033[${n}F' # 光标向上移动 n 行，并移至行首
+CR_HORIZONTAL_ABS='\033[${n}G' # 光标水平移动到第 n 列
+CR_POSITION='\033[${n};${m}H'  # 移动光标到第 n 行，第 m 列
+CR_HIDE='\033[?25l'       # 隐藏光标
+CR_SHOW='\033[?25h'       # 显示光标
+
+# 清除控制
+CLEAR_SCREEN='\033[2J'        # 清除屏幕
+CLEAR_LINE='\033[2K'          # 清除当前行
+
+# 其他控制
+SAVE_CURSOR='\033[s'          # 保存光标位置
+RESTORE_CURSOR='\033[u'       # 恢复光标位置
+HIDE_CURSOR='\033[?25l'       # 隐藏光标
+SHOW_CURSOR='\033[?25h'       # 显示光标
+
+
+#
+# public function
+#
+
+
+isDigit(){
+  [[ $1 =~ ^[0-9]+$ ]] && return 0 || return 1
+}
+
+## get android version ##
+getAndroidVersion(){ getprop ro.build.version.release; }
+getProductBrand(){ getprop ro.product.brand; }
+getSysLocale(){ getprop persist.sys.locale; }
+
+
+#
+# ##
+#
+
+
+init_service(){
+    #mkdir -p $PREFIX/var/service/<PKG>/log
+    #ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/<PKG>/log/run
+    mkdir -p $(pwd)/log
+    ln -sf $PREFIX/share/termux-services/svlogger $(pwd)/log/run
+}
+
+
+
+alias mpv="mpv --audio-device=opensles "
+
+
+
+
+
+## down ##
+#`curl -o /dev/null -s -w "DNS解析时间: %{time_namelookup}s\n连接时间: %{time_connect}s\n开始传输时间: %{time_starttransfer}s\n总时间: %{time_total}s\n"   http://connect.rom.miui.com/generate_204`
+alias curling=""
+
+
+#
+# User-Agent:
+#   - Clash/v1.18.0
+#   - mihomo/1.18.3
+#   - ClashX/1.78.0
+down(){
+  curl -L -f --no-buffer -A "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36 mihomo/1.18.3" "$1"
+  # curl -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15 ClashX/1.78.0" https://xxxxxxxxxxxxx
+}
+
+syosetu(){
+  down "$1" |grep -E '<p |</p>' |sed 's|<p [^>]*>||g; s|</p[^>]*>||g' |termux-clipboard-set
+}
+
+
+
+alias browsh:="browsh --firefox.path $PREFIX/bin/firefox --startup-url "
+alias browshh="browsh --firefox.path $PREFIX/bin/firefox --startup-url "
+alias l="apm com.google.ar.lens/com.google.vr.apps.ornament.app.lens.LensLauncherActivity"
+
+alias st="st -f 'Liberation Mono:pixelsize=45'"
+
+
+
+alias back="cd ~ && tar -zvcf back.tar.gz --exclude=.git back/ && cp back.tar.gz /sdcard/ && cd - "
+
+alias_do(){
+    $(alias $1 |sed "s/.*=//g;s/'//g")
+}
+
+sshd_plus(){
+    sshd;
+    echo $(whoami)@$(rish -c "ip route |grep \$(ip link | awk -v q= '/wlan[1-9]/{sub(/:/, q,\$2); print \$2}') | cut -d\  -f1")
+}
+alias sshdd="sshd_plus"
+
+
+
+
+## qr ##
+
+qrenco-de(){
+  curl -s "https://qrenco.de/$1" | grep -v "^$"
+}
+
+qr(){
+  qrencode -t UTF8 "$@"
+}
+
+
+## gradlew
+alias gradlew="bash gradlew "
+alias gradlew-debug="bash gradlew debug --test "
+
+## call ##
+
+
+2(){
+    local ws
+    callOnSizeChanage(){
+        ws=($(stty size))
+    }
+    callOnSizeChanage
+    printf "${size[0]}"
+
+
+}
+
+1(){
+    [[ $# == 0 ]] && am start -n 'com.google.android.dialer/.extensions.GoogleDialtactsActivity' --user 0 &> /dev/null && return 0
+    [[ ${#1} == 10 ]] && rish -c "am start -a android.intent.action.CALL -d tel:1$1"
+    [[ ${#1} == 11 ]] && rish -c "am start -a android.intent.action.CALL -d tel:$1"
+}
+call(){
+    [[ $# == 0 ]] && am start -n 'com.google.android.dialer/.extensions.GoogleDialtactsActivity' --user 0 &> /dev/null && return 0
+    [[ ${#1} == 11 ]] && rish -c "am start -a android.intent.action.CALL -d tel:1$1"
+}
+
+## aria2 ##
+aria2c-bt-up(){
+    declare -A trackerList=(
+    [animeTrackerList]="https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_best.txt"
+    [TrackersListCollection]="https://cf.trackerslist.com/best.txt")
+    _tl=($(curl ${trackerList[@]}))
+    _tl="$(printf "%s," ${_tl[@]})"
+    _tl="${_tl%,*}"
+    sed -i "s#bt-tracker=.*#bt-tracker=${_tl}#" ~/.config/aria2/aria2.conf
+}
+
+## coreutils ##
+
+##- cd
+
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias .......='cd ../../../../../..'
+alias ........='cd ../../../../../../..'
+alias .........='cd ../../../../../../../..'
+
+alias ..2='cd ../..'
+alias ..3='cd ../../..'
+alias ..4='cd ../../../..'
+alias ..5='cd ../../../../..'
+alias ..6='cd ../../../../../..'
+alias ..7='cd ../../../../../../..'
+alias ..8='cd ../../../../../../../..'
+alias ..9='cd ../../../../../../../../..'
+
+
+
+declare -A L_CD=(
+  [sdcard]="/sdcard"
+  [root]="$PREFIX"
+  [/]="$PREFIX"
+)
+
+#[]=""
+#[]=""
+#[]=""
+#[]=""
+#[]=""
+#[]=""
+alias cd-d="cd /sdcard"
+alias cdd="cd /sdcard"
+alias cd-='cd_ '
+alias cd-y='cd_ ~/CIC_Y ~/cic_y .y'
+alias cd-b='cd_ ~/CIC_B ~/cic_b .b'
+alias cd-z='cd_ ~/CIC_Z ~/cic_z .z'
+alias cd-service="cd $PREFIX/var/service"
+
+cd_(){
+    [[ $# == 0 ]] && echo help
+    [[ $# == 1 ]] && cd "$PREFIX/$1"
+    _arr=($@)
+    for((i=0;i<$#;i++)); do
+        [[ -d ${_arr[i]} ]] && cd ${_arr[i]} && return 0
+    done
+}
+alias cd-sh="cd $PREFIX/opt/sh"
+alias cd-root="cd $PREFIX"
+alias cd-p="cd $PREFIX"
+alias cd-etc="cd $PREIFX/etc"
+alias cd-e="cd $PREIFX/etc"
+cdk_(){
+    local cdd=$(ls -1d ../*/ |tr '\n' ' ' |sed 's/.$//')
+    local path=$(echo " $cdd " | sed -n "s/.* \([^ ]\+\) \.\.\/$(basename "$(pwd)")\/ .*/\1/p")
+    [[ $path ]] || path=${cdd##* }
+    [[ $path ]] && cd ${path}
+}
+cdj_(){
+    local cdd=$(ls -1d ../*/ |tr '\n' ' ' |sed 's/.$//')
+    local path=$(echo " $cdd" | sed -n "s/.* \.\.\/$(basename "$(pwd)")\/ \([^ ]\+\) .*/\1/p")
+    [[ $path ]] || path=${cdd%% *}
+    [[ $path ]] && cd ${path}
+}
+
+cdk(){
+    local cdd name count increment=1 p inc
+
+    [[ $2 && $2 != 0 && $2 != 1 ]] && {
+        for _ in $(seq $(( $2 - 1 )) ); do
+            p="${p}../"
+        done
+        inc=0
+    }
+    cdd=$(ls -1d $p../*/)
+    [[ $2 && $1 == - ]] && echo "$cdd" && return
+    [[ $1 != 1 && $1 != 0 ]] && increment=$1
+    count=$(echo $cdd |wc -w)
+    name=$(basename $(pwd))
+    [[ $inc ]] || increment=$(( $(echo "$cdd" |grep -n ../$name/ |cut -d: -f1) + $increment ))
+    increment=$(( $increment % $count ))
+    [[ $increment == 0 ]] && increment=$count
+    cd $(echo "$cdd" |sed -n "${increment}p") || cd $p
+}
+cdj(){
+    local cdd name count increment=1
+    cdd=$(ls -1rd ../*/)
+    count=$(echo $cdd |wc -w)
+    name=$(basename $(pwd))
+    [[ $# == 0 || $1 == 1 ]] || increment=$1
+    increment=$(( ( $increment + $(echo "$cdd" |grep -n ../$name/ |cut -d: -f1) ) % $count ))
+    [[ $increment == 0 ]] && increment=$count
+    cd $(echo "$cdd" |sed -n "${increment}p")
+}
+
+#cd1
+#cd2
+#cd3
+#cd4
+
+
+##- cp
+
+alias cpr="cp -r"
+
+## clash ##
+
+alias clash="clash -d ~/.config/clash"
+
+alias clash_changer="sed -i \"s/external-controller:.*/external-controller: '0.0.0.0:7513'/;s/secret:.*/secret: 'colemark'/\"  '.config/clash/config.yaml'"
+
+clash-sublink-up(){
+    local confTmp="$HOME/.config/clash/config.yaml"
+    [[ -n "$CLASH_SUB_LINK" ]] && curl $CLASH_SUB_LINK > $confTmp.tmp
+    [[ -s $confTmp.tmp ]] && mv $confTmp.tmp $confTmp && succ -- mv $confTmp.tmp $confTmp
+}
+
+
+
+
+
+
+## android system settings ##
+
+## APN
+alias apn='apm com.android.settings/com.android.settings.Settings\\\$ApnSettingsActivity'
+alias apn_='apm //android.settings.APN_SETTINGS'
+
+
+
+## keyboard ##
+key(){
+    local conf=~/.termux/termux.properties.$1
+    [[ -f $conf ]] && {
+        rm ~/.termux/termux.properties
+        cp $conf ~/.termux/termux.properties
+        termux-reload-settings
+    }
+}
+
+
+## lock ##
+
+slock(){
+	type cmatrix || return 12
+    rish -c "input keyevent KEYCODE_BACK" &>/dev/null
+    cp ~/.termux/termux.properties ~/.termux/termux.properties.bak
+    cp ~/.termux/termux.properties.none ~/.termux/termux.properties
+    termux-reload-settings
+    while : ; do
+        cmatrix
+        termux-fingerprint |grep "AUTH_RESULT_SUCCESS" &>/dev/null && break
+    done
+    cp ~/.termux/termux.properties.bak ~/.termux/termux.properties
+    termux-reload-settings
+}
+
+# lock screen
+alias lock="rish -c 'input keyevent 223'"
+alias gg="rish -c 'input keyevent 223'"
+
+## ls ##
+alias ll="ls -lh"
+alias lsa="ls -d .[!.]*"
+alias la="ls -la"
+alias lla="ls -lha"
+
+
+alias yyy="yes '' |"
+
+prootieDecorator(){
+    local proot_dir=$1
+    cat <<EOF
+    prootie login $proot_dir \\
+      -b ~/.ollama/:/root/.ollama \\
+      -b $PREFIX/bin/am:/bin/am \\
+      -b ~/.bashrc.alias:/root/.bashrc.alias \\
+      -b ~/.bashrc.env:/root/.bashrc.env \\
+      -b ~/.bashrc.include:/etc/profile.d/bashrc.include.sh
+EOF
+}
+
+alias archlinux="eval $(prootieDecorator ~/.distros/archlinux/)"
+alias ollama="archlinux -- ollama"
+alias ollama-serve="archlinux  -- ollama serve"
+alias ollama-run="archlinux -- ollama run"
+
+## proot-distro ##
+#- login
+alias debian="proot-distro login debian"
+alias arch="proot-distro login archlinux"
+alias manjaro="proot-distro login manjaro"
+alias void="proot-distro login void"
+alias ubuntu="proot-distro login ubuntu"
+alias opensuse="proot-distro login opensuse"
+alias fedora="proot-distro login fedora"
+alias deepin="proot-distro login deepin"
+alias alpine="proot-distro login alpine"
+
+#- remove
+alias debian-remove="proot-distro remove debian"
+alias manjaro-remove="proot-distro remove manjaro"
+alias void-remove="proot-distro remove void"
+alias ubuntu-remove="proot-distro remove ubuntu"
+alias opensuse-remove="proot-distro remove opensuse"
+alias fedora-remove="proot-distro remove fedora"
+alias deepin-remove="proot-distro remove deepin"
+alias alpine-remove="proot-distro remove alpine"
+
+## rish & shizuku ##
+rishc(){
+    #[[ $# == 0 ]] || rish -c "$*"
+    [[ $# == 0 ]] || rish <<<"$@"
+}
+
+#- input
+input(){
+    case $1 in
+        key )
+            rish -c "input keyevent $2"
+            ;;
+    esac
+    #[[ "$1" =~ ^[0-9]{1,4}$ ]] &&
+}
+
+alias n="rish -c 'service call statusbar 1'"
+alias mem="cat /proc/meminfo"
+
+declare -A KEY_HINT=(
+    [3]="HOME 键"
+    [4]="返回键"
+    [5]="打开拨号应用"
+    [6]="挂断电话"
+    [24]="增加音量"
+    [25]="降低音量"
+    [26]="电源键"
+    [27]="拍照（需要在相机应用里）"
+    [64]="打开浏览器"
+    [82]="菜单键"
+    [85]="播放/暂停"
+    [86]="停止播放"
+    [87]="播放下一首"
+    [88]="播放上一首"
+    [122]="移动光标到行首或列表顶部"
+    [123]="移动光标到行末或列表底部"
+    [126]="恢复播放"
+    [127]="暂停播放"
+    [164]="静音"
+    [176]="打开系统设置"
+    [187]="切换应用"
+    [207]="打开联系人"
+    [208]="打开日历"
+    [209]="打开音乐"
+    [210]="打开计算器"
+    [220]="降低屏幕亮度"
+    [221]="提高屏幕亮度"
+    [223]="系统休眠"
+    [224]="点亮屏幕"
+    [231]="打开语音助手"
+    [276]="如果没有 wakelock 则让系统休眠"
+)
+
+alias k3="input key 3 -h HOME 键"
+alias k4="input key 4 -h 返回键"
+alias k5="input key 5 -h 打开拨号应用"
+alias k6="input key 6 -h 挂断电话"
+alias k24="input key 24 -h 增加音量"
+alias k25="input key 25 -h 降低音量"
+alias k26="input key 26 -h 电源键"
+alias k27="input key 27 -h 拍照（需要在相机应用里）"
+alias k64="input key 64 -h 打开浏览器"
+alias k82="input key 82 -h 菜单键"
+alias k85="input key 85 -h 播放/暂停"
+alias k86="input key 86 -h 停止播放"
+alias k87="input key 87 -h 播放下一首"
+alias k88="input key 88 -h 播放上一首"
+alias k122="input key 122 -h 移动光标到行首或列表顶部"
+alias k123="input key 123 -h 移动光标到行末或列表底部"
+alias k126="input key 126 -h 恢复播放"
+alias k127="input key 127 -h 暂停播放"
+alias k164="input key 164 -h 静音"
+alias k176="input key 176 -h 打开系统设置"
+alias k187="input key 187 -h 切换应用"
+alias k207="input key 207 -h 打开联系人"
+alias k208="input key 208 -h 打开日历"
+alias k209="input key 209 -h 打开音乐"
+alias k210="input key 210 -h 打开计算器"
+alias k220="input key 220 -h 降低屏幕亮度"
+alias k221="input key 221 -h 提高屏幕亮度"
+alias k223="input key 223 -h 系统休眠"
+alias k224="input key 224 -h 点亮屏幕"
+alias k231="input key 231 -h 打开语音助手"
+alias k276="input key 276 -h 如果没有 wakelock 则让系统休眠"
+
+
+#-
+
+dumpsys(){
+    rish <<@
+        dumpsys $@
+@
+}
+
+#-
+
+alias pm="rishc pm"
+
+#- app activation
+alias do-shizuku="sh /storage/emulated/0/Android/data/moe.shizuku.privileged.api/start.sh"
+rish-dhizuku(){
+  rish -c 'dumpsys account |sed -n "/Account visibility:/,$p"'
+  rish -c 'dpm set-device-owner com.rosan.dhizuku/.server.DhizukuDAReceiver'
+}
+rish-hy(){
+    rish -c 'output=$(pm path me.piebridge.brevent); export CLASSPATH=${output#*:}; app_process /system/bin me.piebridge.brevent.server.BreventServer bootstrap; /system/bin/sh /data/local/tmp/brevent.sh'
+}
+rish-scene(){
+    rish -c '/system/bin/sh /storage/emulated/0/Android/data/com.omarea.vtools/up.sh'
+}
+rish-battery-guru(){
+    rish <<EOF
+        pm grant com.paget96.batteryguru android.permission.BATTERY_STATS
+        pm grant com.paget96.batteryguru android.permission.PACKAGE_USAGE_STATS
+        pm grant com.paget96.batteryguru android.permission.WRITE_SECURE_SETTINGS
+        pm grant com.paget96.batteryguru android.permission.DUMP
+
+EOF
+}
+rish-powerampp(){
+    rish -c 'pm grant com.maxmpz.equalizer android.permission.SET_VOLUME_KEY_LONG_PRESS_LISTENER'
+    rish -c 'pm grant com.maxmpz.equalizer android.permission.DUMP'
+}
+
+alias rish-procs="rish -c 'settings put global settings_enable_monitor_phantom_procs false'"
+
+alias r-="rishc "
+#alias rish-tasker="rish -c 'settings put secure enabled_accessibility_services net.dinglisch.android.taskerm/net.dinglisch.android.taskerm.MyAccessibilityService'"
+rt(){
+rish <<@
+@
+}
+
+
+# pm grant net.dinglisch.android.taskerm android.permission.WRITE_SECURE_SETTINGS
+alias rish-island="rish -c 'pm grant com.oasisfeng.island android.permission.GET_APP_OPS_STATS'"
+alias switch-user="rishc am switch-user"
+#alias rish-uninstall-alluser='comm -23 <(rish -c "pm list packages -e --user 10") <(rish -c "pm list packages -e --user 999") | cut -d':' -f2 | xargs -I {} rish -c "pm uninstall --user 10 {}"'
+
+alias media-scan="am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/"
+
+#- process operations
+alias rtop="rishc top "
+alias rkill="rishc kill "
+alias rkillall="rishc killall "
+alias rps="rishc ps "
+
+
+
+alias rdisable-list="rishc pm list packages -d -u"
+
+alias rish-uninstall-disable="rish -c \"pm list package -d |sed 's/package://' |grep -v com.oplus.appplatform |xargs -n 1 pm uninstall --user 0\""
+
+alias szk-shizuku-get="termux-clipboard-set 'sh /sdcard/Android/data/moe.shizuku.privileged.api/start.sh'"
+
+#- power management
+alias reboot="rish -c reboot"
+alias shutdown="rish -c 'svc power shutdown'"
+
+
+#volume
+#alias v="termux-volume "
+alias va="termux-volume alarm "
+alias vm="termux-volume music "
+alias vn="termux-volume notification "
+alias vr="termux-volume ring "
+alias vs="termux-volume system "
+alias vc="termux-volume call "
+#declare -A __VOLUME_MODE
+v(){
+    
+  unset mute
+
+
+  local mute char y vk ck ckv ckIndex currKey _c _m m \
+    G='\033[32m' RED='\033[31m' R='\033[0m' \
+    c1="\e[38;5;243m" c2="\e[38;5;251m" \
+    conf=~/.config/termux.volume.conf \
+    muteConfPath=~/.cache/v/ \
+    currKey=0 \
+    vKey=(music notification alarm system call) \
+
+  local __hint="${c2}h${c1}/${c2}↑ ${c1}up • ${c2}j${c1}/${c2}↓ ${c1}down • ${c2}m ${c1}mute • ${c2}x ${c1}volume limit • ${c2}number g${c1}/${c2}← k${c1}/${c2}→"
+
+  declare -A limit  # 欧盟音量限制 开关
+  declare -A mute _vol _max _muted limit
+  limit[music]=0
+  
+  
+  trap 'vReturn; return;' SIGINT SIGTERM
+  trap 'vPrint;' SIGWINCH
+
+ 
+  if [[ -f $muteConfPath ]]; then
+      [[ -d $muteConfPath ]] || err -- dir $muteConfPath '-->' already exists
+  else
+      mkdir -p $muteConfPath
+  fi
+
+
+
+    
+  vScan(){
+    eval " $(termux-volume | tr -d '\n []{"' | sed -E 's/},/\n/g; s/stream:([a-z]+),volume:([0-9]+),max_volume:([0-9]+)/_vol[\1]=\2; _max[\1]=\3;/g; s/}//')"
+    [[ ${_max[music]} -gt 100 ]] && _vol[music]=$((_vol[music] / 10))
+  }
+
+  vPrint(){
+    local size=($(stty size)) es=$((size[1] - 37))
+
+    for vk in ${vKey[@]}; do
+      [[ "${vKey[$currKey]}" == $vk ]] && _m3="${G}>${R}" || _m3=">"
+      [[ "${mute[$vk]}" != '' ]] && _m2="${G}M${R}" || _m2="${R}M"
+      [[ "${limit[$vk]}" == 0 ]] && _m1="${RED}<${R}" || _m1="${R}<"
+
+
+      [[ ${_vol[$vk]} == 15 ]] && vkS2="" || vkS2=$( eval printf '_%.0s' {1..$(( 15 - ${_vol[$vk]} ))} )
+      [[ ${_vol[$vk]} == 0 ]] && vkS1="" || vkS1=$( eval printf '\#%.0s' {1..${_vol[$vk]}} )
+      printf "${G}[${R} $_m1$_m2$_m3  %s %$(( 13 - ${#vk} ))s${G}%s${R}%s%${es}s${G}]${R}" "$vk" ' ' "$vkS1" "$vkS2" ''
+
+      [[ "$vk" == call ]] || printf "\n"
+    done
+    printf "\n\e[30m.\e[0m\n$__hint\e[2A"
+  }
+
+
+  vReturn(){
+    declare -p mute |sed 's/^ *declare -A //' > $muteConfPath/mute
+    printf "\e[?25h\e[?1000l\e[${#vKey[@]}A\e[0J\n";
+
+    trap - SIGINT SIGTERM SIGWINCH
+    return;
+  }
+
+  vReadConf(){
+      source $muteConfPath/mute
+  }
+
+
+  vMute(){
+    [[ "${mute[$1]}" == "" ]] && {
+      mute[$1]=${_vol[$1]} 
+      ( termux-volume $1 0 & ) >/dev/null 2>&1
+    } || {
+      mute[$1]= 
+      [[ $1 == music ]] && v=$((_vol[$1] * 10)) || v=${_vol[$1]}
+      ( termux-volume $1 $v & ) >/dev/null 2>&1
+    }
+  }
+
+
+  vSet(){
+
+    local v
+
+    [[ "$1" == "" ]] && return 
+    [[ ${mute[$1]} =~ ^[0-9]{1,3}$ ]] && {
+      _vol[$1]=$2
+      return
+    }
+
+    if [[ $1 == music ]]; then
+      [[ "${limit[$1]}" == 0 && "$2" -gt 10 ]] && return
+      v=$(($2 * 10))
+    else
+      [[ "${limit[$1]}" == 0 && "$2" -gt 8 ]] && return
+      v=$2
+    fi
+    _vol[$1]=$2
+    ( termux-volume $1 $v & ) >/dev/null 2>&1
+
+  }
+
+
+  vScan 
+  vReadConf
+  vPrint
+
+
+  read -sdR -p $'\033[6n' cursor_pos  # 向终端请求光标位置 # 返回信息格式为: ESC [<row>;<col>R
+  y=${cursor_pos#*[}  # 去掉开头的ESC字符（\033[），只保留行和列信息
+  y=${y%;*}
+ 
+  
+  printf "\033[?1000h\033[?25l"  # 启用鼠标事件捕获 # 隐藏光标
+  while IFS= read -rsn 1 char; do while true; do
+      case "$char" in
+        $'\x1b' ) # ESC
+          read -rsn 3 -t .1 char
+          [[ "$char" == "" ]] && {
+            echo
+            vReturn
+            return  
+          }
+          continue
+          ;;
+        $'\x5bM#' ) # [M
+          IFS= read -rsn 2 xy
+
+          ckIndex=$(( $(printf "%d" "'${xy:1:1}") - 32 - $y + 5 ))
+          [[ $ckIndex =~ ^[123450]$ ]] || break
+          ck=${vKey[$ckIndex]}
+          ckv=$(( $(printf "%d" "'${xy:0:1}") - 32 - 21 ))
+          currKey=$ckIndex
+
+          if [[ $ckv -ge 1 && $ckv -le 15 ]]; then
+            vSet $ck $ckv
+          elif [[ $ckv -ge -18 && $ckv -le -16 ]]; then
+            [[ "${mute[$ck]}" == "" ]] && mute[$ck]=${_vol[$ck]} || mute[$ck]=''; 
+          fi
+          _p=0 && break
+          ;;
+        $'\x5bMa' ) # [M
+          read -rsn 2 xy
+          break
+          ;;
+       $'\x5bM`' ) # [M
+          IFS= read -rsn 2 xy
+          break
+          ;;
+       'a' )
+          cexec "$0" "$@"urrKey=2
+          _p=0 && break
+          break
+          ;;
+        $'\x5bA' | k ) #up
+          currKey=$(( (currKey - 1 + ${#vKey[@]}) % ${#vKey[@]} ))
+          _p=0 && break
+          ;;
+        $'\x5bB' | j ) #down
+          currKey=$(( (currKey + 1) % ${#vKey[@]} ))
+          _p=0 && break
+          ;;
+        $'\x5bD' | h ) #left
+          ck=${vKey[$currKey]}
+          #[[ "${vKey[$ck]}" == music && "$limit_music" == 0 && ${_vol[$ck]} -ge 10 ]] && break
+          [[ ${_vol[$ck]} -gt 0 ]] && vSet $ck $((_vol[$ck] - 1))
+          _p=0 && break
+          ;;
+        $'\x5bC' | l ) #right
+          ck=${vKey[$currKey]}
+          #[[ "${vKey[$ck]}" == music && "$limit_music" == 0 && ${_vol[$ck]} -ge 10 ]] && break
+          [[ ${_vol[$ck]} -lt 15 ]] && vSet $ck $((_vol[$ck] + 1))
+          _p=0 && break
+          ;;
+        L )
+          ck=${vKey[$currKey]}
+          _vol[$ck]=15
+          vSet $ck
+          _p=0 && break
+          ;;
+        H )
+          ck=${vKey[$currKey]}
+          _vol[$ck]=0
+          vSet $ck
+          _p=0 && break
+          ;;
+        m )
+          ck=${vKey[$currKey]}
+          vMute $ck
+          _p=0 && break
+          ;;
+        M )
+          if [[ "${mute[ring]}" == "" || "${mute[notification]}" == "" ]]; then
+            [[ "${mute[ring]}" == "" ]] && vMute ring
+            [[ "${mute[notification]}" == "" ]] && vMute notification
+          else
+            [[ "${mute[ring]}" != "" ]] && vMute ring
+            [[ "${mute[notification]}" != "" ]] && vMute notification
+          fi
+          _p=0 && break
+          ;;
+        a )
+          currKey=2
+          _p=0 && break
+          ;;
+        r )
+          currKey=3
+          _p=0 && break
+          ;;
+        s )
+          currKey=4
+          _p=0 && break
+          ;;
+        c )
+          currKey=5
+          _p=0 && break
+          ;;
+        q )
+          vReturn
+          return
+          ;;
+        x )
+          [[ ${limit[${vKey[$currKey]}]} == 0 ]] && limit[${vKey[$currKey]}]=1 || limit[${vKey[$currKey]}]=0
+          _p=0 && break
+          ;;
+        [0-9] )
+          read -rsn 1 -t .25 x
+          [[ "$char$x" =~ ^[0-9]+$ ]] || break
+          ck=${vKey[$currKey]}
+          _p=0 && break
+          ;;
+        : )
+          printf "\r%${size[1]}.s\r:" ''
+          char=
+          while read -rsn 1 cr; do
+            [[ "$cr" == "" ]] && break
+            printf $cr
+            char+=$cr
+          done
+          continue
+          ;;
+        scan )
+          vScan 
+          _p=0 && break
+          ;;
+        * )
+          break
+          ;;
+      esac
+    done
+
+    [[ "$_p" == 0 ]] && {
+      printf "\033[$((${#vKey[@]} - 1))A\r"
+      vPrint
+      _p=
+    }
+
+  done
+
+  vReturn
+  
+}
+
+
+appbadging(){
+    local p pPath pm_list \
+      scan=0 \
+      appbadging=~/.local/share/appbadging/ \
+      applabel=~/.local/share/applabel/
+    case $1 in
+        scan )
+            scan=0
+        ;;
+    esac
+
+    if [[ $scan == 0 ]]; then
+        [[ -d $appbadging ]] || {
+            rm $appbadging
+            mkdir $appbadging
+        }
+        [[ -d $applabel ]] || {
+            rm $applabel
+            mkdir $applabel
+        }
+        echo "declare -A applabel" > ~/.config/applabel.tmp
+        pm_list=($(pm list package |cut -d: -f2))
+        for ((i=0;i<${#pm_list[@]};i++)); do
+            p=${pm_list[$i]}
+            printf "[ %s/%s ] %s " $i ${#pm_list[@]} $p $;
+            pPath=$(rish -c "pm path $p" |cut -d: -f2)
+            badging="$(aapt dump badging $pPath)"
+            echo "$badging" > $appbadging/$p
+            echo "$badging" |grep 'application-label-' > $applabel/$p
+            label=$(echo "$badging" |grep 'application-label-zh-CN:' |cut -d: -f2)
+            [[ "$label" == "" ]] || echo "applabel[$p]=\"$label\"" >> ~/.config/applabel.tmp
+            printf "..."
+        done
+        mv -v ~/.config/applabel.tmp ~/.config/applabel
+    fi
+
+}
+
+
+
+r(){
+
+    #. ~/.config/applabel
+
+    local cmp _m _a \
+      G='\033[32m' \
+      R='\033[0m' \
+      cur=0 \
+      cmpid \
+      size=($(stty size)) \
+      appbadging=~/.local/share/appbadging/$p \
+      applabel=~/.local/share/applabel/
+
+
+    printf "\033[6n"  # 向终端请求光标位置
+    read -sdR -p $'\033[9n' cursor_pos  # 返回信息格式为: ESC [<row>;<col>R
+    cursor_pos=${cursor_pos#*[}  # 去掉开头的ESC字符（\033[），只保留行和列信息
+    y=${cursor_pos%;*}
+    
+    printf "\033[?1000h\033[?25l" #>/dev/null # 启用鼠标事件捕获 and 隐藏光标
+
+
+    declare -A pLabel
+    rScan(){
+        cmp_count=0
+        local  pPath
+        recents="$(dumpsys activity recents |grep '^ *id=\|^ *baseIntent=')"
+        [[ $1 == --rish ]] && :
+        cmp=($(echo "$recents" |sed -n 's#.*cmp=\([^ ]*\).*#\1#p'))
+        cmpid=($(echo "$recents" |sed -n 's# *id=\([0-9]*\).*#\1#p'))
+        #[[ $1 == --rish ]] && cmp=($(rish -c "dumpsys activity recents" |grep '^ *baseIntent=' |sed 's#.*cmp=\([^ ]*\).*#\1#')) || cmp=($(dumpsys activity recents |grep "^ *baseIntent=" |sed 's#.*cmp=\([^ ]*\).*#\1#'))
+        _a=${#cmp[@]}
+        _a=$((_a - 1))
+        _c=0
+        declare -A pName 
+        for ((c=0;c<${#cmp[@]};c++)); do
+            pLabel[$c]=${applabel["${cmp[$c]%/*}"]}
+            pl_count=0
+            for (( i=0; i<${#pLabel[$c]}; i++ )); do
+                [[ $(printf "%d" "'${pLabel[$c]:$i:1}") -gt 127 ]] && pl_count=$((pl_count+2)) || pl_count=$((pl_count+1))
+            done
+
+            cmp_count=$(( $cmp_count + ( 4 + ${#c} + ${#cmp[$c]} + $pl_count ) / ${size[1]} + 1 ))
+            #cmp_count=$(( $cmp_count + ( 4 + ${#c} + ${#cmp[$c]} ) / ${size[1]} + 1 ))
+            
+            #cmp_count=$(( $cmp_count + (${#cmp[$c]} + ${#applabel["${cmp[$c]%/*}"]}) / ${size[1]} + 1 ))
+
+            while [[ $_c -le $cmp_count ]]; do
+                cmp_c[$((_c++))]=$c
+            done
+        done
+    }
+
+    rPrint(){
+        for ((c=0;c<${#cmp[@]};c++)); do
+            [[ $c -eq $cur ]] && _m="${G}>${R}" || _m='>'
+            printf "#%s $_m %s %s" "$c" "${cmp[$c]}" "${pLabel[$c]}"
+            #printf "#%s $_m %s %s" "$c" "${cmp[$c]}" ${applabel["${cmp[$c]%/*}"]}
+
+            [[ $c -lt ${_a} ]] && echo
+        done
+
+    }
+    rReturn(){
+        printf "\033[?25h\033[?1000l\n";
+    }
+    rOpen(){
+        echo
+        apm ${1//$/\\\$}
+        rReturn
+    }
+
+    trap 'rReturn; return;' SIGINT SIGTERM
+    rScan
+    #rScan --rish
+    rPrint
+#read -r char
+#return
+    #echo $cmp_count
+    #return
+
+
+    while IFS= read -rsn 1 char; do while true; do
+        case "$char" in
+            $'\x1b' ) # ESC
+                IFS= read -rsn 2 -t .01 char
+                [[ "$char" == "" ]] && {
+                    rReturn && return
+                }
+                continue
+                ;;
+            $'\x5b'M ) # [M
+                IFS=  read -rsn 1 char
+                echo :"$char":
+                continue
+                break
+                ;;
+            #'a' )
+            #    read -rsn 2 xy
+            #    break
+            #    ;;
+            '`' )
+                IFS= read -rsn 2 xy
+                break
+                ;;
+            ' ' )
+                echo space
+                IFS= read -rsn 2 xy
+                #read -t .01 null
+                break
+                ;;
+            '#' )
+                IFS= read -rsn 2 xy
+                ckIndex=$(( $(printf "%d" "'${xy:1:1}") - 32 - $y + ${cmp_count} ))
+                [[ $ckIndex -ge 0 && $ckIndex -le ${cmp_count} ]] || break
+                cur=${cmp_c[$ckIndex]}
+                rOpen "${cmp[$cur]}"
+                #rOpen "${cmp[$cur]//$/\\\$}"
+                rReturn && return
+                ;;
+            $'\x5bA' | k ) #up
+                cur=$(( (cur - 1 + ${#cmp[@]}) % ${#cmp[@]} ))
+                _p=0 && break
+                ;;
+            $'\x5bB' | j ) #down
+                cur=$(( (cur + 1) % ${#cmp[@]} ))
+
+                _p=0 && break
+                ;;
+            $'\x5bD' | h ) #left
+                _p=0 && break
+                ;;
+            $'\x5bC' | l ) #right
+                _p=0 && break
+                ;;
+            '' )
+                rOpen "${cmp[$cur]}"
+                rReturn
+                return
+                _p=0 && break
+                ;;
+
+            [0-9] )
+                read -rsn 1 -t .25 x
+                [[ $char$x -ge 0 && $char$x -lt ${#cmp[@]} ]] && {
+                    cur=$char$x
+                    rOpen "${cmp[$cur]}"
+                }
+                rReturn && return
+                _p=0 && break
+                ;;
+            x )
+                rish -c "am stack remove ${cmpid[$cur]}"
+                rReturn && return
+                ;;
+            : )
+                echo
+                IFS= read -p : char
+                continue
+                #return
+                ;;
+            scan )
+                echo
+                appbadging scan
+                break
+                ;;
+            q )
+                rReturn
+                return
+                ;;
+            * )
+                #echo  "." "$char"
+                break
+                ;;
+        esac
+    
+    done
+    
+    [[ "$_p" == 0 ]] && {
+        printf "\033[$((cmp_count-1))A\r"
+
+        rPrint
+        _p=
+    }
+    done
+
+    rReturn
+}
+
+#- pause/resume playback
+alias a="rishc input keyevent 85"
+
+
+## vim ##
+alias vi-alias="vim $HOME/.bashrc.alias"
+alias vi-alias_back_termux="vim ~/back_termux/conf/home/.bashrc.alias && cp -v ~/back_termux/conf/home/.bashrc.alias ~/.bashrc.alias"
+alias vi-bashrc="vim $HOME/.bashrc"
+alias vi-bashrc:etc="vim $PREFIX/etc/bash.bashrc"
+alias vi-do="vim $HOME/.do"
+alias vi-env="vim $PREFIX/etc/profile.d/envar.sh"
+#
+#vi-...
+
+
+
+
+## source ##
+
+alias .alias_back_termux=". ~/back_termux/conf/home/.bashrc.alias"
+alias .alias=". ~/back_termux/conf/home/.bashrc.alias"
+
+
+## x11 ##
+
+alias x11-kill="kill -9 \$(ps aux |grep -e 'com.termux.x11.Loader' |grep -v grep |cut -d ' ' -f3)"
+alias x11="apm com.termux.x11/com.termux.x11.MainActivity"
+alias termux11="apm com.termux.x11/com.termux.x11.MainActivity"
+alias x11:0="termux-x11 :0"
+alias x11-dwm="termux-x11 :0 -xstartup 'exec dwm'"
+
+## mpv ##
+
+# Dependency :
+#   socat
+#   termux-api
+hifi(){
+  local HIFI_DIR=/storage/emulated/0/HIFI
+  local SOCKET="hifi.mpv.socket"
+  ranger --cmd="map oo shell mpv --audio-device=opensles --no-audio-display --sub-auto=fuzzy --input-ipc-server=$TMPDIR/$SOCKET %p" "$HIFI_DIR"
+}
+
+
+mpvv(){
+    [[ $# == 0 ]] && mpv "$@"
+    case $1 in
+        [0-9] | [0-9][0-9] | [0-9][0-9][0-9])
+            rotate="--video-rotate="$1
+            shift
+            ;;
+        0x0 | 00 )
+            autofit="--autofit="$1
+            shift
+            ;;
+        [0-9]*x[0-9]* )
+            autofit="--autofit="$(printf $1 |sed -E "s#([0-9]*)%?x([0-9]*)%?#\1%x\2%#")
+            
+            shift
+            ;;
+        * )
+            ;;
+    esac
+    echo mpv $autofit $rotate "$*"
+    mpv $autofit $rotate "$*"
+        
+
+}
+alias mpv:="mpv --autofit=100%x100% --video-rotate=90 "
+
+## termux-api ##
+
+alias t0="termux-torch on"
+alias t="termux-torch on"
+alias t1="termux-torch off"
+alias tt="termux-torch off"
+alias tcs="termux-clipboard-set"
+alias tcg="termux-clipboard-get"
+
+
+
+
+
+
+## ##
+
+#- Close Phantom processes
+cp9(){
+    ANDROID_VERSION=${ANDROID_VERSION:-$(getAndroidVersion)}
+    #ANDROID_VERSION=${ANDROID_VERSION:-$(getprop ro.build.version.release)}
+    case $1 in
+        dis | disable )
+            case $ANDROID_VERSION in
+                13 | 12 )
+                    # For Android 12L & Android 13:
+                    rish -c "settings put global settings_enable_monitor_phantom_procs false"
+                    ;;
+            esac
+            ;;
+        en | enable )
+            case $ANDROID_VERSION in
+                13 | 12 )
+                    # For Android 12L & Android 13:
+                    rish -c "settings put global settings_enable_monitor_phantom_procs true"
+                    ;;
+            esac
+            ;;
+        get )
+            rish -c "settings get global settings_enable_monitor_phantom_procs"
+
+            ;;
+    esac
+
+
+# For Android 12：
+rish -c "/system/bin/device_config set_sync_disabled_for_tests persistent; /system/bin/device_config put activity_manager max_phantom_processes 2147483647"
+
+}
+
+
+## iem ##
+ime(){
+    user=$(echo "$*" | sed -n 's/.*--user \([0-9]\+\).*/\1/p')
+    [[ $user =~ ^[0-9]+$ ]] || user=0
+    [[ $# == 0 ]] && rish -c "ime list -s" &&return 0
+    case $1 in
+        list )
+            rish -c "ime list -s"
+            ;;
+        list-all )
+            rish -c "ime list -a"
+            ;;
+        enable | en )
+            rish -c "ime enable --user $user $2"
+            ;;
+        disable | dis )
+            rish -c "ime disable --user $user $2"
+            ;;
+        set )
+            [[ $2 == 0 ]] && ime="com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME" || {
+            [[ $2 =~ ^[0-9]*$ ]] && \
+                ime=$(rish -c "ime list -s" |sed -n "${2}p") || \
+                ime=$2
+            }
+            rish -c "ime set --user $user $ime"
+            ;;
+    esac
+}
+
+
+## other ##
+
+
+
+
+
+
+
+
+alias ra="ranger"
+
+
+
+
+
+## select app ##
+
+## ARRAY
+
+
+declare -A LAPP_CAMERA=(
+    [--]="//android.media.action.STILLAPP_IMAGE_CAMERA"
+    [OPPO]="com.oplus.camera/.Camera"
+    [cam]="com.shamim.cam//android.media.action.STILLAPP_IMAGE_CAMERA"
+    [gcam]="com.agc.gcam92//android.media.action.STILLAPP_IMAGE_CAMERA"
+    [Redmi]="com.android.camera/com.android.camera.Camera"
+    [mi]="com.android.camera/com.android.camera.Camera"
+)
+
+declare -A LAPP_CALCULATOR=(
+    [--]="com.google.android.calculator/com.android.calculator2.Calculator"
+    [google]="com.google.android.calculator/com.android.calculator2.Calculator"
+    [Redmi]="com.miui.calculator/com.miui.calculator.cal.CalculatorActivity"
+
+)
+
+
+declare -A LAPP_STORE=(
+    [OPPO]="com.heytap.market/.activity.MainActivity"
+    [Redmi]="com.xiaomi.market/com.xiaomi.market.ui.MarketTabActivity"
+    [coolapk]="com.coolapk.market/.view.main.MainActivity"
+    [google]="com.android.vending/.AssetBrowserActivity"
+    [play]="com.android.vending/.AssetBrowserActivity"
+    [aurora]="com.aurora.store/.MainActivity"
+    [fdroid]="org.fdroid.fdroid/.views.main.MainActivity"
+    [f]="org.fdroid.fdroid/.views.main.MainActivity"
+)
+
+declare -A LAPP_THEMESTORE=(
+    [OPPO]="com.heytap.themestore/com.nearme.themespace.activities.ThemeActivity"
+    [Redmi]="com.miui.themestore/com.miui.thememanagerstore.ThemeResourceTabActivity"
+)
+declare -A LAPP_CALENDAR=(
+    [--]="com.google.android.calendar/com.android.calendar.AllInOneActivity"
+    [OPPO]="com.coloros.calendar/com.android.calendar.AllInOneActivity"
+    [google]="com.google.android.calendar/com.android.calendar.AllInOneActivity"
+    [Redmi]="com.android.calendar/com.android.calendar.homepage.AllInOneActivity"
+)
+declare -A LAPP_BROWSER=(
+    [--]="com.android.chrome/com.google.android.apps.chrome.Main"
+    [SAMSUNG]="com.sec.android.app.sbrowser/.SBrowserMainActivity"
+    [chrome]="com.android.chrome/com.google.android.apps.chrome.Main"
+    [kiwi]="com.kiwibrowser.browser/com.google.android.apps.chrome.Main"
+    [samsung]="com.sec.android.app.sbrowser/.SBrowserMainActivity"
+    [s]="com.sec.android.app.sbrowser/.SBrowserMainActivity"
+    [einkbro]="info.plateaukao.einkbro/info.plateaukao.einkbro.activity.BrowserActivity"
+    [yandex]="com.yandex.browser/com.yandex.browser.YandexBrowserActivity"
+    [sleipnir]="jp.co.fenrir.android.sleipnir/com.fenrir_inc.sleipnir.main.MainActivity"
+    [firefox]="org.mozilla.firefox/.App"
+)
+
+
+declare -A LAPP_RECENTS=(
+    [HANVON]="com.hanvon.recents/com.hanvon.recents.MainActivity"
+    [Redmi]="com.miui.home/com.miui.home.recents.RecentsActivity"
+)
+alias milauncher="apm com.miui.home/com.miui.home.launcher.Launcher"
+declare -A LAPP_LAUNCHER=(
+    [HANVON]="hanvon.aebr.hvLauncher/hanvon.aebr.hvLauncher.core.navigation.ui.NavigationActivity"
+    [Redmi]="com.miui.home/com.miui.home.launcher.Launcher"
+    [niagara]="bitpit.launcher/bitpit.launcher.ui.HomeActivity"
+    [termux]="ww.start.termux/ww.start.termux.TermuxLauncher"
+)
+
+declare -A LAPP_IME=(
+    [msougou]="com.sohu.inputmethod.sogou.xiaomi/com.sohu.inputmethod.sogou.SogouIMESettings"
+    [fcitx5a]="org.fcitx.fcitx5.android/ui.main.MainActivity"
+)
+
+declare -A LAPP_TTS=(
+    [xiaomi]="com.xiaomi.mibrain.speech"
+    [Redmi]="com.xiaomi.mibrain.speech"
+
+)
+
+declare -A LAPP_SMS=(
+    [google]="com.google.android.apps.messaging/com.google.android.apps.messaging.ui.ConversationListActivity///zh-CN:信息:en-US:sms"
+)
+
+declare -A LAPP_BANK=(
+    [--]="apm cmb.pb/cmb.pb.app.mainframe.container.PBMainActivity -h 招商银行 "
+    [BOC]="apm com.chinamworld.bocmbci/com.boc.bocsoft.mobile.bocmobile.buss.system.splash.SplashActivity -h 中国银行 "
+    [CMB]="apm cmb.pb/cmb.pb.app.mainframe.container.PBMainActivity -h 招商银行 "
+    [CCB]="apm -h 中国建设银行 "
+    [ABC]="apm -h 中国农业银行 "
+    [ICBC]="apm -h 中国工商银行 "
+    [CMBC]="apm -h 中国民生银行 "
+    [BCM]="apm -h 交通银行 "
+    [CEB]="apm -h 中国光大银行 "
+    [GDB]="apm -h 广东发展银行 "
+    [SPDB]="apm -h 上海浦东发展银行 "
+    [PSBC]="apm -h 中国邮政储蓄银行 "
+    [BOB]="apm -h 北京银行 "
+    [HXB]="apm -h 华夏银行 "
+    [ADBC]="apm -h 中国农业发展银行 "
+)
+
+
+declare -A LAPP_DESKCLOCK=(
+    [Redmi]="com.android.deskclock/.DeskClockTabActivity"
+
+)
+
+
+
+
+
+## FUNCTION
+
+p(){
+
+    declare -A |grep LAPP_
+    printf 
+
+}
+
+
+#?:app_launcher
+<<@
+ call-function callback package-name/class-name[]
+@
+#?:app_launcher
+
+app_launcher(){
+
+    local arrname=$1 \
+        arrkey='--'
+
+
+eval echo \${LAPP_$(echo "$1" | tr '[:lower:]' '[:upper:]')[$2]}
+
+
+    return
+
+    local _l=$1
+    eval _PCName=\${$_l[$(getProductBrand)]}
+    [[ -e $_PCName ]] && eval _PCName=\${$_l[--]}
+    [[ -e $_PCName ]] && eval _PCName=\${$_l[-]}
+    
+    [[ -n $_PCName ]] && apm $_PCName ${@:2}
+}
+
+alias camera="app_launcher L_CAMERA"
+alias calculator="app_launcher L_CALCULATOR"
+alias tts="app_launcher L_TTS"
+alias deskclock="app_launcher L_DESKCLOCK"
+
+
+## alarm ##
+#alias alarm="am start -a android.intent.action.SET_ALARM"
+:<<@
+am start -a android.intent.action.SET_TIMER \
+  --ei android.intent.extra.alarm.LENGTH 600 \
+  --ez android.intent.extra.alarm.SKIP_UI true
+
+adb shell am start -a android.intent.action.SET_ALARM \
+  --ez android.intent.extra.alarm.SKIP_UI true \
+    --ei android.intent.extra.alarm.HOUR 7 \
+      --ei android.intent.extra.alarm.MINUTES 30 \
+        --ez android.intent.extra.alarm.VIBRATE true
+@
+
+
+#shopt -s extglob
+#timer(){
+#  case $1 in
+#    +([0-9])h)
+#      _timer=$(( ${1%h} * 60 ))
+#      ;;
+#    +([0-9]) )
+#      _timer=$(($1*60))
+#      ;;
+#  esac
+#
+#am start -a android.intent.action.SET_TIMER \
+#  --ei android.intent.extra.alarm.LENGTH $_timer \
+#  --ez android.intent.extra.alarm.SKIP_UI true
+#}
+
+#alarm(){
+#
+#    [[ $# == 0 ]] && app_launcher L_DESKCLOCK
+#
+#    [[ $# -lt 2 ]] && return
+#    [[ $1 == [0-9] || $1 == [0-9][0-9] ]] || return
+#    [[ $2 == [0-9] || $2 == [0-9][0-9] ]] || return
+#    if [[ $3 == 0 ]]; then SKIP_UI=true;
+#    else SKIP_UI=false
+#    fi
+#    am start -a android.intent.action.SET_ALARM --ei android.intent.extra.alarm.HOUR $1 --ei android.intent.extra.alarm.MINUTES $2 --ez android.intent.extra.alarm.SKIP_UI $SKIP_UI
+#
+#}
+
+select_app:brand(){
+    local listname activity listkey brand dp
+    dp=$(declare -p L_$1) 
+
+    [[ $1 && ${#1} -le 10 && "$(echo "$dp" |cut -d ' ' -f 2)" =~ -[aA]? ]] && {
+        [[ $2 == -l ]] \
+            && echo "$dp" |sed -e 's/[^=]*=(//' -e 's/[ ]*)[ ]*//' -e 's/ \[/\n\[/g' \
+            && return 
+
+        listname=L_$1
+        shift
+    } || return
+
+    [[ $1 == "--" ]] && activity=$(eval echo \${$listname[-]}) && shift || {
+        listkey=$(eval echo \${!$listname[@]})
+        [[ ${#1} -le 10 && "$listkey" =~ $1 ]] && brand=$1 && shift || {
+            brand=$(getProductBrand)
+            [[ "$listkey" =~ $brand ]] || brand='-'
+        }
+        activity=$(eval echo \${$listname[$brand]})
+    }
+    echo $brand apm $activity $@
+    apm $activity $@
+}
+
+
+alias h="apm com.miui.home/com.miui.home.recents.RecentsActivity"
+
+:<<@
+
+jq :tput
+ pkg install fetchmail
+
+$ termux-sms-list
+{
+  "error": "Please grant the following permission to use this command: android.permission.READ_SMS"
+}
+
+@
+#termux-contact-list |grep -A 1 "name\": \"王瑞" |sed -n '/"number":/ s/.*"number": "//;s/"$//p'
+
+smss(){
+    local last_contact sms_body
+    local _lines _cols \
+        _all= _inbox= _sent= _draft= _outbox=
+    termux-sms-list -l -1 -t inbox
+
+    #[[ $# == 0 ]] && apm ${L_SMS[google]} $@ && return
+
+
+    _lines=$(tput lines)
+    _cols=$(tput cols)
+    echo $((_cols/3))
+
+    case $1 in
+        --help )
+            echo help
+            ;;
+        [^-]* )
+            ;;
+    esac
+
+    return
+    [[ $1 ]] && {
+        [[ $2 ]] && sms_body="--es sms_body ${@:2}" || sms_body=''
+        get_contact $1
+    }
+    [[ $last_contact ]] && apm //android.intent.action.SENDTO -d sms:$last_contact $sms_body --ez exit_on_sent true
+}
+
+alias camera="select_app:brand CAMERA"
+alias store="select_app:brand STORE"
+alias themestore="select_app:brand THEMESTORE"
+alias calendar="select_app:brand CALENDAR"
+alias browser="select_app:brand BROWSER"
+
+
+alias mm="select_app:brand LAUNCHER"
+alias rl="select_app:brand RECENTS"
+alias rr="select_app:brand RECENTS"
+
+
+bank(){
+    :
+
+
+    local _b=
+
+    [[ $# == 0 ]] && echo help
+
+    case $1 in
+        abc | ABC )
+            echo 中国农业银行 
+            _b=${L_BANK["ABC"]}
+            ;;
+        adbc | ADBC )
+            echo 中国农业发展银行 
+            _b=${L_BANK["ADBC"]}
+            ;;
+        bcm | BCM )
+            echo 交通银行 
+            _b=${L_BANK["BCM"]}
+            ;;
+        bob | BOB )
+            echo 北京银行 
+            _b=${L_BANK["BOB"]}
+            ;;
+        boc | BOC )
+            echo 中国银行 
+            _b=${L_BANK["BOC"]}
+            ;;
+        ccb | CCB )
+            echo 中国建设银行 
+            _b=${L_BANK["CCB"]}
+            ;;
+        ceb | CEB )
+            echo 中国光大银行 
+            _b=${L_BANK["CEB"]}
+            ;;
+        cmb | CMB )
+            echo 招商银行 
+            _b=${L_BANK["CMB"]}
+            ;;
+        cmbc | CMBC )
+            echo 中国民生银行 
+            _b=${L_BANK["CMBC"]}
+            ;;
+        gdb | GDB )
+            echo 广东发展银行 
+            _b=${L_BANK["GDB"]}
+            ;;
+        hxb | HXB )
+            echo 华夏银行 
+            _b=${L_BANK["HXB"]}
+            ;;
+        icbc | ICBC )
+            echo 中国工商银行 
+            _b=${L_BANK["ICBC"]}
+            ;;
+        psbc | PSBC )
+            echo 中国邮政储蓄银行 
+            _b=${L_BANK["PSBC"]}
+            ;;
+        spdb | SPDB )
+            echo 上海浦东发展银行 
+            _b=${L_BANK["SPDB"]}
+            ;;
+    esac
+
+    $_b
+
+_bankList="
+ABC 中国农业银行 
+ADBC 中国农业发展银行 
+BCM 交通银行 
+BOB 北京银行 
+BOC 中国银行 
+CCB 中国建设银行 
+CEB 中国光大银行 
+CMB 招商银行 
+CMBC 中国民生银行 
+GDB 广东发展银行 
+HXB 华夏银行 
+ICBC 中国工商银行 
+PSBC 中国邮政储蓄银行 
+SPDB 上海浦东发展银行 
+"
+
+
+
+}
+
+
+## inner link & URL Scheme & deep link ##
+am_nd(){
+    local n d a user other
+    #[[ $@ =~ " -- " ]] && other=$(echo $@ |sed "s/.* -- //")
+    [[ $1 == - ]] && local n='' || {
+        a=$(echo $1 |cut -d / -f 3)
+        n=$(echo $1 |cut -d / -f 1,2)
+        user=$(echo $1 |cut -d / -f 4) 
+        [[ $a ]] && a="-a $a"
+        [[ $n =~ ^/.*$ ]] && n='' || n="-n $n"
+        [[ $user =~ ^[0-9]+$ ]] && user="--user $user" || user="--user 0"
+    }
+    [[ $2 ]] && d="-d $2"
+    shift 2
+    apm $user $a $n $d $@ #&>/dev/null
+}
+
+f(){
+    com.android.documentsui/com.android.documentsui.files.FilesActivity
+content://media/external/downloads
+content://com.android.providers.media.documents/root/images_root
+content://com.android.providers.media.documents/root/audio_root
+content://com.android.providers.media.documents/root/video_root
+}
+
+file_manage(){
+
+    [[ $# == 0 ]] && return 9
+    echo $@
+    
+    local a mime_type
+    declare -a a[{0..6}]=
+    a=($(echo $1 |tr '/' ' ') "${a[@]}") && shift
+    [[ $1 && $1 =~ ^[0-9]+$ ]] && a[3]=$1 && shift
+    
+    mime_type=$(file -b --mime-type $1 2>/dev/null)
+    [[ $mime_type =~ ' ' ]] || a[5]="$mime_type"
+    [[ $1 == '/sdcard' ]] && mime_type="inode/directory"
+    case $mime_type in
+        inode/directory )
+            #a[1]=
+            a[2]=android.intent.action.OPEN_DOCUMENT
+            a[5]='*/*'
+            set -- "file://$(realpath $1)" "${@:2}"
+            ;;
+        image/* )
+            #a[1]=
+            a[2]=android.intent.action.VIEW
+            set -- "file://$(realpath $1)" "${@:2}"
+            ;;
+        text/* )
+            #a[1]=
+            a[2]=android.intent.action.EDIT
+            set -- "file://$(realpath $1)" "${@:2}"
+            ;;
+        * )
+            ;;
+    esac
+    a=$(echo "${a[@]}" |tr ' ' '/')
+    apm $a $@ 
+
+}
+
+#+ mf
+alias mf-ftp="apm me.zhanghai.android.files/me.zhanghai.android.files.ftpserver.FtpServerActivity"
+alias mf-download="apm me.zhanghai.android.files/me.zhanghai.android.files.filelist.FileListActivity"
+alias mf="file_manage me.zhanghai.android.files/.filelist.FileListActivity"
+alias mf="file_manage me.zhanghai.android.files/.filelist.FileListActivity"
+alias x4e="file_manage com.lonelycatgames.Xplore/.Browser"
+
+#me.zhanghai.android.files.filelist.FileListActivity
+
+
+#+ settings && open
+
+alias os-battery-optimization="apm //android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS"
+alias os-wifi="apm //android.settings.WIFI_SETTINGS"
+alias os-bluetooth="apm //android.settings.BLUETOOTH_SETTINGS"
+alias os-sound="apm //android.settings.SOUND_SETTINGS"
+alias os-display="apm //android.settings.DISPLAY_SETTINGS"
+alias os-vpn="apm //android.settings.VPN_SETTINGS"
+alias os-default-application="apm com.android.permissioncontroller/com.android.permissioncontroller.role.ui.DefaultAppListActivity"
+alias change-default-cardemulation="apm //android.nfc.cardemulation.action.ACTION_CHANGE_DEFAULT"
+alias change-default-launcher="apm //android.settings.HOME_SETTINGS"
+alias change-default-app="apm //android.settings.MANAGE_DEFAULT_APPS_SETTINGS"
+alias os-notification-listener="apm //android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"
+alias os-print="apm //android.settings.ACTION_PRINT_SETTINGS"
+alias os-add-account="apm //android.settings.ADD_ACCOUNT_SETTINGS"
+alias os-airplane-mode="apm //android.settings.AIRPLANE_MODE_SETTINGS"
+alias os-apn='apm com.android.settings/com.android.settings.Settings\\\$ApnSettingsActivity'
+alias os-dev="apm //android.settings.APPLICATION_DEVELOPMENT_SETTINGS"
+alias os-app-preferences="apm //android.intent.action.APPLICATION_PREFERENCES"
+alias os-application="apm //android.settings.APPLICATION_SETTINGS"
+alias os-app="apm //android.settings.APPLICATION_SETTINGS"
+alias os-call="apm //android.intent.action.CALL_BUTTON"
+alias os-captioning="apm //android.settings.CAPTIONING_SETTINGS"  # 字幕偏好设置
+alias os-captive-portal="apm //android.net.conn.CAPTIVE_PORTAL"  # 登录到网络 强制登录门户
+alias os-cast="apm //android.settings.CAST_SETTINGS"  # 投屏
+alias os-create-shortcut="apm //android.intent.action.CREATE_SHORTCUT"  # 创建快捷方式
+alias os-data-roaming="am-start //android.settings.DATA-ROAMING-SETTINGS"
+alias os-date="apm //android.settings.DATE_SETTINGS"
+alias dial="apm //android.intent.action.DIAL"  # 拨号器
+alias os-dismiss-alarm="apm //android.intent.action.DISMISS_ALARM"
+alias intent-display_audio_effect_control_panel="apm //android.media.action.DISPLAY_AUDIO_EFFECT_CONTROL_PANEL"
+alias os-hardkeyboard="apm //android.settings.HARD_KEYBOARD_SETTINGS"
+alias os-home="apm //android.settings.HOME_SETTINGS"
+alias os-ime="apm //android.settings.INPUT_METHOD_SETTINGS"
+alias os-locale="apm //android.settings.LOCALE_SETTINGS"
+alias os-location-source="apm //android.settings.LOCATION_SOURCE_SETTINGS"
+alias os-appmanage="apm //android.settings.MANAGE_ALL_APPLICATIONS_SETTINGS"
+alias os-overlayper="apm //android.settings.action.MANAGE_OVERLAY_PERMISSION"  # 权限管理:显示在其他应用上方
+alias os-manage-storage="apm //android.os.storage.action.MANAGE_STORAGE"
+alias os-appinper="apm //android.settings.MANAGE_UNKNOWN_APP_SOURCES"  # 权限管理:安装未知应用
+alias os-modify-sys="apm //android.settings.action.MANAGE_WRITE_SETTINGS"  # 权限管理:可修改系统设置
+alias os-="apm //apm //android.media.action.MEDIA_PLAY_FROM_SEARCH -- -e query '\"song title\"'"  # 媒体搜索:在媒体应用中搜索 # 待编写apm()
+# android.intent.action.MEDIA_SEARCH
+alias music-player="apm //android.intent.action.MUSIC_PLAYER"  # 音乐
+alias mp="apm //android.intent.action.MUSIC_PLAYER"  # 音乐
+alias os-network-oper="apm //android.settings.NETWORK_OPERATOR_SETTINGS"  # 网络运营商设置
+alias os-nfcpay="apm //android.settings.NFC_PAYMENT_SETTINGS"  # nfc感应式付款
+alias os-nfc="apm //android.settings.NFC_SETTINGS"
+alias os-night-display="apm //android.settings.NIGHT_DISPLAY_SETTINGS"  # xiaomi:护眼模式
+alias os-dndper="apm //android.settings.NOTIFICATION_POLICY_ACCESS_SETTINGS"  # Do Not Disturb # 权限管理:勿扰权限
+alias os-powercenter="apm //android.intent.action.POWER_USAGE_SUMMARY"  # xiaomi:省电与电池
+alias os-privacy="apm //android.settings.PRIVACY_SETTINGS"  # settings-隐私
+alias os-search-="apm //android.intent.action.SEARCH -- -e query '搜索内容'"  # 搜索
+alias os-security="apm //android.settings.SECURITY_SETTINGS"  # settings-安全
+alias intent-send="apm //android.intent.action.SEND"  # intent:发送数据到其他应用
+alias intent-sendm="apm //android.intent.action.SEND_MULTIPLE"  # intent:发送多个数据项到其他应用
+
+alias os-sendto="apm //android.intent.action.SENDTO"  # intent:发送数据到特定 URI（如短信、电子邮件等）
+alias os-passwd="apm //android.app.action.SET_NEW_PARENT_PROFILE_PASSWORD"  # 设置或更改家长账户的密码（用于家长控制）
+alias os-="apm //android.app.action.SET_NEW_PASSWORD"  # 设置或更改主用户（设备锁屏）的密码
+#android.intent.action.SET_ALARM
+#android.intent.action.SET_TIMER
+#android.intent.action.SHOW_ALARMS
+#android.intent.action.SNOOZE_ALARM  # 模拟闹钟打盹
+alias os-wallpaper="apm //android.intent.action.SET_WALLPAPER"  # 设置壁纸
+alias os-settings="apm //android.settings.SETTINGS"  # 打开系统设置
+alias os-alarms="apm //android.intent.action.SHOW_ALARMS"  # 打开闹钟
+alias appinfo="apm //android.intent.action.SHOW_APP_INFO -d package:com.example.app"  # 打开应用的详细信息页面
+alias os-timers="apm //android.intent.action.SHOW_TIMERS"  # 倒计时
+alias os-snooze-alarm="am broadcast -a android.intent.action.SNOOZE_ALARM"  # 模拟闹钟打盹
+alias snooze-alarm="am broadcast -a android.intent.action.SNOOZE_ALARM"  # 模拟闹钟打盹
+alias alarm-snooze="am broadcast -a android.intent.action.SNOOZE_ALARM"  # 模拟闹钟打盹
+alias os-sound="apm //android.settings.SOUND_SETTINGS"  # xiaomi:声音与触感
+alias os-still-image-camera="apm //android.media.action.STILL_IMAGE_CAMERA"  # 启动设备的 相机应用，并直接进入 拍照模式（拍摄静态图片）
+#android.media.action.STILL_IMAGE_CAMERA_SECURE
+#android.media.action.VIDEO_CAMERA
+alias os-sync="apm //android.settings.SYNC_SETTINGS"  # settings-账号与同步
+alias os-ud="apm //android.settings.USER_DICTIONARY_SETTINGS"  # settings-个人字典
+alias lsdow="apm //android.intent.action.VIEW_DOWNLOADS"  # 查看下载内容
+alias os-voice-assist="apm //android.intent.action.VOICE_ASSIST"  # 语音助手
+alias voice-assist="apm //android.intent.action.VOICE_ASSIST"  # 打开语音助手
+alias os-voice-input="apm //android.settings.VOICE_INPUT_SETTINGS"  # 语音助手设置
+alias os-vpn="apm //android.settings.VPN_SETTINGS"
+alias vpn="apm //android.settings.VPN_SETTINGS"
+alias os-vr="apm //android.settings.VR_LISTENER_SETTINGS"  # vr助手服务
+alias os-web-search="apm //android.intent.action.WEB_SEARCH"
+alias os-webview="apm //android.settings.WEBVIEW_SETTINGS"  # 设置 WebView 实现
+alias os-wifim="apm //android.settings.WIFI_IP_SETTINGS"  # WLAN偏好设置
+alias os-wifi="apm //android.settings.WIFI_SETTINGS"
+alias os-iem="apm //android.settings.INPUT_METHOD_SETTINGS"
+alias os-wireless="apm //android.settings.WIRELESS_SETTINGS"  # settings-更多连接
+alias os-zen="apm //android.settings.ZEN_MODE_PRIORITY_SETTINGS"  # settings-勿扰模式
+alias os-="apm //"
+alias os-="apm //"
+alias os-="apm //"
+alias os-="apm //"
+alias os-allapp="apm //android.settings.APPLICATION_SETTINGS"
+alias os-application-development="apm //android.settings.APPLICATION_DEVELOPMENT_SETTINGS"
+alias os-dev="apm //android.settings.APPLICATION_DEVELOPMENT_SETTINGS"
+alias os-date="apm //android.settings.DATE_SETTINGS"
+alias os-device-info="apm //android.settings.DEVICE_INFO_SETTINGS"
+alias os-info="apm //android.settings.DEVICE_INFO_SETTINGS"
+alias os-locale="apm //android.settings.LOCALE_SETTINGS"
+alias os-security="apm //android.settings.SECURITY_SETTINGS"
+alias os-internal-storage="apm //android.settings.INTERNAL_STORAGE_SETTINGS"
+alias os-battery-saver="apm //android.settings.BATTERY_SAVER_SETTINGS"
+alias os-accessibility='apm //android.settings.ACCESSIBILITY_SETTINGS'
+alias os-usage-access="apm //android.settings.USAGE_ACCESS_SETTINGS"  # 权限管理:有权查看使用情况的应用
+alias os-display='apm com.android.settings/com.android.settings.Settings$DisplaySettingsActivity/android.settings.DISPLAY_SETTINGS'
+alias os-storage-dashboard='apm com.android.settings/com.android.settings.Settings$StorageDashboardActivity/android.settings.INTERNAL_STORAGE_SETTINGS'
+alias os-security-dashboard='apm com.android.settings/com.android.settings.Settings$SecurityDashboardActivity/android.settings.SECURITY_SETTINGS'
+alias os-account-dashboard='apm com.android.settings/com.android.settings.Settings$AccountDashboardActivity/android.settings.SYNC_SETTINGS'
+alias os-network-dashboard='apm com.android.settings/com.android.settings.Settings$NetworkDashboardActivity/android.settings.WIRELESS_SETTINGS'
+alias os-allapp-info='apm com.android.settings/com.android.settings.Settings\\\$ManageApplicationsActivity/android.intent.action.MAIN'
+alias os-battery-ignore="apm //android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS --hint 电池优化"
+#alias open-="apm //"
+#alias open-="apm //"
+#alias open-="apm //"
+#alias open-="apm //"
+#alias open-="apm //"
+
+
+
+alias change-lang="apm //am start -a android.settings.LOCALE_SETTINGS"
+alias change-wallpaper="apm com.android.settings/com.android.settings.wallpaper.StyleSuggestionActivity/android.intent.action.MAIN"
+alias change-iem-settings="apm //android.settings.INPUT_METHOD_SETTINGS"
+alias cis="apm //android.settings.INPUT_METHOD_SETTINGS"
+alias change-iem-sub-settings="apm //android.settings.INPUT_METHOD_SUBTYPE_SETTINGS"
+
+
+
+alias show-allapp-info="apm com.android.settings/com.android.settings.Settings\\\$ManageApplicationsActivity/android.intent.action.MAIN"
+
+
+#am start -a android.intent.action.VIEW -d tg://resolve?domain=fumeiTea"
+
+
+alias clean-downloads:apps="am start -n com.android.storagemanager/com.android.storagemanager.deletionhelper.DeletionHelperActivity"
+
+mxplay(){
+    declare -A mxplayLauncher=(
+    [main]="com.mxtech.videoplayer.pro/com.mxtech.videoplayer.pro.ActivityMediaList" 
+    [view]="com.mxtech.videoplayer.pro/com.mxtech.videoplayer.ActivityScreen"
+)
+    [[ $# -gt 0 ]] && _p="view" || _p="main"
+
+    apm "${mxplayLauncher[$_p]}" "$@"
+    #com.mxtech.videoplayer.pro.ActivityScreen
+}
+
+# surfboard state toggle
+
+
+
+
+alias shazam-splash="apm com.shazam.android/com.shazam.android.activities.SplashActivity shazam://startautotagging?origin=appshortcuts"
+
+alias contacts-new="apm 'content://com.android.contacts/contacts'"
+alias c-new="apm //android.intent.action.INSERT 'content://com.android.contacts/contacts'"
+
+alias one-search="apm 'com.One.WoodenLetter/com.One.WoodenLetter.activitys.search.SearchActivity'"
+
+#+ sleep-zz
+alias sleep-start="apm com.urbandroid.sleep/com.urbandroid.sleep.appactions.OpenFeatureActivity https://sleep-as-android/feature/start-tracking"
+alias sleep-stop="apm com.urbandroid.sleep/com.urbandroid.sleep.appactions.OpenFeatureActivity https://sleep-as-android/feature/stop-tracking"
+alias sleep-last="apm com.urbandroid.sleep/com.urbandroid.sleep.appactions.OpenFeatureActivity https://sleep-as-android/feature/last-sleep"
+
+
+alias oto-search="apm com.piyush.music/com.piyush.music.activities.shortcut.ShortcutTrampolineActivity"
+alias vanilla-search="apm com.kyant.vanilla/com.piyush.music.activities.shortcut.ShortcutTrampolineActivity"
+
+#+ spotify
+spotify_search(){
+    [[ -n $1 ]] && local query="--es query $1"
+    am start -a android.intent.action.SEARCH -n com.spotify.music/com.spotify.music.SpotifyMainActivity $query &>/dev/null
+}
+
+alias spotify-search="spotify_search"
+
+
+#+ wechat
+#?:wechat-code:zh
+#- set URL type user   设置wechat相关的二维码
+#?:wechat-code:zh
+#
+alias wechatqr="wechat-code"
+alias wqr="wechat-code"
+wechat-code(){
+  local wechat_qrcode_dir=~/.config/.qrcode/
+  local wechat_qrcode=$wechat_qrcode_dir/wechat.qr
+  [[ -d $wechat_qrcode_dir ]] || mkdir -pv $wechat_qrcode_dir
+
+  if [[ $1 == '-c' ]]; then
+    qr "$2" > $wechat_qrcode
+    return
+  fi
+
+  cat $wechat_qrcode
+}
+
+#wechat-code(){
+#    local path type=friend user=0 set
+#    [[ $1 == set ]] && shift && set=0
+#    [[ $1 =~ ^[0-9]+$ ]] && user=$1
+#    [[ $1 =~ ^[a-z]+$ ]] && type=$1
+#    [[ $2 =~ ^[0-9]+$ ]] && user=$2
+#    [[ $2 =~ ^[a-z]+$ ]] && type=$path="$HOME/.wechat.qr.$type.$user"
+#    path="/storage/emulated/0/Pictures/wechat.qr.$type.$user.png"
+#    [[ $@ ]] && {
+#        [[ $(read -n 3 -t 5 -p "entry [ y/yes ] : " line && echo $line) =~ ^(y|yea)$ ]] && echo cp ${!#} $path && cp ${!#} $path
+#    } || apm com.google.android.apps.photos//android.intent.action.VIEW///image/* file://$path -f 0x00000001
+#
+#    #-t image/* -f 0x00000001
+#}
+
+
+
+
+#+ telegram
+tg_domain(){
+    [[ $2 ]] && local domain=$(grep $2 ~/.tg.domain.conf |cut -d ':' -f 1) || local domain=$1
+    domain=$(echo $domain |tr -d '@')
+    echo $domain
+    apm //android.intent.action.VIEW tg://resolve?domain=$domain
+}
+
+
+#+ map
+
+applicationName=com.termux
+
+#  [路径规划](https://lbs.amap.com/api/amap-mobile/guide/android/route)
+#  amapuri://route/plan/?dname=地点名称&dev=0&t=0
+
+alias map-subway="apm - -d 'androidamap://openFeature?featureName=Subway&adcode=310000&sourceApplication=$applicationName&page=Subway'"  # [地铁图](https://lbs.amap.com/api/amap-mobile/guide/android/subway)
+alias map-rootmap="apm - -d androidamap://rootmap?sourceApplication=$applicationName"
+
+alias map-poi="apm - -d androidamap://poi?sourceApplication=$applicationName&keywords="  # [POI搜索](https://lbs.amap.com/api/amap-mobile/guide/android/search)
+alias map-arroundpoi="apm - -d androidamap://arroundpoi?sourceApplication=$applicationName&keywords="  # 周边搜索
+
+alias map-me="apm - -d androidamap://myLocation?sourceApplication=$applicationName"  # [我的位置](https://lbs.amap.com/api/amap-mobile/guide/android/location)
+
+map-rg(){  # Reverse Geocoding / RevGeo
+  dev=0  # 国测加密
+  [[ $# -gt 2 ]] && dev=$3
+  apm - -d "androidamap://viewReGeo?sourceApplication=$applicationName&lat=$1&lon=$2&dev=$dev"
+}
+
+
+#+ pay
+alias pay-scan="apm - -d alipayqr://platformapi/startapp?saId=10000007"  # 扫码
+alias pay-skcode="apm - -d alipayqr://platformapi/startapp?saId=20000123"  # 收款码
+alias pay-fkcode="apm - -d alipayqr://platformapi/startapp?appId=20000056"  # 付款码
+alias payfk="apm - -d alipayqr://platformapi/startapp?appId=20000056"  # 付款码
+alias pay-cxcode="apm - -d alipayqr://platformapi/startapp?appId=200011235"  # 乘车码
+alias pcode="apm - -d alipayqr://platformapi/startapp?appId=200011235"  # 乘车码
+alias pay-su="apm - -d alipayqr://platformapi/startapp?appId=20000027"  # 切换账号
+alias pay-accounting="apm - -d alipayqr://platformapi/startapp?appId=20000168"  # 记帐本
+alias pay-search="apm - -d alipayqr://platformapi/startapp?appId=20001003"  # 搜索
+alias pay-bicycle="apm - -d alipayqr://platformapi/startapp?appId=60000155"  # 共享单车
+alias pay-bill="apm - -d alipayqr://platformapi/startapp?appId=60000155"  # 共享单车
+
+#+qq
+qq_add_friend(){
+    [[ $1 =~ ^[0-9]+$ ]] && am_d mqqapi://card/show_pslcard?src_type=internal&version=1&uin=$1
+}
+alias qq-add-friend="qq_qq-add-friend "
+qq_add_group(){
+    [[ $1 =~ ^[0-9]+$ ]] && apm - mqqapi://card/show_pslcard?src_type=internal&version=1&card_type=group&uin=$1
+}
+alias qq-add-group="qq_qq-add-group "
+alias qq-home-page="apm - -d mqqapi://card/show_pslcard"
+
+#+taobao
+alias taobao-scan="apm - -d taobao://tb.cn/n/scancode"
+
+#+meituan
+alias meituan-scan="apm - -d 'imeituan://www.meituan.com/page/scanQRCodeForMBarResult?openAR=0&shortcuts=true&lch=mhqRLXSDxdm6BfP-x2WvMo2Cw'"
+alias meituan-bicycle="apm - -d imeituan://www.meituan.com/bike/scan?lc-callback=imeituan://www.meituan.com/bike/inscan"
+alias meituan-fkcode="apm - -d imeituan://www.meituan.com/search?q=付款码"
+meituan_search(){
+    [[ $@ ]] && apm - imeituan://www.meituan.com/search?q=$1 || apm - imeituan://www.meituan.com/page/search/home?lch=mhq0lV4qPTqkOwMXUnt7H3nSQ&entrance=4
+}
+alias meituan-search="meituan_search "
+
+#+bili
+alias bili-scan="apm - -d bilibili://qrcode"
+alias bili-search="apm - -d bilibili://search"
+alias bili-collection="apm - -d bilibili://main/favorite"
+bili-vedio(){
+    apm - bilibili://video/$(echo $1 |sed -n -E "s/.*(BV|AV)([0-9a-zA-Z]*).*/\1\2/p")
+}
+
+#+surfboard
+alias surfboard-toggle="apm com.getsurfboard/com.getsurfboard.ui.activity.DeeplinkActivity surfboard:///toggle"
+alias surfboard-toggle="apm - -d surfboard:///toggle"
+alias s-t="apm com.getsurfboard/com.getsurfboard.ui.activity.DeeplinkActivity surfboard:///toggle"
+alias surfboard-start="apm - -d surfboard://start"
+alias surfboard-stop="apm - -d surfboard://stop"
+surfboard-add-subscription(){
+    [[ -n $1 ]] && apm - surfboard:///install-config?url=$1 || {
+        [[ "$(termux-clipboard-get)" =~ ^http[s]?:// ]] && apm - -d surfboard:///install-config?url="$(termux-clipboard-get)"
+    }
+}
+
+#+clash
+clash-add-subscription(){
+    [[ -n $1 ]] && apm - -d clash://install-config?url=$1
+}
+
+#+kdeconnect
+#alias kde-share="am start -a android.intent.action.SEND -n org.kde.kdeconnect_tp/org.kde.kdeconnect.Plugins.SharePlugin.ShareActivity -c android.intent.category.DEFAULT -d file:///storage/emulated/0/Download/8tUgu38.jpg"
+kdeconnect-share(){
+    [[ -n $1 ]] && rish -c "am start -a android.intent.action.SEND -n org.kde.kdeconnect_tp/org.kde.kdeconnect.Plugins.SharePlugin.ShareActivity -t image/jpeg -c android.intent.category.DEFAULT --es android.intent.extra.MIME_TYPES "image/jpeg,image/png" --es android.intent.extra.STREAM file://$(realpath $1) -f 0xb080001 --ez launchflag 0xb080001 "
+    #--es referrerPackage me.zhanghai.android.files
+}
+
+alias miphotos="apm com.miui.gallery/com.miui.gallery.activity.HomePageActivity"
+photos(){
+    #[[ $MV_ScreenshotsToTt == 0 ]] && {
+    #    mv -v /storage/emulated/0/DCIM/Screenshots/* /storage/emulated/0/tt/Screenshots |awk '{ printf "."; }'
+    #}
+    apm com.google.android.apps.photos/.home.HomeActivity
+}
+
+photos-edit(){
+    apm //android.intent.action.EDIT/999 file://$(realpath $1) -t image/* -f 0x00000001
+}
+
+
+## apm ##
+
+
+APP=(
+    APP_MUSIC
+    APP_STORE
+    APP_APKTOOL
+    APP_SHOPPING
+    APP_BROWSER
+)
+APP_MUSIC=(
+    oto
+    vanilla
+    usbaudioplayerpro
+    poweramp
+    spotify
+    aimp
+    shanling
+    dl-sound
+)
+APP_BROWSER=(
+    sbrowser
+    sleipnir
+    yandex-browser
+    chrome
+    chrome-beta
+    dlbrowser
+    einkbro-browser
+    firefox
+    kiwi-browser
+)
+APP_STORE=(
+    aurora-store
+    hstore
+    pstore
+    f-droid
+)
+APP_SHOPPING=(
+    jingdong
+    meituan
+    pdd
+    taobao
+)
+APP_APKTOOL=(
+    apkanalyzer
+    apkextractor
+    apktool
+    android-dev-toolbox
+    libchecker
+    androidide
+)
+
+#?:app:zh
+<<@
+  -l | --list | list  显示全部类别
+  -ll | --list-all | list-all  显示全部类别及values
+@
+#?:app:zh
+app(){
+    [[ $@ ]] || set -- -ll
+    case $1 in
+        -l | --list | list )
+            #eval echo "$(printf "\${%s[@]}\n" "${APP[@]}")"
+            [[ $2 ]] && eval echo "$2 : \${$2[@]}" || echo ${APP[@]}
+                ;;
+        -ll | --list-all | list-all )
+                for p in ${APP[@]}; do
+                    eval echo "$p : \${$p[@]}"
+                done
+            ;;
+        * )
+            [[ "${APP[@]}" =~ $1 ]] && {
+                echo $1
+            }
+            ;;
+    esac
+}
+
+
+#?:
+<<@
+
+ pkg i netcat-openbsd \
+    socat
+@
+#?:
+apm_count(){
+    :
+}
+
+
+
+
+#?apk_install:zh
+<<@
+store-type package-name user-id
+@
+#?apk_install:zh
+apk_install(){
+
+  if [[ $# -le 0 ]] ;then
+    echo "[key] packageName [userId]"
+    for _k in ${!DLINK_ApkInstall[@]} ;do
+      printf "%-10s %s %s \n" $_k ${DLINK_ApkInstall["$_k"]} ${Activity_ApkInstall["$_k"]}
+    done
+    return
+  fi
+
+  #am start -a android.intent.action.VIEW -d "market://search?q=pname:${1%/*}" 2>/dev/null
+  declare -A DLINK_ApkInstall=(
+    ["--"]="market://details?id=%p"
+    ["gplay"]="https://play.google.com/store/apps/details?id=%p"
+    ["coolapk"]="coolmarket://apk/%p"
+  )
+
+  declare -A Activity_ApkInstall=(
+    ["aurora"]="com.aurora.store/.MainActivity"
+    ["fdroid"]="org.fdroid.fdroid/.views.main.MainActivity"
+  )
+    local _d _activity
+
+    [[ $# == 1 ]] && set -- "--" $@
+    isDigit $2 && _user=$2
+    isDigit $3 && _user=$3
+    isDigit $_user || _user=0
+
+
+    if [[ -n ${DLINK_ApkInstall[$1]} ]] ;then _k=$1 
+    else
+      _kk=1
+      _k='--'
+    fi
+
+    if [[ -n ${Activity_ApkInstall[$1]} ]] ;then
+      _activity="-n ${Activity_ApkInstall[$1]}"
+    else
+      [[ $_kk == 1 ]] && return
+      _activity=
+    fi
+
+    _d="$(echo ${DLINK_ApkInstall["$_k"]} |sed "s#%p#$2#")"
+
+
+    if [[ $_user == 0 ]] ;then 
+      #case "$(getProductBrand)" in
+	  #Redmi ) #am start --user $3 -a android.intent.action.VIEW -d "$_d" -n com.android.vending/.AssetBrowserActivity 2>/dev/null
+      echo am start -a android.intent.action.VIEW --user $_user $_activity "$_d"
+      am start -a android.intent.action.VIEW --user $_user $_activity "$_d" &>/dev/null
+    else 
+      echo rish -c "am start --user $3 -a android.intent.action.VIEW -d '$_d' "
+      rish -c "am start --user $3 -a android.intent.action.VIEW -d '$_d' " #&>/dev/null
+    fi
+}
+
+#am start --user $2 -a android.settings.APPLICATION_DETAILS_SETTINGS -n com.android.settings/com.android.settings.applications.InstalledAppDetails -d package:$1 &>/dev/null || \
+apk_info_dashboard(){
+    apm com.android.settings/com.android.settings.applications.InstalledAppDetails/android.settings.APPLICATION_DETAILS_SETTINGS/$2 -d package:$1 &>/dev/null
+}
+
+
+declare -A L_PERMISSION=(
+    [CAMERA]="android.permission.CAMERA -h 相机"
+    
+    [CALL_PHONE]="android.permission.CALL_PHONE -h 拨打电话"
+    [READ_CONTACTS]="android.permission.READ_CONTACTS -h 读取联系人权限"
+    [WRITE_CONTACTS]="android.permission.WRITE_CONTACTS -h 写入联系人权限"
+    [ACCESS_FINE_LOCATION]="android.permission.ACCESS_FINE_LOCATION -h 访问设备位置信"
+    [SEND_SMS]="android.permission.SEND_SMS -h 发送短信"
+    [READ_SMS]="android.permission.READ_SMS -h 读取短信"
+    [CAMERA]="android.permission.CAMERA -h 使用相机"
+    [RECORD_AUDIO]="android.permission.RECORD_AUDIO -h 录音"
+    [READ_PHONE_STATE]="android.permission.READ_PHONE_STATE -h 读取电话状态"
+    [ACCESS_NETWORK_STATE]="android.permission.ACCESS_NETWORK_STATE -h 访问网络状态"
+    [INTERNET]="android.permission.INTERNET -h 连接网络"
+    [WRITE_EXTERNAL_STORAGE]="android.permission.WRITE_EXTERNAL_STORAGE -h 写入外部存储"
+    [READ_EXTERNAL_STORAGE]="android.permission.READ_EXTERNAL_STORAGE -h 读取外部存储"
+    [GET_ACCOUNTS]="android.permission.GET_ACCOUNTS -h 获取账户信息"
+    [ACCESS_WIFI_STATE]="android.permission.ACCESS_WIFI_STATE -h 访问WiFi状态"
+    [CHANGE_WIFI_STATE]="android.permission.CHANGE_WIFI_STATE -h 改变WiFi状态"
+    [CHANGE_NETWORK_STATE]="android.permission.CHANGE_NETWORK_STATE -h 改变网络状态"
+    [READ_CALL_LOG]="android.permission.READ_CALL_LOG -h 读取通话记录"
+    [WRITE_CALL_LOG]="android.permission.WRITE_CALL_LOG -h 写入通话记录"
+    [MANAGE_ACCOUNTS]="android.permission.MANAGE_ACCOUNTS -h 访问账户凭据"
+    [USE_FINGERPRINT]="android.permission.USE_FINGERPRINT -h 使用指纹"
+    [GET_TASKS]="android.permission.GET_TASKS -h 获取任务信息"
+    [READ_CALENDAR]="android.permission.READ_CALENDAR -h 读取日历"
+    [WRITE_CALENDAR]="android.permission.WRITE_CALENDAR -h 写入日历"
+    [BODY_SENSORS]="android.permission.BODY_SENSORS -h 访问传感器信息"
+    [READ_PHONE_NUMBERS]="android.permission.READ_PHONE_NUMBERS -h 读取手机号码"
+    [REQUEST_IGNORE_BATTERY_OPTIMIZATIONS]="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS -h 请求忽略电池优化"
+    [SYSTEM_ALERT_WINDOW]="android.permission.SYSTEM_ALERT_WINDOW -h 系统警告窗口"
+    [RECEIVE_BOOT_COMPLETED]="android.permission.RECEIVE_BOOT_COMPLETED -h 开机启动"
+    [VIBRATE]="android.permission.VIBRATE -h 控制振动"
+    [DISABLE_KEYGUARD]="android.permission.DISABLE_KEYGUARD -h 禁用键盘锁"
+    [BLUETOOTH]="android.permission.BLUETOOTH -h 访问蓝牙"
+    [BLUETOOTH_ADMIN]="android.permission.BLUETOOTH_ADMIN -h 管理蓝牙"
+    [READ_SYNC_SETTINGS]="android.permission.READ_SYNC_SETTINGS -h 读取同步设置"
+    [WRITE_SYNC_SETTINGS]="android.permission.WRITE_SYNC_SETTINGS -h 写入同步设置"
+    [NFC]="android.permission.NFC -h 使用NFC"
+    [ACCESS_NOTIFICATION_POLICY]="android.permission.ACCESS_NOTIFICATION_POLICY -h 访问通知策略"
+    
+    
+)
+
+
+
+#curl -i -k -X GET 'https://hcapi02.api.bdymkt.com/mobile?mobile=18138434699&' \
+#-H 'Content-Type:application/json;charset=UTF-8' \
+#-H 'X-Bce-Signature:AppCode/325858f470b24d448ded3f394b9fef04'
+
+
+contactScan(){
+    local _p=~/.config/.contact.list
+    termux-contact-list |awk -v printMode="$1" '
+      /"name":/ {
+        $1="";
+        gsub(/,/,"",$0);
+        gsub(/^ */,"",$0);
+        key=$0;
+      }
+      /"number":/ {
+        gsub(/ /,"",$0);
+        gsub(/,/,"",$0);
+        gsub(/"/,"",$0);
+        split($0,a,":");
+        arr[key]=arr[key]a[2]" ";
+      }
+      END {
+        if(printMode == "array"){
+          printf "declare -A _contactList={ ";
+          for(key in arr) printf "["key"]=\""arr[key]"\"\n";
+          printf "}";
+        } else if(printMode == "" || printMode == "space" || printMode == "null"){
+          for(key in arr) printf key":"arr[key]"\n";
+        }
+      }
+    ' |python3 -c "
+
+# 定义颜色代码
+class Color:
+  RESET = '\033[0m'
+  RED = '\033[31m'
+  GREEN = '\033[32m'
+  YELLOW = '\033[33m'
+  BLUE = '\033[34m'
+  MAGENTA = '\033[35m'
+  CYAN = '\033[36m'
+  WHITE = '\033[37m'
+
+
+
+from pypinyin import pinyin, Style;
+import sys;
+
+
+for l in sys.stdin:
+  if not l:
+    continue
+  a=l.split(':'); #.replace(' ','').replace('[','').replace(']','');
+
+  nameSizeMax=16
+
+  space=' ' * (
+    nameSizeMax - (
+      2 * len(a[0]) - sum(1 
+        for char in a[0] 
+          if ord(char) < 128
+      )
+    )
+  );
+
+  aa=a[0].replace('\"','').strip();
+  a0=aa.replace(' ','');
+
+  a1=a[1].replace('\n','').replace('-','').strip().split(' ');
+  for i in range(len(a1)):
+    l=len(a1[i]);
+    if l <= 9:
+      max=9;
+    else:
+      max=14;
+    a1c=a1[i] + ( ' ' * (max - l) );
+
+
+
+  print(Color.GREEN
+    + '[ '
+    + Color.RESET
+    + aa
+    + Color.GREEN
+    + ' ]'
+    + Color.RESET
+    + ' '
+    + space
+    + a1c
+    + ' > '
+    + ''.join(
+      [word[0] for word in pinyin(
+        a0,
+        style=Style.NORMAL
+      )]
+    )
+    + ' '
+    + ''.join(
+      [word[0][0] for word in pinyin(
+        a0,
+        style=Style.NORMAL
+      )]
+    )
+    , end='\n'
+    );
+
+" > $_p
+
+}
+
+
+
+
+#?:help
+<<@
+fzf
+@
+    #_select=$(cat $_p |fzf --ansi --preview 'sed "s/\x1b\[[0-9;]*m//g" .contact.list |grep "{}" '$_p --preview-window up:1)
+#?:help
+contactList(){
+    local _p=~/.config/.contact.list _select _num
+    [[ "$(cat $_p |wc -l)" -le 1 ]] && contactScan
+    _select=$(cat $_p |fzf --ansi --preview "sed 's/\x1b\[[0-9;]*m//g' $_p |grep -F {} "  --preview-window up:1 --print-query)
+    echo $_select
+    case "$_select" in
+        "" )
+            return
+            ;;
+        : | :: | :command | :cmd )
+            fzf <<@
+:scan
+@
+
+            ;;
+        :* )
+            ;;
+        * )
+            ;;
+    esac
+    _num=($(grep "$_select" $_p |cut -d: -f2))
+    [[ ${#_num[@]} -gt 1 ]] && {
+        printf "%s " "${_num[@]}" |tr ' ' '\n' |fzf
+    } || printf $_num
+}
+
+
+
+
+
+
+
+
+#?:help:zh
+<<@
+package_name permission
+
+$ rish -c "pm dump com.termux" -->
+"""
+        ...
+        android.permission.ACCESS_BACKGROUND_LOCATION: granted=false, flags=[ REVOKE_WHEN_REQUESTED|APPLY_RESTRICTION]
+        ...
+
+
+        -l ) 列出所有权限
+        -l" "s) 列出所有权限的精简名称
+        --list-short ) 列出所有权限的精简名称(彩色输出)
+        -l" "c | --list-color ) 列出所有权限(彩色输出)
+        call_phone | CALL_PHONE | android.permission.CALL_PHONE )
+        * )
+"""
+
+@
+#?:help:zh
+
+getAllPermissions(){
+    [[ $# -ge 1 ]] || return
+    rish -c "pm dump $1" |awk -v packageName="$1" '
+      /    [a-z ]*:/ { f=0; }
+      /    requested permissions:/ { f=1; next; }
+      {
+        if(f==1){
+          gsub(/ /,"",$0);
+          printf $0"\n"
+        }
+      }
+    ' 
+}
+
+getRuntimePermissions(){
+    [[ $# -ge 1 ]] || return
+    dumpsys package $1 |awk -v packageName="$1" '
+      /[ ]*[a-z ]*:/ { f=0; }
+      /[ ]*runtime permissions:/ { f=1; next; }
+      {
+        if(f==1){
+          gsub(/ /,"",$0);
+          printf $0"\n"
+        }
+      }
+    ' 
+}
+
+
+#?:help
+:<<@
+    packageName grant/revoke
+#?:help
+@
+printPermissions(){
+    [[ $1 == "--help" || $1 == "-h" ]] && {
+        printf help
+        return
+    }
+    [ -p /dev/stdin ] || return
+    cat |awk -F " " -v opt=$2 -v packageName="$1" '{
+      printf "out=$(pm %s %s %s 2>&1)  &&  printf \"\\e[32m[ succ ]\\e[0m %s %s \\n\"  ||  printf \"\\e[31m[ err ]\\e[0m %s %s $(echo \"$out\" |sed -n \" 1p; 2p; 3p;\") \\n\"; \n", opt, packageName, $0, opt, $0, opt, $0
+    }' 
+}
+revokePermissions(){
+    [[ $# -eq 1 ]] || return
+        printf "[ $(date +%y%m%d.%H%M%S) ] pm revoke $1 -->\n"
+        rish -c "$( getAllPermissions $1 |printPermissions $1 revoke )" |stdbuf -o0 tee >(sed 's/\x1b\[[0-9;]*m//g' >> $LOGDIR/permissions.revoke)
+
+}
+grantPermissions(){
+    [[ $# -eq 1 ]] || return
+        printf "[ $(date +%y%m%d.%H%M%S) ] pm revoke $1 -->\n"
+        rish -c "$( getAllPermissions $1 |printPermissions $1 grant )" |stdbuf -o0 tee >(sed 's/\x1b\[[0-9;]*m//g' >> $LOGDIR/permissions.grant)
+}
+
+declare -A L_WEBVIEW=(
+    [stable]="com.google.android.webview/org.chromium.android_webview.devui.MainActivity"
+    [beta]=""
+    [dev]=""
+    [canary]="com.google.android.webview.canary/org.chromium.android_webview.devui.MainActivity"
+)
+
+
+#rish -c "pm grant com.tencent.mobileqq android.permission.CAMERA"
+
+#?:apm:zh
+<<@
+package-name/class-name/action/user-id/app-name/type1@class-name1:type2@class-name2/ [paraments] [user-id]
+
+格式：
+    1packageName/2className/3action/4userId/5key:otherClassName:suffix::.../6Language-Region:appName/7permission:[@perArr]:...
+
+  --install | in            安装应用
+  --uninstall|unin|uni <user>   卸载应用
+  --install-existing | in-ex  重新安装应用
+  --disable | dis  冻结应用
+  --enable | e  启用应用
+  --help               帮助文档
+  --hint | -h  hint...  命令释义
+  -ch | --cat-hint  查看释义
+
+
+  --install | in )
+  --install-gplay | in-g )
+  --install-coolapk | in-c )
+  --uninstall | unin | uni )
+  --uninstall-k | unin-k | uni-k | unik | uk )
+  --install-existing | in-ex )
+  --disable | dis )
+  --enable | en | e )
+  --package-name | cat )
+  --package-name-all | cat-all )
+  --info | info )
+  --ext | ext )
+  --app-name | --name | appname | name | n )
+  --battery-whitelist-add | bw+ )
+  --battery-whitelist-remove | bw- )
+  -t* )
+  --help )
+  -h | --hint )
+  -ch | --cat-hint )
+  - )
+  -- )
+
+@
+#?:apm:zh
+
+#- 
+
+#- rishc dumpsys deviceidle whitelist +com.google.android.deskclock
+
+alias fyy="apm com.google.android.apps.translate/.TranslateActivity/string@android.intent.action.TRANSLATE//string@.copydrop.gm3.TapToTranslateActivity:ww@wwe:ttt/"
+
+
+declare -A __PERMISSION_TO_NAME_MAP=(
+  [COARSE_LOCATION]="粗略位置"
+  [FINE_LOCATION]="精准位置"
+  [WIFI_SCAN]="WLAN扫描"
+  [NEIGHBORING_CELLS]="手机网络扫描"
+  [GPS]="GPS"
+  [MONITOR_LOCATION]="监测位置"
+  [MONITOR_HIGH_POWER_LOCATION]="监控高电耗位置信息服务"
+  [PHONE_CALL_CAMERA]="电话拨打与相机"
+  [CAMERA]="相机"
+  [PHONE_CALL_MICROPHONE]="电话拨打与麦克风"
+  [RECORD_AUDIO]="录制音频"
+  [MUTE_MICROPHONE]="将麦克风静音或取消静音"
+  [READ_SMS]="短信读取"
+  [WRITE_SMS]="编写短信"
+  [RECEIVE_SMS]="接收短信"
+  [RECEIVE_MMS]="接收彩信"
+  [RECEIVE_WAP_PUSH]="接收 WAP PUSH 消息"
+  [SEND_SMS]="发送短信"
+  [READ_ICC_SMS]="读取 ICC 短信"
+  [WRITE_ICC_SMS]="写入 ICC 短信"
+  [SMS_FINANCIAL_TRANSACTIONS]="付费短信权限"
+  [CALL_PHONE]="拨打电话"
+  [READ_PHONE_STATE]="读取手机状态"
+  [PROCESS_OUTGOING_CALLS]="处理拨出电话"
+  [READ_CALL_LOG]="读取通话记录"
+  [READ_PHONE_NUMBERS]="读取手机号码"
+  [ANSWER_PHONE_CALLS]="接听电话"
+  [WRITE_CALL_LOG]="修改通话记录"
+  [READ_CALENDAR]="读取日历"
+  [WRITE_CALENDAR]="修改日历"
+  [READ_CONTACTS]="读取联系人"
+  [WRITE_CONTACTS]="修改联系人"
+  [GET_ACCOUNTS]="获取帐号"
+  [READ_EXTERNAL_STORAGE]="读取存储空间"
+  [WRITE_EXTERNAL_STORAGE]="写入存储空间"
+  [READ_MEDIA_AUDIO]="读取音乐收藏"
+  [WRITE_MEDIA_AUDIO]="写入音乐收藏"
+  [READ_MEDIA_VIDEO]="读取视频收藏"
+  [WRITE_MEDIA_VIDEO]="写入视频收藏"
+  [READ_MEDIA_IMAGES]="读取照片收藏"
+  [WRITE_MEDIA_IMAGES]="写入照片收藏"
+  [ACCESS_MEDIA_LOCATION]="从媒体文件中读取位置信息"
+  [MANAGE_EXTERNAL_STORAGE]="管理所有文件"
+  [BODY_SENSORS]="身体传感器"
+  [ACTIVITY_RECOGNITION]="识别身体活动"
+  [special: sensors]="传感器"
+  [READ_CLIPBOARD]="读取剪贴板内容"
+  [WRITE_CLIPBOARD]="修改剪贴板内容"
+  [READ_DEVICE_IDENTIFIERS]="读取设备识别码"
+  [RECORD_AUDIO_HOTWORD]="热词录音"
+  [MANAGE_ONGOING_CALLS]="管理进行中的通话"
+  [MANAGE_CREDENTIALS]="管理凭证"
+  [USE_ICC_AUTH_WITH_DEVICE_IDENTIFIER]="使用设备识别码进行 ICC 认证"
+  [RECORD_AUDIO_OUTPUT]="录音输出"
+  [SCHEDULE_EXACT_ALARM]="精确闹钟调度"
+  [FINE_LOCATION_SOURCE]="精准位置来源"
+  [COARSE_LOCATION_SOURCE]="粗略位置来源"
+  [POST_NOTIFICATION]="发布通知"
+  [MANAGE_MEDIA]="管理媒体"
+  [BLUETOOTH_CONNECT]="蓝牙连接"
+  [UWB_RANGING]="UWB定位"
+  [RECEIVE_EXPLICIT_USER_INTERACTION]="接收显式用户交互"
+  [ACTIVITY_RECOGNITION_SOURCE]="识别身体活动控制"
+  [BLUETOOTH_ADVERTISE]="蓝牙广告"
+  [RECORD_INCOMING_PHONE_AUDIO]="录制来电音频"
+  [NEARBY_WIFI_DEVICES]="附近 Wi-Fi 设备"
+  [ESTABLISH_VPN_SERVICE]="建立 VPN 服务"
+  [ESTABLISH_VPN_MANAGER]="建立 VPN 管理器"
+  [ACCESS_RESTRICTED_SETTINGS]="访问受限设置"
+  [RECEIVE_SOUNDTRIGGER_AUDIO]="接收声音触发音频"
+  [RECEIVE_EXPLICIT_USER_INTERACTION]="显式用户交互接收"
+  [RUN_USER_INITIATED_JOBS]="运行用户发起的任务"
+  [READ_MEDIA_VISUAL_USER_SELECTED]="读取媒体视觉用户选择"
+  [SYSTEM_EXEMPT_FROM_SUSPENSION]="系统豁免挂起"
+  [SYSTEM_EXEMPT_FROM_DISMISSIBLE_NOTIFICATIONS]="系统豁免可删除通知"
+  [READ_WRITE_HEALTH_DATA]="读取写入健康数据"
+  [FOREGROUND_SERVICE_SPECIAL_USE]="前台服务特殊使用"
+  [SYSTEM_EXEMPT_FROM_POWER_RESTRICTIONS]="系统豁免电源限制"
+  [SYSTEM_EXEMPT_FROM_HIBERNATION]="系统豁免休眠"
+  [SYSTEM_EXEMPT_FROM_ACTIVITY_BG_START_RESTRICTION]="系统豁免后台活动限制"
+  [CAPTURE_CONSENTLESS_BUGREPORT]="捕获无同意的错误报告"
+  [DEPRECATED_2]="废弃权限 2"
+  [USE_FULL_SCREEN_INTENT]="全屏意图使用"
+  [CAMERA_SANDBOXED]="相机沙箱"
+  [RECORD_AUDIO_SANDBOXED]="录音沙箱"
+  [RECEIVE_SANDBOX_TRIGGER_AUDIO]="接收沙箱触发音频"
+  [CREATE_ACCESSIBILITY_OVERLAY]="创建辅助功能叠加层"
+  [MEDIA_ROUTING_CONTROL]="媒体路由控制"
+  [ENABLE_MOBILE_DATA_BY_USER]="启用用户移动数据"
+  [OP_RESERVED_FOR_TESTING]="保留用于测试"
+  [RAPID_CLEAR_NOTIFICATIONS_BY_LISTENER]="快速清除通知"
+  [READ_SYSTEM_GRAMMATICAL_GENDER]="读取系统语法性别"
+  [DEPRECATED_3]="废弃权限 3"
+  [ARCHIVE_ICON_OVERLAY]="归档图标叠加层"
+  [UNARCHIVAL_CONFIRMATION]="取消归档确认"
+  [EMERGENCY_LOCATION]="紧急位置"
+  [RECEIVE_SENSITIVE_NOTIFICATIONS]="接收敏感通知"
+  [RECEIVE_EMERGENCY_BROADCAST]="接收紧急广播"
+  [WRITE_SETTINGS]="修改系统设置"
+  [SYSTEM_ALERT_WINDOW]="显示在其他应用的上层"
+  [ACCESS_NOTIFICATIONS]="访问通知"
+  [PLAY_AUDIO]="播放音频"
+  [VIBRATE]="振动"
+  [TAKE_MEDIA_BUTTONS]="媒体按钮"
+  [TAKE_AUDIO_FOCUS]="音频焦点"
+  [AUDIO_MASTER_VOLUME]="主音量"
+  [AUDIO_VOICE_VOLUME]="语音音量"
+  [AUDIO_RING_VOLUME]="铃声音量"
+  [AUDIO_MEDIA_VOLUME]="媒体音量"
+  [AUDIO_ALARM_VOLUME]="闹钟音量"
+  [AUDIO_NOTIFICATION_VOLUME]="通知音量"
+  [AUDIO_BLUETOOTH_VOLUME]="蓝牙音量"
+)
+
+declare -A __PERMISSION_TO_IDENTIFIERS_MAP=(
+  [android.permission.ACCESS_COARSE_LOCATION]="COARSE_LOCATION"
+  [android.permission.ACCESS_FINE_LOCATION]="FINE_LOCATION"
+  [android.permission.ACCESS_WIFI_STATE]="WIFI_SCAN"
+  [android.permission.ACCESS_WIFI_STATE]="NEIGHBORING_CELLS"
+  [android.permission.ACCESS_COARSE_LOCATION]="GPS"
+  [android.permission.ACCESS_COARSE_LOCATION]="MONITOR_LOCATION"
+  [android.permission.ACCESS_COARSE_LOCATION]="MONITOR_HIGH_POWER_LOCATION"
+  [android.permission.CAMERA]="PHONE_CALL_CAMERA"
+  [android.permission.CAMERA]="CAMERA"
+  [android.permission.RECORD_AUDIO]="PHONE_CALL_MICROPHONE"
+  [android.permission.RECORD_AUDIO]="RECORD_AUDIO"
+  [android.permission.RECORD_AUDIO]="MUTE_MICROPHONE"
+  [android.permission.READ_SMS]="READ_SMS"
+  [android.permission.WRITE_SMS]="WRITE_SMS"
+  [android.permission.RECEIVE_SMS]="RECEIVE_SMS"
+  [android.permission.RECEIVE_MMS]="RECEIVE_MMS"
+  [android.permission.RECEIVE_WAP_PUSH]="RECEIVE_WAP_PUSH"
+  [android.permission.SEND_SMS]="SEND_SMS"
+  [android.permission.READ_SMS]="READ_ICC_SMS"
+  [android.permission.WRITE_SMS]="WRITE_ICC_SMS"
+  [android.permission.SMS_FINANCIAL_TRANSACTIONS]="SMS_FINANCIAL_TRANSACTIONS"
+  [android.permission.CALL_PHONE]="CALL_PHONE"
+  [android.permission.READ_PHONE_STATE]="READ_PHONE_STATE"
+  [android.permission.PROCESS_OUTGOING_CALLS]="PROCESS_OUTGOING_CALLS"
+  [android.permission.READ_CALL_LOG]="READ_CALL_LOG"
+  [android.permission.READ_PHONE_NUMBERS]="READ_PHONE_NUMBERS"
+  [android.permission.ANSWER_PHONE_CALLS]="ANSWER_PHONE_CALLS"
+  [android.permission.WRITE_CALL_LOG]="WRITE_CALL_LOG"
+  [android.permission.READ_CALENDAR]="READ_CALENDAR"
+  [android.permission.WRITE_CALENDAR]="WRITE_CALENDAR"
+  [android.permission.READ_CONTACTS]="READ_CONTACTS"
+  [android.permission.WRITE_CONTACTS]="WRITE_CONTACTS"
+  [android.permission.GET_ACCOUNTS]="GET_ACCOUNTS"
+  [android.permission.READ_EXTERNAL_STORAGE]="READ_EXTERNAL_STORAGE"
+  [android.permission.WRITE_EXTERNAL_STORAGE]="WRITE_EXTERNAL_STORAGE"
+  [android.permission.READ_MEDIA_AUDIO]="READ_MEDIA_AUDIO"
+  [android.permission.WRITE_MEDIA_AUDIO]="WRITE_MEDIA_AUDIO"
+  [android.permission.READ_MEDIA_VIDEO]="READ_MEDIA_VIDEO"
+  [android.permission.WRITE_MEDIA_VIDEO]="WRITE_MEDIA_VIDEO"
+  [android.permission.READ_MEDIA_IMAGES]="READ_MEDIA_IMAGES"
+  [android.permission.WRITE_MEDIA_IMAGES]="WRITE_MEDIA_IMAGES"
+  [android.permission.ACCESS_MEDIA_LOCATION]="ACCESS_MEDIA_LOCATION"
+  [android.permission.MANAGE_EXTERNAL_STORAGE]="MANAGE_EXTERNAL_STORAGE"
+  [android.permission.BODY_SENSORS]="BODY_SENSORS"
+  [android.permission.ACTIVITY_RECOGNITION]="ACTIVITY_RECOGNITION"
+  [android.permission.ACTIVITY_RECOGNITION]="special: sensors"
+  [android.permission.READ_CLIPBOARD]="READ_CLIPBOARD"
+  [android.permission.WRITE_CLIPBOARD]="WRITE_CLIPBOARD"
+  [android.permission.READ_DEVICE_IDENTIFIERS]="READ_DEVICE_IDENTIFIERS"
+  [android.permission.RECORD_AUDIO_HOTWORD]="RECORD_AUDIO_HOTWORD"
+  [android.permission.MANAGE_ONGOING_CALLS]="MANAGE_ONGOING_CALLS"
+  [android.permission.MANAGE_CREDENTIALS]="MANAGE_CREDENTIALS"
+  [android.permission.USE_ICC_AUTH_WITH_DEVICE_IDENTIFIER]="USE_ICC_AUTH_WITH_DEVICE_IDENTIFIER"
+  [android.permission.RECORD_AUDIO_OUTPUT]="RECORD_AUDIO_OUTPUT"
+  [android.permission.SCHEDULE_EXACT_ALARM]="SCHEDULE_EXACT_ALARM"
+  [android.permission.ACCESS_FINE_LOCATION]="FINE_LOCATION_SOURCE"
+  [android.permission.ACCESS_COARSE_LOCATION]="COARSE_LOCATION_SOURCE"
+  [android.permission.POST_NOTIFICATIONS]="POST_NOTIFICATION"
+  [android.permission.MANAGE_MEDIA]="MANAGE_MEDIA"
+  [android.permission.BLUETOOTH_CONNECT]="BLUETOOTH_CONNECT"
+  [android.permission.UWB_RANGING]="UWB_RANGING"
+  [android.permission.RECEIVE_EXPLICIT_USER_INTERACTION]="RECEIVE_EXPLICIT_USER_INTERACTION"
+  [android.permission.ACTIVITY_RECOGNITION]="ACTIVITY_RECOGNITION_SOURCE"
+  [android.permission.BLUETOOTH_ADVERTISE]="BLUETOOTH_ADVERTISE"
+  [android.permission.RECORD_INCOMING_PHONE_AUDIO]="RECORD_INCOMING_PHONE_AUDIO"
+  [android.permission.NEARBY_WIFI_DEVICES]="NEARBY_WIFI_DEVICES"
+  [android.permission.ESTABLISH_VPN_SERVICE]="ESTABLISH_VPN_SERVICE"
+  [android.permission.ESTABLISH_VPN_MANAGER]="ESTABLISH_VPN_MANAGER"
+  [android.permission.ACCESS_RESTRICTED_SETTINGS]="ACCESS_RESTRICTED_SETTINGS"
+  [android.permission.RECEIVE_SOUNDTRIGGER_AUDIO]="RECEIVE_SOUNDTRIGGER_AUDIO"
+  [android.permission.RECEIVE_EXPLICIT_USER_INTERACTION]="RECEIVE_EXPLICIT_USER_INTERACTION"
+  [android.permission.RUN_USER_INITIATED_JOBS]="RUN_USER_INITIATED_JOBS"
+  [android.permission.READ_MEDIA_VISUAL_USER_SELECTED]="READ_MEDIA_VISUAL_USER_SELECTED"
+  [android.permission.SYSTEM_EXEMPT_FROM_SUSPENSION]="SYSTEM_EXEMPT_FROM_SUSPENSION"
+  [android.permission.SYSTEM_EXEMPT_FROM_DISMISSIBLE_NOTIFICATIONS]="SYSTEM_EXEMPT_FROM_DISMISSIBLE_NOTIFICATIONS"
+  [android.permission.READ_WRITE_HEALTH_DATA]="READ_WRITE_HEALTH_DATA"
+  [android.permission.FOREGROUND_SERVICE_SPECIAL_USE]="FOREGROUND_SERVICE_SPECIAL_USE"
+  [android.permission.SYSTEM_EXEMPT_FROM_POWER_RESTRICTIONS]="SYSTEM_EXEMPT_FROM_POWER_RESTRICTIONS"
+  [android.permission.SYSTEM_EXEMPT_FROM_HIBERNATION]="SYSTEM_EXEMPT_FROM_HIBERNATION"
+  [android.permission.SYSTEM_EXEMPT_FROM_ACTIVITY_BG_START_RESTRICTION]="SYSTEM_EXEMPT_FROM_ACTIVITY_BG_START_RESTRICTION"
+  [android.permission.CAPTURE_CONSENTLESS_BUGREPORT]="CAPTURE_CONSENTLESS_BUGREPORT"
+  [android.permission.USE_FULL_SCREEN_INTENT]="USE_FULL_SCREEN_INTENT"
+  [android.permission.RECEIVE_SANDBOX_TRIGGER_AUDIO]="RECEIVE_SANDBOX_TRIGGER_AUDIO"
+  [android.permission.MEDIA_ROUTING_CONTROL]="MEDIA_ROUTING_CONTROL"
+  [android.permission.ENABLE_MOBILE_DATA_BY_USER]="ENABLE_MOBILE_DATA_BY_USER"
+  [android.permission.OP_RESERVED_FOR_TESTING]="OP_RESERVED_FOR_TESTING"
+  [android.permission.RAPID_CLEAR_NOTIFICATIONS_BY_LISTENER]="RAPID_CLEAR_NOTIFICATIONS_BY_LISTENER"
+  [android.permission.READ_SYSTEM_GRAMMATICAL_GENDER]="READ_SYSTEM_GRAMMATICAL_GENDER"
+  [android.permission.DEPRECATED_3]="DEPRECATED_3"
+  [android.permission.ARCHIVE_ICON_OVERLAY]="ARCHIVE_ICON_OVERLAY"
+  [android.permission.UNARCHIVAL_CONFIRMATION]="UNARCHIVAL_CONFIRMATION"
+  [android.permission.LOCATION_BYPASS]="EMERGENCY_LOCATION"
+  [android.permission.RECEIVE_SENSITIVE_NOTIFICATIONS]="RECEIVE_SENSITIVE_NOTIFICATIONS"
+  [android.permission.RECEIVE_EMERGENCY_BROADCAST]="RECEIVE_EMERGENCY_BROADCAST"
+  [android.permission.WRITE_SETTINGS]="WRITE_SETTINGS"
+  [android.permission.SYSTEM_ALERT_WINDOW]="SYSTEM_ALERT_WINDOW"
+  [android.permission.ACCESS_NOTIFICATIONS]="ACCESS_NOTIFICATIONS"
+  [android.permission.PLAY_AUDIO]="PLAY_AUDIO"
+  [android.permission.VIBRATE]="VIBRATE"
+  [android.permission.TAKE_MEDIA_BUTTONS]="TAKE_MEDIA_BUTTONS"
+  [android.permission.TAKE_AUDIO_FOCUS]="TAKE_AUDIO_FOCUS"
+  [android.permission.AUDIO_MASTER_VOLUME]="AUDIO_MASTER_VOLUME"
+  [android.permission.AUDIO_VOICE_VOLUME]="AUDIO_VOICE_VOLUME"
+  [android.permission.AUDIO_RING_VOLUME]="AUDIO_RING_VOLUME"
+  [android.permission.AUDIO_MEDIA_VOLUME]="AUDIO_MEDIA_VOLUME"
+  [android.permission.AUDIO_ALARM_VOLUME]="AUDIO_ALARM_VOLUME"
+  [android.permission.AUDIO_NOTIFICATION_VOLUME]="AUDIO_NOTIFICATION_VOLUME"
+  [android.permission.AUDIO_BLUETOOTH_VOLUME]="AUDIO_BLUETOOTH_VOLUME"
+)
+
+
+
+
+declare -A __mime_text_x_clipboard
+__mime_text_x_clipboard[com.pikcloud.pikpak]='am start -n com.pikcloud.pikpak/com.pikcloud.router.share.SystemShareActivity -c android.intent.category.DEFAULT -c android.intent.category.BROWSABLE  -d "$#1#$"'
+__mime_text_x_clipboard[com.google.android.apps.translate]='am start -a android.intent.action.TRANSLATE -n com.google.android.apps.translate/com.google.android.apps.translate.copydrop.gm3.TapToTranslateActivity  -e android.intent.extra.PROCESS_TEXT "$#1#$" -f 0x14000000'  # 0x14000000 是 FLAG_ACTIVITY_CLEAR_TASK 和 FLAG_ACTIVITY_NEW_TASK 的十六进制表示。
+__mime_text_x_clipboard[me.zhanghai.android.files]='[[ -e "$#1#$" ]] && am start -n me.zhanghai.android.files/.filelist.FileListActivity -d "file://$(realpath $#1#$)"'  # 
+
+declare -A __mime_text_plain
+__mime_text_plain[com.google.android.apps.translate]='am start -a android.intent.action.TRANSLATE -n com.google.android.apps.translate/com.google.android.apps.translate.copydrop.gm3.TapToTranslateActivity  -e android.intent.extra.PROCESS_TEXT "$#1#$" -f 0x14000000'
+
+declare -A __mime_application_x_magnet
+__mime_application_x_magnet[com.pikcloud.pikpak]='am start -n com.pikcloud.pikpak/com.pikcloud.router.share.SystemShareActivity -c android.intent.category.DEFAULT -c android.intent.category.BROWSABLE  -d "$#1#$"'
+
+declare -A __mime_image
+__mime_image[me.zhanghai.android.files]='am start me.zhanghai.android.files/me.zhanghai.android.files.viewer.image.ImageViewerActivity -d'
+
+
+alias pikpak="apm com.pikcloud.pikpak/com.pikcloud.app.SplashActivity"
+alias fy="apm com.google.android.apps.translate/.TranslateActivity"
+
+declare -A SEARCH_ENGINE=(
+    ["Google"]=https://www.google.com/search?q=%s
+    ["Baidu"]=https://www.baidu.com/s?wd=%s
+    ["Bing"]=https://www.bing.com/search?q=%s
+    ["Sougou"]=https://www.sogou.com/web?query=%s
+    ["360"]=https://www.so.com/s?q=%s
+    ["Yahoo"]=https://search.yahoo.com/search?p=%s
+    ["DuckDuckGo"]=https://duckduckgo.com/?q=%s
+    ["Ask"]=https://www.ask.com/web?q=%s
+    ["Aol"]=https://search.aol.com/aol/search?q=%s
+    ["Yandex"]=https://www.yandex.com/search/?text=%s
+    ["Quark"]=https://quark.sm.cn/s?q=%s
+    
+    ["g"]=https://www.google.com/search?q=%s
+    ["bd"]=https://www.baidu.com/s?wd=%s
+    ["b"]=https://www.bing.com/search?q=%s
+    ["sg"]=https://www.sogou.com/web?query=%s
+    ["so"]=https://www.so.com/s?q=%s
+    ["yh"]=https://search.yahoo.com/search?p=%s
+    ["ddg"]=https://duckduckgo.com/?q=%s
+    ["ask"]=https://www.ask.com/web?q=%s
+    ["aol"]=https://search.aol.com/aol/search?q=%s
+    ["yd"]=https://www.yandex.com/search/?text=%s
+    ["q"]=https://quark.sm.cn/s?q=%s
+)
+
+#declare -A EncoderRules_Ext=(
+#    [' ']="%20"
+#    ['!']="%21"
+#    ['#']="%23"
+#    ['$']="%24"
+#    ['&']="%26"
+#    [''']="%27"
+#    ['(']="%28"
+#    [')']="%29"
+#    ['*']="%2A"
+#    ['+']="%2B"
+#    [',']="%2C"
+#    ['/']="%2F"
+#    [':']="%3A"
+#    [';']="%3B"
+#    ['=']="%3D"
+#    ['?']="%3F"
+#    ['@']="%40"
+#    ['[']="%5B"
+#    [']']="%5D"
+#)
+
+chrome-android(){
+    local para= _d= CODING_EXPRESSION="$@"
+    local url_regex="^[^.]+\.[^.]+\.[^.]+"
+
+    while [[ -n $1 ]] ; do
+    case $1 in
+        :[^:]* )
+            echo qq
+            _d="-d $(echo $1 |sed "s|:|http://|")"
+        #:[^:]* )
+        #    _d="-d $(echo $1 |sed "s|:|http://|")"
+            ;;
+        ::[^:]* )
+            _d="-d $(echo $1 |sed "s|::|https://|")"
+            ;;
+        [a-z]*:[^:]* )
+            _d="-d $(echo ${SEARCH_ENGINE["$(echo $1 |cut -d: -f1)"]} |sed "s|%s|${1#*:}|")"
+            ;;
+        [a-z] | [a-z][a-z] | [a-z3][a-z6][a-z0] )
+            _d="-d $(echo ${SEARCH_ENGINE["${1}"]} |sed "s|%s|"${@:2}"|")"
+            ;;
+        http://* | https://* )
+            _d="-d $1"
+            ;;
+        -- )
+            #_d="-d $2"
+            __=0
+            ;;
+        * )
+            [[ $__ == 0 ]] && echo :$1
+    esac
+    shift
+    done
+
+    #am start -a android.intent.action.VIEW $CODING_EXPRESSION com.android.chrome
+
+    #echo am start --user 0 -n 'com.android.chrome/com.google.android.apps.chrome.Main' $_d && return
+    am start --user 0 -n 'com.android.chrome/com.google.android.apps.chrome.Main' $_d #&> /dev/null
+}
+
+alias chrome="chrome-android "
+
+alias chromee="apm com.android.chrome/com.google.android.apps.chrome.Main"
+
+#am start -n 'com.google.android.youtube/.app.honeycomb.Shell$HomeActivity' --user 0 &> /dev/null
+youtube(){
+    apm "com.google.android.youtube/com.google.android.youtube.app.honeycomb.Shell\\\$HomeActivity" $@
+}
+
+
+alias hail="apm com.aistra.hail/com.aistra.hail.ui.main.MainActivity"
+
+
+alias kimi="apm com.moonshot.kimichat/.MainActivity"
+
+alias 7cat="apm com.kmxs.reader/com.km.app.home.view.LoadingActivity"
+alias dailyart="apm com.moiseum.dailyart2/.MainActivity"
+alias edgeb="apm com.microsoft.emmx/com.microsoft.ruby.Main"
+alias adtlbox="apm com.su.assistant.pro/com.su.assistant.ui.main.SplashActivity"
+alias aida64="apm com.finalwire.aida64/.HHMainActivity"
+alias aide="apm com.itsaky.androidide/com.itsaky.androidide.activities.SplashActivity"
+alias aimp="apm com.aimp.player/com.aimp.player.ui.activities.main.MainActivity"
+alias android-dev-toolbox="apm com.su.assistant.pro/com.su.assistant.ui.main.SplashActivity"
+alias androidide="apm com.itsaky.androidide/com.itsaky.androidide.activities.SplashActivity"
+alias ani="apm tw.com.gamer.android.animad/tw.com.gamer.android.animad.AnimadActivity"
+alias animad="apm tw.com.gamer.android.animad/tw.com.gamer.android.animad.AnimadActivity -h 动画疯"
+alias apkanalyzer="apm sk.styk.martin.apkanalyzer/sk.styk.martin.apkanalyzer.ui.main.MainActivity"
+alias apkextractor="apm com.ytheekshana.apkextractor/com.ytheekshana.apkextractor.MainActivity"
+alias apkpure="apm com.apkpure.aegon/.main.activity.SplashActivity"
+alias apktoolm="apm ru.maximoff.apktool/ru.maximoff.apktool.SplashActivity///ACCESSIBILITY_SERVICES:ru.maximoff.apktool.service.ActivityDetectingService"
+alias applauncher="apm com.simplemobiletools.applauncher/com.simplemobiletools.applauncher.activities.SplashActivity.Orange"
+alias appops="apm rikka.appops/.home.HomeActivity"
+alias appservices="apm com.oplus.appplatform/"
+alias aria2ng="apm com.xmader.aria_ng_gui_android/com.xmader.aria_ng_gui_android.MainActivity"
+alias audify="apm com.tangerinesoftwarehouse.audify/.MainActivity"
+alias aurora-store="apm com.aurora.store/.MainActivity"
+alias authenticator-google="apm com.google.android.apps.authenticator2/.main.MainActivity"
+alias authenticator-microsoft="apm com.azure.authenticator/.ui.LaunchActivity"
+alias battery-guru="apm com.paget96.batteryguru/.activities.SplashScreen"
+alias bbing="apm com.microsoft.bing/com.microsoft.clients.bing.voice.VoiceActivity"
+alias bdnd="apm com.baidu.netdisk/com.baidu.netdisk.ui.DefaultMainActivity////百度网盘"
+alias bili="apm tv.danmaku.bili/tv.danmaku.bili.MainActivityV2"
+alias bing="apm com.microsoft.bing/com.microsoft.sapphire.app.main.SapphireMainActivity"
+alias browser-einkbro="apm info.plateaukao.einkbro/info.plateaukao.einkbro.activity.BrowserActivity"
+alias browser-kiwi="apm com.kiwibrowser.browser/com.google.android.apps.chrome.Main"
+alias browser-sanxing="apm com.sec.android.app.sbrowser/.SBrowserMainActivity"
+alias browser-sleipnir="apm jp.co.fenrir.android.sleipnir/com.fenrir_inc.sleipnir.main.MainActivity"
+alias browser-yandex="apm com.yandex.browser/com.yandex.browser.YandexBrowserActivity"
+alias camera-oplus="apm com.oplus.camera/.Camera////OPPO相机"
+alias cfa="apm com.github.kr328.clash/.MainActivity"
+alias chatgpt="apm com.openai.chatgpt/.MainActivity"
+alias chrome-beta="apm com.chrome.beta/com.google.android.apps.chrome.Main"
+alias Chrome="apm com.android.chrome/com.google.android.apps.chrome.Main"
+alias clash-meta="apm com.github.metacubex.clash.meta/com.github.kr328.clash.MainActivity"
+alias clasha="apm com.github.kr328.clash/com.github.kr328.clash.MainActivity"
+alias clashx="apm com.github.clashx.foss/com.github.kr328.clash.MainActivity"
+alias compass="apm com.coloros.compass2/com.coloros.compass.flat.FlatCompass"
+alias contacts="apm com.google.android.contacts/com.android.contacts.activities.PeopleActivity////google通讯录"
+alias coolapk="apm com.coolapk.market/.view.main.MainActivity////酷安"
+alias cpu-x="apm com.abs.cpu_z_advance/.MainActivity"
+alias cpux="apm com.abs.cpu_z_advance/com.abs.cpu_z_advance.MainActivity"
+alias cpuz="apm com.cpuid.cpu_z/com.cpuid.cpu_z.MainActivity"
+alias devcheck="apm flar2.devcheck/.MainActivity"
+alias device-info="apm com.toralabs.deviceinfo/.activities.SplashActivity"
+alias deviceinfohw="apm ru.andr7e.deviceinfohw/.MainActivity"
+alias dialer="apm com.google.android.dialer/.extensions.GoogleDialtactsActivity////google电话"
+alias dingtalk="apm com.alibaba.android.rimet/com.alibaba.android.rimet.biz.LaunchHomeActivity"
+alias diskinfo="apm com.drhowdydoo.diskinfo/.activity.MainActivity"
+alias dl-sound="apm jp.co.eisys.dlsitesound/jp.co.eisys.dlsitesound.MainActivity"
+alias dlb="apm fm.dlb.dlbrowser/fm.dlb.dlbrowser.MainActivity"
+alias dlbrowser="apm fm.dlb.dlbrowser/fm.dlb.dlbrowser.MainActivity"
+alias easy-japanese="apm mobi.eup.jpnews/.activity.MainActivity"
+alias einkbro-browser="apm info.plateaukao.einkbro/info.plateaukao.einkbro.activity.BrowserActivity"
+alias einkbrob="apm info.plateaukao.einkbro/info.plateaukao.einkbro.activity.BrowserActivity"
+alias ele="apm me.ele/me.ele.Launcher////饿了吗"
+alias f-droid="apm org.fdroid.fdroid/.views.main.MainActivity"
+alias fanyi="apm com.google.android.apps.translate/.TranslateActivity////谷歌翻译"
+alias file2="apm com.karthek.android.s.files2/com.karthek.android.s.files2.MainActivity////MagicFiles"
+alias firefox="apm org.mozilla.firefox/.App"
+alias fl="apm com.android.documentsui/com.android.documentsui.LauncherActivity////AndroidFiles"
+alias foxit="apm com.foxit.mobile.pdf.lite/com.fuxin.app.frame.AppActivity"
+alias gcal="apm com.google.android.calendar/com.android.calendar.AllInOneActivity"
+alias gclock="apm com.google.android.deskclock/.DeskClock"
+alias gdialer="apm com.google.android.dialer/.extensions.GoogleDialtactsActivity"
+alias gdrive="apm com.google.android.apps.docs/.app.NewMainProxyActivity"
+alias gmess="apm com.google.android.apps.messaging/.ui.ConversationListActivity"
+alias gsms="apm com.google.android.apps.messaging/.ui.ConversationListActivity"
+alias gphotos="apm com.google.android.apps.photos/.home.HomeActivity"
+alias gtasks="apm com.google.android.apps.tasks/com.google.android.apps.tasks.ui.TaskListsActivity"
+alias gallery="apm org.Gallery.Pro/org.Gallery.Pro.activities.SplashActivity////图库"
+alias game-きゃらデン="apm jp.ne.mkb.voice/.ui.activity.NotificationActivity"
+alias game-となかいｗ時計-志穂="apm com.prekano.tonakaiwwatch_gp/com.ies_net.artemis.ArtemisActivity"
+alias game-ローマ字チャレンジ="apm com.gloding.android.RomajiChallengeFree/com.unity3d.player.UnityPlayerActivity"
+alias game-太鼓之达人="apm com.linecorp.LGTAIKO/com.linecorp.trident.unity.TridentUnityPlayerActivity"
+alias game-王者荣耀="apm com.tencent.tmgp.sgame/.SGameActivity"
+alias gamecenter="apm com.nearme.gamecenter/.ui.activity.SplashActivity////OPPO游戏中心"
+alias gboard="apm com.google.android.inputmethod.latin/com.google.android.libraries.inputmethod.launcher.LauncherActivity"
+alias gcam="apm com.google.android.GoogleCameraEng/com.android.camera.CameraLauncher"
+alias gclock="apm com.google.android.deskclock/com.android.deskclock.DeskClock////google时钟"
+alias gdocs="apm com.google.android.apps.docs.editors.docs/com.google.android.apps.docs.app.NewMainProxyActivity"
+alias gemini="apm com.google.android.apps.bard/.shellapp.BardEntryPointActivity"
+alias gfiles="apm com.google.android.apps.nbu.files/com.google.android.apps.nbu.files.home.HomeActivity"
+alias github="apm com.github.android/.main.MainActivity"
+alias gkd="apm li.songe.gkd/li.songe.gkd.MainActivity////GKD自动跳过广告"
+alias gmail="apm com.google.android.gm/.ConversationListActivityGmail"
+alias gnd="apm com.google.android.apps.docs/.app.NewMainProxyActivity////谷歌云盘"
+alias google-search="apm com.google.android.googlequicksearchbox/com.google.android.googlequicksearchbox.SearchActivity"
+alias google="apm com.google.android.googlequicksearchbox/.GoogleAppImplicitMainInfoGatewayInternal"
+alias gsheets="apm com.google.android.apps.docs.editors.sheets/com.google.android.apps.docs.app.NewMainProxyActivity"
+alias H-jmcomic2="apm com.jiaohua_browser/.MainActivity"
+alias hcalendar="apm com.coloros.calendar/com.android.calendar.AllInOneActivity"
+alias hcompass="apm com.coloros.compass2/com.coloros.compass.flat.FlatCompass////OPPO指南针"
+alias hiby="apm com.hiby.music/com.hiby.music.Activity.StartActivity////海贝音乐播放器"
+alias hstore="apm com.heytap.market/.activity.MainActivity////OPPO软件商店"
+alias htheme="apm com.heytap.themestore/com.nearme.themespace.activities.ThemeActivity////OPPO主题商店"
+alias hy="apm me.piebridge.brevent/.ui.BreventActivity////黑阈"
+alias icebox="apm com.catchingnow.icebox/.activity.mainActivity.MainAppActivity////冰箱"
+alias idm-settings="apm idm.internet.download.manager/acr.browser.lightning.activity.SettingsActivity"
+alias idm="apm idm.internet.download.manager/idm.internet.download.manager.MainActivity"
+alias idmp-="apm idm.internet.download.manager.plus/"
+alias idmp-="apm idm.internet.download.manager.plus/"
+alias idmp-="apm idm.internet.download.manager.plus/"
+alias idmp-browser="apm idm.internet.download.manager.plus/acr.browser.lightning.activity.BrowserLauncher"
+alias idmp-down="apm idm.internet.download.manager.plus/idm.internet.download.manager.Downloader"
+alias idmp-exit="apm idm.internet.download.manager.plus/idm.internet.download.manager.ExitAppUiAndDownloadService"
+alias idmp-host="apm idm.internet.download.manager.plus/acr.browser.lightning.activity.AdblockerSourceManagementActivity"
+alias idmp-settings="apm idm.internet.download.manager.plus/acr.browser.lightning.activity.SettingsActivity"
+alias idmp-stop="apm idm.internet.download.manager.plus/idm.internet.download.manager.ExitDownloadService"
+alias idmp="apm idm.internet.download.manager.plus/idm.internet.download.manager.MainActivity"
+alias idmpb="apm idm.internet.download.manager.plus/acr.browser.lightning.activity.BrowserLauncher"
+alias island="apm com.oasisfeng.island/com.oasisfeng.island.MainActivity////"
+alias jd="apm com.jingdong.app.mall/.main.MainActivity" #京东
+alias jingdong="apm com.jingdong.app.mall/.main.MainActivity" #京东
+alias jmcomic2="apm com.jiaohua_browser/.MainActivity"
+alias kado="apm com.kadokawa.kadokado/com.kadokawa.kadokado.MainActivity"
+alias kakuyomu="apm jp.kadokawa.el.kakuyomu/.activity.RootActivity"
+alias kconnect="kde-connect"
+alias kde-connect="apm org.kde.kdeconnect_tp/org.kde.kdeconnect.UserInterface.MainActivity"
+alias kdeconnect="kde-connect"
+alias keep="apm com.google.android.keep/com.google.android.keep.activities.BrowseActivity"
+alias kiwi-browser="apm com.kiwibrowser.browser/com.google.android.apps.chrome.Main"
+alias kiwib="apm com.kiwibrowser.browser/com.google.android.apps.chrome.Main"
+alias kodi="apm org.xbmc.kodi/org.xbmc.kodi.Splash"
+alias kore="apm org.xbmc.kore/.ui.sections.remote.RemoteActivity"
+alias kore="apm org.xbmc.kore/org.xbmc.kore.ui.sections.remote.RemoteActivity"
+alias koreader="apm org.koreader.launcher/.MainActivity"
+alias l22="apm com.netease.l22/com.netease.ntunisdk.external.protocol.ProtocolLauncher"
+alias ladb="apm com.draco.ladb/com.draco.ladb.views.MainActivity"
+alias lemurb="apm com.lemurbrowser.exts/com.google.android.apps.chrome.Main"
+alias lemurbrowser="apm com.lemurbrowser.exts/com.google.android.apps.chrome.Main"
+alias lens="apm com.google.ar.lens/com.google.vr.apps.ornament.app.lens.LensLauncherActivity"
+alias libchecker-bak="apm com.absinthe.libchecker/com.absinthe.libchecker.features.album.backup.ui.BackupActivity"
+alias libchecker="apm com.absinthe.libchecker/com.absinthe.libchecker.features.home.ui.MainActivity"
+alias limehd="apm net.toload.main.hd/MainActivity"
+alias lspatch="apm org.lsposed.lspatch/.ui.activity.MainActivity"
+alias m365="apm com.microsoft.office.officehubrow/com.microsoft.office.officesuite.OfficeSuiteActivity"
+alias magic-files="apm com.karthek.android.s.files2/com.karthek.android.s.files2.MainActivity////MagicFiles"
+alias map="apm com.autonavi.minimap/com.autonavi.map.activity.SplashActivity"
+alias mcalendar="apm com.google.android.calendar/com.android.calendar.AllInOneActivity"
+alias mega="apm mega.privacy.android.app/.main.ManagerActivity"
+alias meituan="apm com.sankuai.meituan/com.meituan.android.pt.homepage.activity.MainActivity"
+alias messaging="apm com.google.android.apps.messaging/.ui.ConversationListActivity"
+alias mi="apm "
+alias micam="apm com.android.camera/com.android.camera.Camera"
+alias micompass="apm com.miui.compass/.CompassActivity"
+alias mifilexplorer="apm com.android.fileexplorer/.FileExplorerTabActivity"
+alias mifreeform="apm com.sunshine.freeform/com.sunshine.freeform.ui.splash.SplashActivity"
+alias migallery="apm com.miui.gallery/.activity.HomePageActivity"
+alias miru="apm miru.miaomint/miru.miaomint.MainActivity"
+alias mistore="apm com.xiaomi.market/com.xiaomi.market.ui.MarketTabActivity////小米应用商店"
+alias mitheme="apm com.miui.themestore/com.miui.thememanagerstore.ThemeResourceTabActivity////小米主题商店"
+alias moffice="apm com.microsoft.office.officehubrow/com.microsoft.office.officesuite.OfficeSuiteActivity"
+alias momoa="apm com.maimemo.android.momo/.ui.SplashActivity"
+alias moonreaderp="apm com.flyersoft.moonreaderp/.ActivityMain"
+alias mt="apm bin.mt.plus/bin.mt.plus.MainLightIcon"
+alias mvst="[[ -f ~/.config/.mv.screenshots.down ]] && rm ~/.config/.mv.screenshots.down || touch ~/.config/.mv.screenshots.down"
+alias mxplay-addir="apm com.mxtech.videoplayer.pro/com.mxtech.videoplayer.preference.MediaDirectorySelector/////v@.ActivityScreen/"
+alias mxplay-sharer="apm com.mxtech.videoplayer.pro/com.mxtech.videoplayer.transfer.bridge.ActionActivityProxy/////v@.ActivityScreen/"
+alias mxplayer="apm com.mxtech.videoplayer.pro/.ActivityMediaList/////v@.ActivityScreen/"
+alias niagara-launcher="apm bitpit.launcher/.ui.HomeActivity"
+alias Nix-android="apm com.termux.nix/com.termux.app.TermuxActivity"
+alias nix-android="apm com.termux.nix/com.termux.app.TermuxActivity"
+alias notepad="apm com.google.android.keep/com.google.android.keep.activities.BrowseActivity"
+alias obsidian="apm md.obsidian/.MainActivity"
+alias office="apm com.microsoft.office.officehubrow/com.microsoft.office.officesuite.OfficeSuiteActivity"
+alias one="apm com.One.WoodenLetter/.LetterActivity////一个木函"
+alias onedrive="apm com.microsoft.skydrive/com.microsoft.skydrive.MainActivity"
+alias open-battery-optimization="apm //android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS"
+alias oto="apm com.piyush.music/com.piyush.music.activities.main.MainActivity"
+alias outlook="apm com.microsoft.office.outlook/.MainActivity"
+alias pay="apm com.eg.android.AlipayGphone/.AlipayLogin"
+alias pbook="apm com.google.android.apps.books/.app.BooksActivity"
+alias pcalendar="apm com.google.android.calendar/com.android.calendar.AllInOneActivity"
+alias pdd="apm com.xunmeng.pinduoduo/com.xunmeng.pinduoduo.ui.activity.MainFrameActivity"
+alias play-book="apm com.google.android.apps.books/.app.BooksActivity"
+alias play-store="apm com.android.vending/.AssetBrowserActivity"
+alias poe="apm com.poe.android/com.poe.MainActivity"
+alias poweramp-="apm com.maxmpz.audioplayer/"
+alias poweramp-addir="apm com.maxmpz.audioplayer/com.maxmpz.audioplayer.dialogs.MusicFoldersActivity"
+alias poweramp-eq="apm com.maxmpz.equalizer/com.maxmpz.audioplayer.standard_adaptive"
+alias poweramp-list="apm com.maxmpz.audioplayer/com.maxmpz.audioplayer.PlayListActivity"
+alias poweramp-pl="apm com.maxmpz.audioplayer/com.maxmpz.audioplayer.dialogs.PlaylistShortcutActivity"
+alias poweramp-playlist="apm com.maxmpz.audioplayer/com.maxmpz.audioplayer.dialogs.PlaylistShortcutActivity"
+alias poweramp-scan="apm com.maxmpz.audioplayer/com.maxmpz.audioplayer.preference.SettingsActivityManageSpace"
+alias poweramp-settings="apm com.maxmpz.audioplayer/com.maxmpz.audioplayer.SettingsActivity"
+alias poweramp="apm com.maxmpz.audioplayer/.standard_adaptive"
+alias powerampl="apm com.maxmpz.audioplayer/com.maxmpz.audioplayer.PlayListActivity"
+alias poweramps="apm com.maxmpz.audioplayer/com.maxmpz.audioplayer.rounded_play_inverted_mu"
+alias pstore="apm com.android.vending/.AssetBrowserActivity"
+alias pubgmhd="apm com.tencent.tmgp.pubgmhd/com.epicgames.ue4.SplashActivity"
+alias purewriter="apm com.drakeet.purewriter/.WriterActivity"
+alias pw="apm com.drakeet.purewriter/.WriterActivity"
+alias qq="apm com.tencent.mobileqq/.activity.SplashActivity"
+alias rail123="apm com.MobileTicket/.ui.activity.WelcomeGuideActivity"
+alias remotecontroller="apm com.duokan.phone.remotecontroller/com.xiaomi.mitv.phone.remotecontroller.HoriWidgetMainActivityV2"
+alias repainter="apm dev.kdrag0n.dyntheme/dev.kdrag0n.dyntheme.ui.main.MainActivity"
+alias reqable="apm com.reqable.android/.MainActivity"
+alias rish-tasker="rish -c 'settings put secure enabled_accessibility_services net.dinglisch.android.taskerm/net.dinglisch.android.taskerm.MyAccessibilityService'"
+alias SAI="apm com.aefyr.sai.fdroid/com.aefyr.sai.ui.activities.MainActivity"
+alias sbrowser="apm com.sec.android.app.sbrowser/.SBrowserMainActivity"
+alias sdmse="apm eu.darken.sdmse/.main.ui.MainActivity"
+alias se="apm ninja.sesame.app.edge/.activities.MainActivity"
+alias search="apm ninja.sesame.app.edge/.activities.MainActivity"
+alias sesame="apm ninja.sesame.app.edge/.activities.MainActivity"
+alias settingsa="apm com.android.settings/.Settings"
+alias sgame="apm com.tencent.tmgp.sgame/.SGameActivity"
+alias shanling="apm com.shanling.MusicApp/com.shanling.MusicApp.gui.Activity.SplashActivity"
+alias shazam="apm com.shazam.android/.activities.SplashActivity"
+alias shizuku="apm moe.shizuku.privileged.api/moe.shizuku.manager.MainActivity"
+alias shizukurunner="apm com.shizuku.uninstaller/.MainActivity"
+alias shortcut-maker="apm rk.android.app.shortcutmaker/.CommonMethods.SplashScreenActivity"
+alias singbox="apm io.nekohasekai.sfa/io.nekohasekai.sfa.ui.MainActivity"
+alias sleep-zz="apm com.urbandroid.sleep/.alarmclock.AlarmClock"
+alias sleepcloud="apm com.urbandroid.sleep.addon.port/.CloudSettingsActivity"
+alias sleipnir="apm jp.co.fenrir.android.sleipnir/com.fenrir_inc.sleipnir.main.MainActivity"
+alias sms="apm com.google.android.apps.messaging/com.google.android.apps.messaging.ui.ConversationListActivity"
+alias spotifx="apm com.spotify.musix/.MainActivity"
+alias spotify="apm com.spotify.music/.MainActivity"
+alias spotifl="apm com.spotify.lite/com.spotify.litenavigation.launcher.LauncherActivity"
+alias store-aurora="apm com.aurora.store/.MainActivity"
+alias store-heytap="apm com.heytap.market/.activity.MainActivity"
+alias store-xiaomi="com.xiaomi.market/com.xiaomi.market.ui.MarketTabActivity"
+alias surfboard="apm com.getsurfboard/.ui.activity.MainActivity"
+alias systemui-tuner="apm com.zacharee1.systemuituner/.MainActivity"
+alias systemuituner="apm com.zacharee1.systemuituner/com.zacharee1.systemuituner.MainActivity"
+alias t2s="apm hesoft.T2S/hesoft.T2S.AppActivity"
+alias tanchjim="apm com.tanchjim.chengmao/io.dcloud.PandoraEntry"
+alias taobao="apm com.taobao.taobao/com.taobao.tao.welcome.Welcome"
+alias tasker-start="am startservice -n net.dinglisch.android.taskerm/com.joaomgcd.oldtaskercompat.matter.ServiceMatterCommissioning"
+alias tasker="apm net.dinglisch.android.taskerm/.Tasker///ACCESSIBILITY_SERVICES:.MyAccessibilityService::q:w//android.permission.PACKAGE_USAGE_STATS:android.permission.BODY_SENSORS:android.permission.WRITE_CALL_LOG:android.permission.READ_CALL_LOG:android.permission.RECEIVE_SMS:android.permission.WRITE_EXTERNAL_STORAGE:android.permission.RECORD_AUDIO:android.permission.READ_PHONE_STATE:android.permission.SEND_SMS:android.permission.READ_SMS:android.permission.ACCESS_FINE_LOCATION:android.permission.ACCESS_COARSE_LOCATION:android.permission.CAMERA:android.permission.PROCESS_OUTGOING_CALLS:android.permission.READ_CONTACTS:android.permission.WRITE_CONTACTS:android.permission.CALL_PHONE:android.permission.READ_CALENDAR:android.permission.WRITE_CALENDAR:android.permission.CHANGE_CONFIGURATION:android.permission.ANSWER_PHONE_CALLS:android.permission.SET_MEDIA_KEY_LISTENER:android.permission.SYSTEM_ALERT_WINDOW:android.permission.SET_PROCESS_LIMIT:android.permission.READ_EXTERNAL_STORAGE:android.permission.ACCESS_BACKGROUND_LOCATION"
+alias tasks="apm com.google.android.apps.tasks/com.google.android.apps.tasks.ui.TaskListsActivity"
+alias telegram="apm org.telegram.messenger/.DefaultIcon"
+alias theme-heytap="apm com.heytap.themestore/com.nearme.themespace.activities.ThemeActivity"
+alias theme-xiaomi="com.miui.themestore/com.miui.thememanagerstore.ThemeResourceTabActivity"
+alias tomato-novel="apm com.dragon.read/com.dragon.read.pages.splash.SplashActivity"
+alias translate="apm com.google.android.apps.translate/.TranslateActivity"
+alias ttgk="apm com.szttgk.audio/com.szttgk.audio.SplashActivity"
+alias usbaudioplayerpro="apm com.extreamsd.usbaudioplayerpro/com.extreamsd.usbaudioplayershared.ScreenSlidePagerActivity"
+alias V-surfboard="apm com.getsurfboard/.ui.activity.MainActivity"
+alias vanilla="apm com.kyant.vanilla/com.kyant.vanilla.MainActivity"
+alias wechat="apm com.tencent.mm/.ui.LauncherUI"
+alias wirelesssettings="apm com.oplus.wirelesssettings/"
+alias x="apm com.twitter.android/.StartActivity"
+alias xodo="apm com.xodo.pdf.reader/viewer.CompleteReaderMainActivity"
+alias xplore="apm com.lonelycatgames.Xplore/.Browser"
+alias XSDL="apm x.org.server/.MainActivity"
+alias xsdl="apm x.org.server/.MainActivity"
+alias xserver-xsdl="apm x.org.server/.MainActivity"
+alias yandex-browser="apm com.yandex.browser/com.yandex.browser.YandexBrowserActivity"
+alias yandexb="apm com.yandex.browser/com.yandex.browser.YandexBrowserActivity"
+alias ytm="apm com.google.android.apps.youtube.music/.activities.MusicActivity"
+alias ytmusic="apm com.google.android.apps.youtube.music/.activities.MusicActivity"
+alias yuzu="apm org.yuzu.yuzu_emu/.ui.main.MainActivity"
+alias za="apm ru.zdevs.zarchiver.pro/.ZArchiver"
+alias zap="apm ru.zdevs.zarchiver/.ZArchiver"
+alias zarchiver-pro="apm ru.zdevs.zarchiver.pro/.ZArchiver"
+alias zpay="apm com.eg.android.AlipayGphone/.AlipayLogin"
+alias douyin="apm com.ss.android.ugc.aweme/.splash.SplashActivity"
+#alias =""
+#alias ="apm "
+alias micommunity="apm com.xiaomi.vipaccount/com.xiaomi.mi.launch.LaunchActivity"
+alias deepseek="apm com.deepseek.chat/.MainActivity"
+alias bottomquicksettings="apm com.tombayley.bottomquicksettings/com.tombayley.bottomquicksettings.activity.MainActivity"
+alias volumepanel="apm com.tombayley.volumepanel/.app.ui.home.MainActivity"
+alias accessibilitymanager="apm com.accessibilitymanager/.MainActivity"
+alias canta="apm org.samo_lego.canta/.MainActivity"
+alias nrfr="apm com.github.nrfr/.MainActivity"
+alias boc="apm com.chinamworld.bocmbci/com.boc.bocsoft.mobile.bocmobile.buss.system.splash.SplashActivity"
+alias BOC="apm com.chinamworld.bocmbci/com.boc.bocsoft.mobile.bocmobile.buss.system.splash.SplashActivity"
+alias ccb="apm com.chinamworld.main/com.ccb.start.MainActivity"
+alias CCB="apm com.chinamworld.main/com.ccb.start.MainActivity"
+alias abc="apm com.android.bankabc/com.alipay.mobile.quinox.LauncherActivity"
+alias ABC="apm com.android.bankabc/com.alipay.mobile.quinox.LauncherActivity"
+alias cmb="apm cmb.pb/.app.mainframe.container.PBMainActivity"
+alias CMB="apm cmb.pb/.app.mainframe.container.PBMainActivity"
+alias ct="apm com.ct.client/.activity.SplashActivity"
+alias noweather="apm com.nothing.weather/com.nothing.weather.ui.main.MainActivity"
+alias rednote="apm com.xingin.xhs/com.xingin.xhs.index.v2.IndexActivityV2"
+#alias ="apm "
+#alias ="apm "
+#alias ="apm "
+#alias ="apm "
+#alias ="apm "
+#alias ="apm "
+alias zhihu="apm com.zhihu.android/.app.ui.activity.LauncherActivity"
+#alias calculator="apm com.google.android.calculator/com.android.calculator2.Calculator////google计算器"
+#alias chrome="apm com.android.chrome/com.google.android.apps.chrome.Main"
+#alias fy="apm com.google.android.apps.translate/.TranslateActivity"
+#alias kconnect="apm org.kde.kdeconnect_tp/org.kde.kdeconnect.UserInterface.MainActivity"
+#alias kdeconnect="apm org.kde.kdeconnect_tp/org.kde.kdeconnect.UserInterface.MainActivity"
+#alias TermuxLauncher|termuxlauncher="apm amsitlab.android.apps.termuxlauncher/.MainActivity"
+#alias 一个木函|一个木函="apm com.One.WoodenLetter/.LetterActivity"
+#alias 中国银行|中国银行="apm com.chinamworld.bocmbci/com.boc.bocsoft.mobile.bocmobile.buss.system.splash.SplashActivity"
+#alias 動畫瘋|動畫瘋="apm tw.com.gamer.android.animad/.AnimadActivity"
+#alias 图库|图库="apm org.Gallery.Pro/.activities.SplashActivity.Orange"
+#alias 文字转语音|文字转语音="apm com.alpaca.android.readout/.MainActivity"
+#alias 海贝音乐|海贝音乐="apm com.hiby.music/.Activity.StartActivity"
+#alias 美团|美团="apm com.sankuai.meituan/com.meituan.android.pt.homepage.activity.MainActivity"
+#alias 遥控精灵|遥控精灵="apm com.tiqiaa.remote/com.tiqiaa.icontrol.WelcomeActivity"
+#alias 静读天下专业版|静读天下专业版="apm com.flyersoft.moonreaderp/.ActivityMain"
+#alias 黑阈|黑阈="apm me.piebridge.brevent/.ui.BreventActivity"
+
+alias s="apm rk.android.app.pixelsearch/rk.android.app.pixelsearch.activities.HomeActivity"
+alias dhizuku="apm com.rosan.dhizuku/com.rosan.dhizuku.ui.activity.SettingsActivity"
+alias Sync="apm com.resilio.sync/.ui.activity.StartActivity"
+alias owndroid="apm com.bintianqi.owndroid/com.bintianqi.owndroid.MainActivity"
+
+alias bible="apm com.aquila.bible/com.wdbible.app.wedevotebible.base.LoadingActivity"
+
+
+
+##  ##
+[[ $1 == '--' ]] && {
+    declare -f $2 &>/dev/null && {
+        echo function $2
+        $2 ${@:3}
+    }
+    alias $2 &>/dev/null && {
+        echo alias $2
+        $2 ${@:3}
+    }
+}
+
+
+# vim: set ft=sh ts=2 sw=2 sts=2 et :

@@ -1,0 +1,73 @@
+isTermux(){
+  [[ -d $PREFIX ]] && command -v pkg
+}
+
+getCodeName(){
+[[ -f /etc/os-release ]] && {
+  codeName=$(grep VERSION_CODENAME /etc/os-release |cut -d'=' -f2)
+  [[ -n $codeName ]] && echo $codeName && exit
+}
+
+  isTermux && echo termux && exit
+}
+
+getTmpDir(){
+  echo ${TMPDIR:-/tmp}
+}
+
+
+# get_env_type: 返回当前环境的规范化类型
+# 优先级：Termux > Wayland > X11 > Fallback
+get_env_type() {
+    if isTermux; then
+        echo "TERMUX"
+        return
+    fi
+
+    # 规范化 $XDG_SESSION_TYPE 的值
+    case "$XDG_SESSION_TYPE" in
+        wayland)
+            echo "WAYLAND"
+            ;;
+        x11)
+            echo "X11"
+            ;;
+        *)
+            # 默认回退到 X11
+            echo "X11"
+            ;;
+    esac
+}
+
+getCliGetCmd() {
+    local env_type=$(get_env_type) # 仅依赖规范化类型
+    
+    case "$env_type" in
+        TERMUX)
+            echo "termux-clipboard-get"
+            ;;
+        WAYLAND) 
+            echo "wl-paste" 
+            ;;
+        X11) 
+            echo "xclip -selection clipboard -o" 
+            ;;
+        # 无需 * 默认分支，因为 get_env_type 保证返回一个已知值
+    esac
+}
+
+getCliSetCmd() {
+    local env_type=$(get_env_type) # 仅依赖规范化类型
+    
+    case "$env_type" in
+        TERMUX)
+            echo "termux-clipboard-set"
+            ;;
+        WAYLAND) 
+            echo "wl-copy" 
+            ;;
+        X11) 
+            echo "xclip -selection clipboard" 
+            ;;
+    esac
+}

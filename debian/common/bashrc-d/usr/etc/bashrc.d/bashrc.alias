@@ -1,5 +1,121 @@
 #!/bin/bash
 
+alias ra="ranger --choosedir=${TMPDIR:-/tmp}/rangerExitDwd;cd $(cat ${TMPDIR:-/tmp}/rangerExitDwd)"
+
+
+alias cl="clear"
+
+get_className(){
+    xprop | awk '
+      /^WM_CLASS/{sub(/.* =/, "instance:"); sub(/,/, "\nclass:"); print}
+      /^WM_NAME/{sub(/.* =/, "title:"); print}'
+}
+
+## cat ##
+
+cat_(){
+  cat ~/._$1 |$(getCliSetCmd)
+}
+
+alias cat-uuid="cat /proc/sys/kernel/random/uuid"
+
+alias cat-git="cat_ git"
+
+
+## clash ##
+
+alias clash-mmdb="curl -L 'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb' -o ~/.config/clash/Country.mmdb"
+alias clash-dashboard="git clone https://github.com/chmod777john/clash-dashboard.git ~/.config/clash/clash-dashboard"
+
+clash-config-down(){
+
+  (( $# <= 0 )) && return 1
+
+  local CLASH_UAS
+  declare -A CLASH_UAS
+  
+  CLASH_UAS["GO_HTTP"]='Go-http-client/1.1'
+  CLASH_UAS["CLASH_CORE"]='Clash/1.0.0'
+  CLASH_UAS["CLASH"]="Clash"
+  CLASH_UAS["CLASH_META"]="Clash.Meta"
+  CLASH_UAS["CLASH_META_V"]="Clash.Meta/1.18.0"
+  CLASH_UAS["CFW"]="Clash.for.Windows"
+  CLASH_UAS["CFW_V"]="Clash.for.Windows/0.20.39"
+  CLASH_UAS["CFW_META"]="Clash.Meta.for.Windows"
+  CLASH_UAS["CFW_META_V"]="Clash.Meta.for.Windows/1.18.0"
+  CLASH_UAS["CLASHX"]="ClashX"
+  CLASH_UAS["CLASHX_V"]="ClashX/1.120.0"
+  CLASH_UAS["CLASHXPRO"]="ClashX Pro"
+  CLASH_UAS["CLASHXPRO_V"]="ClashX Pro/1.120.0"
+  CLASH_UAS["CLASH_ANDROID"]="Clash.for.Android"
+  CLASH_UAS["CLASH_ANDROID_V"]="Clash.for.Android/2.8.7"
+  CLASH_UAS["META_ANDROID"]="Clash.Meta.for.Android"
+  CLASH_UAS["META_ANDROID_V"]="Clash.Meta.for.Android/2.8.7"
+  CLASH_UAS["VERGE"]="Clash Verge"
+  CLASH_UAS["VERGE_V"]="Clash Verge/1.3.0"
+  CLASH_UAS["VERGE_REBORN"]="Clash Verge Reborn"
+  CLASH_UAS["VERGE_REBORN_V"]="Clash Verge Reborn/1.3.0"
+  CLASH_UAS["PREMIUM"]="Clash Premium"
+  CLASH_UAS["PREMIUM_V"]="Clash Premium/3.0.0"
+  CLASH_UAS["DNF"]="ClashDotNetFramework"
+  CLASH_UAS["DNF_V"]="ClashDotNetFramework/2.1.9"
+  CLASH_UAS["CLASH_LINUX"]="Clash.for.Linux"
+  CLASH_UAS["CLASH_LINUX_V"]="Clash.for.Linux/1.17.0"
+
+
+  local UA url output isBak
+  UA=${CLASH_UAS["VERGE_V"]}
+  output=~/.config/clash/config.yaml
+
+  while [[ $# > 0 ]] ;do
+    case $1 in
+      -l | --list )
+        for key in "${!CLASH_UAS[@]}"; do
+          echo "  - $key: ${CLASH_UAS[$key]}"
+        done
+        ;;
+      -a | --UserAgent )
+        UA=${CLASH_UAS[$2]}
+        shift
+        ;;
+      -A | --FullUserAgent )
+        UA=$2
+        shift
+        ;;
+      -u | --url )
+        url=$2
+        shift
+        ;;
+      -o | -output )
+        output=$2
+        shift
+        ;;
+      -O )
+        output=~/.config/clash/$2
+        shift
+        ;;
+      -b | --bak )
+        isBak=0 
+        ;;
+      * )
+        url=$1
+        [[ $# == 2 ]] && output=$2 && shift
+        ;;
+    esac  
+
+    shift
+  done
+
+  [[ $isBak == 0 ]] && mv -v $output ${output}.bak
+
+  echo curl -s -L -H "User-Agent: ${UA}" -o "${output}" "${url}"
+
+}
+
+##### 以上是已经修改过的
+##### 以下是原本的文件
+
+
 #tput cup 0 0 && tput cr && tput el && printf qq && lines=$(tput lines) && tput cup $((lines - 1)) 0
 
 #
@@ -325,8 +441,6 @@ syosetu(){
 }
 
 
-alias clash-mmdb="curl -L 'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb' -o ~/.config/clash/Country.mmdb"
-alias clash-dashboard="git clone https://github.com/chmod777john/clash-dashboard.git ~/.config/clash/clash-dashboard"
 
 alias browsh:="browsh --firefox.path $PREFIX/bin/firefox --startup-url "
 alias browshh="browsh --firefox.path $PREFIX/bin/firefox --startup-url "
@@ -334,13 +448,7 @@ alias l="apm com.google.ar.lens/com.google.vr.apps.ornament.app.lens.LensLaunche
 
 alias st="st -f 'Liberation Mono:pixelsize=45'"
 
-get_className(){
-    xprop | awk '
-      /^WM_CLASS/{sub(/.* =/, "instance:"); sub(/,/, "\nclass:"); print}
-      /^WM_NAME/{sub(/.* =/, "title:"); print}'
-}
 
-alias cl="clear"
 
 alias back="cd ~ && tar -zvcf back.tar.gz --exclude=.git back/ && cp back.tar.gz /sdcard/ && cd - "
 
@@ -355,10 +463,7 @@ sshd_plus(){
 alias sshdd="sshd_plus"
 
 
-## cat ##
-alias cat-uuid="cat /proc/sys/kernel/random/uuid"
 
-alias cat-git="cat ~/._git |termux-clipboard-set"
 
 ## qr ##
 

@@ -45,7 +45,7 @@ build_package() {
   #local FIRST_CHAR=${DEB_NAME:0:1}
   #FIRST_CHAR=${FIRST_CHAR,,}
   #local DEB_DIR="$1/$ARCH/$FIRST_CHAR/$PACKAGE"
-  local DEB_DIR="$1"
+  local DEB_DIR="$1/binary-${ARCH}"
   mkdir -p "$DEB_DIR"
   dpkg-deb --build "$PKG_ROOT" "$DEB_DIR/$DEB_NAME.deb"
 }

@@ -6,11 +6,12 @@
 #repo_root=
 dist_name=stable
 comp_name=sh
-arch=binary-aarch64
-packages_dir=dists/$dist_name/$comp_name/$arch/
+arch=aarch64
+packages_dir=dists/$dist_name/$comp_name/binary-$arch/
 mkdir -pv $packages_dir 2>/dev/null
 
-dpkg-scanpackages -a $arch pool/sh /dev/null > ${packages_dir}Packages
+echo dpkg-scanpackages pool/${comp_name}/ /dev/null \> ${packages_dir}Packages
+dpkg-scanpackages pool/${comp_name}/ > ${packages_dir}Packages
 #gzip -c dists/stable/main/binary-aarch64/Packages > ${packages_dir}/Packages.gz
 gzip -k -f $packages_dir/Packages
 

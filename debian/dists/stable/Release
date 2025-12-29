@@ -1,30 +1,30 @@
 Architectures: binary-aarch64 all
 Codename: stable
 Components: sh
-Date: Mon, 29 Dec 2025 12:55:36 +0000
+Date: Mon, 29 Dec 2025 13:29:29 +0000
 Label: TRepo
 Origin: TRepo
 MD5Sum:
- 915cefb7c93ce888db910694a254fb48              131 Release
- d41d8cd98f00b204e9800998ecf8427e                0 sh/binary-aarch64/Packages
- d8079db155871d8123fc4c89bd8c5b42               29 sh/binary-aarch64/Packages.gz
+ 74f48925f640d0287673ae01e9423bb0              131 Release
+ 010d5bb9de1e98b49c2ef908a6b4a0ad              388 sh/binary-aarch64/Packages
+ 36cab25b428ded0969e872b8f9bd7ed5              315 sh/binary-aarch64/Packages.gz
  4801366c7633eada0e6c33c3b5e9ed04             3783 termux/binary-aarch64/Packages
  b2899af4de7fb5e779acca1114ed944c             1390 termux/binary-aarch64/Packages.gz
 SHA1:
- b541baa4fa31526ea699b8efebaa246667f910d1              131 Release
- da39a3ee5e6b4b0d3255bfef95601890afd80709                0 sh/binary-aarch64/Packages
- 5e6fe9bb217ac8715dfa145ff8a4e7aed77f9ea9               29 sh/binary-aarch64/Packages.gz
+ 5ce546b873ba25cdd226942e8edabe723c1f94ef              131 Release
+ 20615300eb9d36409c86374ef9b959417ff302d2              388 sh/binary-aarch64/Packages
+ 2522e8454ef3306dfc0587dfdc36baa33e99fe56              315 sh/binary-aarch64/Packages.gz
  0f45c46351499e48026dba144f32d01700948ea4             3783 termux/binary-aarch64/Packages
  a69cd727908ef9dc7f6aae70257b10dc0c0a0b13             1390 termux/binary-aarch64/Packages.gz
 SHA256:
- 168e4bc5afe75ec4017e9327ebfbe9dd03c6420a30e08159fbdb86488d74e9f0              131 Release
- e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 sh/binary-aarch64/Packages
- 0e8e7fe4a260ac296c23d03eca13400a7eef04ddf7fa14dd697db369b0ac99e7               29 sh/binary-aarch64/Packages.gz
+ ae22f24083fac20c56835a3f1c2fabd01895110c27d279af209eb595ede75133              131 Release
+ 689ae742fe831323413b359b6dac7aab623b414ddc9eff19f8271234c087825a              388 sh/binary-aarch64/Packages
+ b0ba0a4f273825b8f015f157faf0fda30dc9ce50ae35a3233ad16655a6a52cf2              315 sh/binary-aarch64/Packages.gz
  8e7983ebcbf586a4f1d5c9c423c6f27e80fd4058063f00af99278545f97fbe35             3783 termux/binary-aarch64/Packages
  f698dfe5306047127040900873307ee65a2c732affd631da7c99e35b2417584f             1390 termux/binary-aarch64/Packages.gz
 SHA512:
- 72c43262984eabec6efec554789bc27db2efa1976709f0dc796ebe10936c9ab8b238af556c3a362e25ba313b8259d84ce41b25c3693e11c8e2f2d3aa26968790              131 Release
- cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e                0 sh/binary-aarch64/Packages
- 57dcc8dfdef062aaf4a1d615451d2e67f683a0742d682d5efc028f9a634b3373b95ab4adfc59c434b9d61d8174e7dbde7778448c02edce98a03f19da711f582c               29 sh/binary-aarch64/Packages.gz
+ e4ee6d3cb5bb4fa2db3d13d0d9c179a1a8bfa6cff3d30107425a37aa7a72a347f83b9d177a764b1b94f53e8c9e3ca604b867f948807d741b498efb033c1f6fcd              131 Release
+ 439648726c82bc98fd6964ba3800c2f7ce80eaa6fc10feadcd902d684e3ef77915df7a92069b7201f55ba6046be49e120624413b6cb47b83e728c98883f56a03              388 sh/binary-aarch64/Packages
+ ced4e35312e0fcc61fbf3cd30eded765b63241dd6ca45ed512568c82330ac1f6a35b0b4e3c2a77c63bc4e69f975dd23d66615475d573b11ef8b994af3e6da015              315 sh/binary-aarch64/Packages.gz
  e23f639e7028bb1e5bc6db787bc5f18894ebcdfea3f49614d3b0f36dc04886ffc4a284d24581f127af4a59a8b3de8a7481dec9a6885825b97c56c2ad5bd25647             3783 termux/binary-aarch64/Packages
  fa239861349e4ae4624d0294f24ef3ce4ff1aa66f7d84a1647a2ad007cb85e100b9ac9e734798171dfa9567a42024197643f0ae2f4b163b44011586d382c7d51             1390 termux/binary-aarch64/Packages.gz

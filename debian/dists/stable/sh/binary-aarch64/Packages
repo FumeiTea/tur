@@ -1,0 +1,14 @@
+Package: ww-utils
+Version: 1.0
+Architecture: all
+Maintainer: fumei wwb.cici@gmail.com
+Recommends: opt-sh
+Filename: pool/sh/binary-all/ww-utils_all_1.0.deb
+Size: 3216
+MD5sum: 29181032180748aaad30ad02d934559f
+SHA1: 0115b55aba33605352f11550d8f32c9852d4f3ad
+SHA256: 139f6b34f6f2f13e013cf8df8d45e5a41edffb2736095809e4253e4b43f6694c
+Section: base
+Priority: optional
+Description: ww-utils [sh]
+

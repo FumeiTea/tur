@@ -38,6 +38,14 @@ termux user repository
 
 ### 导入密钥
 
+```bash
+curl -sL [https://raw.githubusercontent.com/FumeiTea/tur/main/setup.sh](https://raw.githubusercontent.com/FumeiTea/tur/main/setup.sh) | bash
+```
+
+```bash
+curl -sL https://raw.githubusercontent.com/FumeiTea/tur/main/setup.sh | bash
+```
+
 termux : `curl -o $PREFIX/etc/apt/trusted.gpg.d/tur.key.gpg https://raw.githubusercontent.com/FumeiTea/tur/main/debian/dists/public.gpg`
 
 curl https://raw.githubusercontent.com/FumeiTea/tur/main/debian/dists/public.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/tur.gpg

@@ -1,8 +1,8 @@
-Package: wlog
+Package: ww-utils
 Version: 1.0
 Section: base
 Priority: optional
 Architecture: all
 Recommends: opt-sh
 Maintainer: fumei wwb.cici@gmail.com
-Description: wlog [sh]
+Description: ww-utils [sh]

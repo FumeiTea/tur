@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# 临时构建目录
+BUILD_DIR="build_tmp"
+rm -rf "$BUILD_DIR"
+
+
+
+# 提取包信息
+extract_deb_info() {
+  local control_file="$1/DEBIAN/control"
+  
+  PACKAGE=$(awk '/^Package:/ {print $2}' "$control_file")
+  VERSION=$(awk '/^Version:/ {print $2}' "$control_file")
+  ARCH=$(awk '/^Architecture:/ {print $2}' "$control_file")
+  
+  # 如果没有指定架构，默认为 all
+  ARCH="${ARCH:-all}"
+  echo ${PACKAGE}_${ARCH}_${VERSION}
+}
+
+
+build_package() {
+  local PLATFORM="$1"
+  local INSTALL_PREFIX="$2"
+
+  echo "正在构建 [$PLATFORM] 版本..."
+
+  # 1. 准备目录结构 (包含前缀)
+  # 普通 Linux: build_tmp/linux/opt/sh
+  # Termux:     build_tmp/termux/data/data/.../opt/sh
+  local PKG_ROOT="$BUILD_DIR/$PLATFORM"
+  local FINAL_DIR="$PKG_ROOT$INSTALL_PREFIX/"
+
+  mkdir -p "$FINAL_DIR"
+
+  echo
+  cp -rfvp "$3/DEBIAN/" $PKG_ROOT
+  cp -rfvp "$3"/src/* $FINAL_DIR
+  echo
+
+  #dpkg-deb --build "$PKG_ROOT" "${PKG_NAME}_${VERSION}_${PLATFORM}.deb"
+    dpkg-deb --build "$PKG_ROOT" "$BUILD_DIR/$(extract_deb_info $PKG_ROOT).deb"
+}
+
+build_package "$@"

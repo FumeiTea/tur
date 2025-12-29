@@ -51,19 +51,10 @@ termux : `curl -o $PREFIX/etc/apt/trusted.gpg.d/tur.key.gpg https://raw.githubus
 curl https://raw.githubusercontent.com/FumeiTea/tur/main/debian/dists/public.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/tur.gpg
 
 
-### Debian:Trixie <span id="Debian-Trixie"/>
+### ![debian](https://img.shields.io/badge/-A81D33?style=for-the-badge&logo=debian&logoColor=white) Debian:Trixie <span id="Debian-Trixie"/>
 
 `deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/debian/ stable trixie sh main`
 
-#### 收录架构
-
-#### 
-
-### Debian-Bullseye <span id="Debian-Bullseye"/>
-`deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/debian/ stable bullseye sh main`
-
-### termux <span id="termux"/>
-`deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/debian/ stable termux sh main`
 
 ### Arch <span id="Arch"/>
 ### ChromeOS-Crostini <span id="ChromeOS-Crostini"/>

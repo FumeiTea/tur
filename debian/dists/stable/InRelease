@@ -1,3 +1,6 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
 Architectures: binary-aarch64 all
 Codename: stable
 Components: sh
@@ -28,3 +31,10 @@ SHA512:
  d5c77439355ce7c00439c4c9db310de05c7e26d17e31846376302d784c14cd64082229b5fdda8944a8dc7fcbbb09a4ab7bb29749785ff2993d24052155402981              315 sh/binary-aarch64/Packages.gz
  e23f639e7028bb1e5bc6db787bc5f18894ebcdfea3f49614d3b0f36dc04886ffc4a284d24581f127af4a59a8b3de8a7481dec9a6885825b97c56c2ad5bd25647             3783 termux/binary-aarch64/Packages
  fa239861349e4ae4624d0294f24ef3ce4ff1aa66f7d84a1647a2ad007cb85e100b9ac9e734798171dfa9567a42024197643f0ae2f4b163b44011586d382c7d51             1390 termux/binary-aarch64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQQ00XA1N9yBMJe5Hd8/bVGs/63e4gUCaVKLKgAKCRA/bVGs/63e
+4rrvAQD3O6YJjht/rTPdfpJD0eil3nfsO71Yrck7Wfq/Qd2B0AD/cbRX+JJAmWyt
+CtyqYSy4ehyJJRTdyiTQ5iYcWBVr1Qs=
+=YgNz
+-----END PGP SIGNATURE-----

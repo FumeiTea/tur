@@ -1,21 +1,22 @@
 #!/bin/bash
 
+#~/.tur.private-key.asc
 
 # scanpackages
 
 #repo_root=
 dist_name=stable
+dist_path=dists/$dist_name
 comp_name=sh
 arch=aarch64
 packages_dir=dists/$dist_name/$comp_name/binary-$arch/
+
 mkdir -pv $packages_dir 2>/dev/null
 
 echo dpkg-scanpackages pool/${comp_name}/ /dev/null \> ${packages_dir}Packages
 dpkg-scanpackages pool/${comp_name}/ > ${packages_dir}Packages
 #gzip -c dists/stable/main/binary-aarch64/Packages > ${packages_dir}/Packages.gz
 gzip -k -f $packages_dir/Packages
-
-
 
 #cat <<EOF > release.conf
 #APT::FTPArchive::Release::Codename "${dist_name}";
@@ -26,5 +27,24 @@ gzip -k -f $packages_dir/Packages
 #EOF
 
 
+# release
+
+release_file=dists/$dist_name/Release
 echo "Generating Release file..."
-apt-ftparchive -c release/${dist_name}_${comp_name}_${arch}.conf release dists/$dist_name > dists/$dist_name/Release
+apt-ftparchive -c release/${dist_name}_${comp_name}_${arch}.conf release $dist_path > $release_file
+
+
+# gpg key
+
+GPG_NAME=tur
+
+rm -f $dist_path/Release.gpg $dist_path/InRelease
+
+# 生成 Release.gpg (分离式签名)
+# -a: ASCII输出, -b: 分离签名, -s: 签名, -o: 输出文件
+gpg --default-key "$GPG_NAME" -abs -o $dist_path/Release.gpg $dist_path/Release
+
+
+# 生成 InRelease (内嵌式签名，现代 apt 首选)
+# --clearsign: 生成包含原文的签名文件
+gpg --default-key "$GPG_NAME" --clearsign -o $dist_path/InRelease $dist_path/Release

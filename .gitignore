@@ -1,0 +1,68 @@
+.# ==============================
+# Vim / Vi 编辑器文件
+# ==============================
+
+# 交换文件 (swap files)
+*.swp
+*.swo
+*.swx
+
+# 备份文件
+*~
+*.bak
+*.backup
+*.back
+.bk
+
+# 撤销文件
+[._]*.un~
+*.un~
+*.undo
+
+# 会话文件
+*.viminfo
+.viminfo
+.viminf[0-9]*
+.viminf[0-9]*.tmp
+
+# Vim 会话
+Session.vim
+Sessionx.vim
+*.session
+*.session.lock
+
+# 视图文件
+*.view
+*.view.lock
+
+# 临时文件
+.temp
+.tmp
+
+# 标签文件
+tags
+.tags
+.tags_sorted_by_file
+TAGS
+
+# 历史记录
+.netrwhist
+.history
+.vimhistory
+
+# Vim 持久化撤销
+[._]*.un~
+*.un~
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+
+# 特定插件文件
+cscope.*
+*.cscope
+.ycm_*
+YouCompleteMe*.py
+
+# 目录
+.vim/
+.vimrc.local
+.vimrc.bundles.local

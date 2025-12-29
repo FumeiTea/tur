@@ -36,6 +36,13 @@ termux user repository
 [跳转到目录](#contents)
 
 
+### 导入密钥
+
+termux : wget -O /data/data/com.termux/files/usr/etc/apt/trusted.gpg.d/tur.key.gpg  https://raw.githubusercontent.com/FumeiTea/tur/main/debian/dists/public.key
+
+wget -q -O- https://raw.githubusercontent.com/FumeiTea/tur/main/debian/dists/public.key | sudo gpg --dearmor -o /etc/apt/keyrings/tur.gpg
+
+
 ### Debian:Trixie <span id="Debian-Trixie"/>
 
 `deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/debian/ stable trixie sh main`

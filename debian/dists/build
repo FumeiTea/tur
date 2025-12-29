@@ -13,16 +13,16 @@ extract_deb_info() {
   PACKAGE=$(awk '/^Package:/ {print $2}' "$control_file")
   VERSION=$(awk '/^Version:/ {print $2}' "$control_file")
   ARCH=$(awk '/^Architecture:/ {print $2}' "$control_file")
-  
+
+
   # 如果没有指定架构，默认为 all
   ARCH="${ARCH:-all}"
-  echo ${PACKAGE}_${ARCH}_${VERSION}
 }
 
 
 build_package() {
-  local PLATFORM="$1"
-  local INSTALL_PREFIX="$2"
+  local PLATFORM="$2"
+  local INSTALL_PREFIX="$3"
 
   echo "正在构建 [$PLATFORM] 版本..."
 
@@ -35,12 +35,19 @@ build_package() {
   mkdir -p "$FINAL_DIR"
 
   echo
-  cp -rfvp "$3/DEBIAN/" $PKG_ROOT
-  cp -rfvp "$3"/src/* $FINAL_DIR
+  cp -rfvp "$4/DEBIAN/" $PKG_ROOT
+  cp -rfvp "$4"/src/* $FINAL_DIR
   echo
 
   #dpkg-deb --build "$PKG_ROOT" "${PKG_NAME}_${VERSION}_${PLATFORM}.deb"
-    dpkg-deb --build "$PKG_ROOT" "$BUILD_DIR/$(extract_deb_info $PKG_ROOT).deb"
+  extract_deb_info $PKG_ROOT
+  local DEB_NAME=${PACKAGE}_${ARCH}_${VERSION}
+  #local FIRST_CHAR=${DEB_NAME:0:1}
+  #FIRST_CHAR=${FIRST_CHAR,,}
+  #local DEB_DIR="$1/$ARCH/$FIRST_CHAR/$PACKAGE"
+  local DEB_DIR="$1"
+  mkdir -p "$DEB_DIR"
+  dpkg-deb --build "$PKG_ROOT" "$DEB_DIR/$DEB_NAME.deb"
 }
 
 build_package "$@"

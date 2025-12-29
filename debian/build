@@ -2,9 +2,28 @@
 
 # scanpackages
 
-dpkg-scanpackages pool/ /dev/null > dists/stable/main/binary-aarch64/Packages
-gzip -c dists/stable/main/binary-aarch64/Packages > dists/stable/main/binary-aarch64/Packages.gz
 
-# 
+#repo_root=
+dist_name=stable
+comp_name=sh
+arch=binary-aarch64
+packages_dir=dists/$dist_name/$comp_name/$arch/
+mkdir -pv $packages_dir 2>/dev/null
 
-apt-ftparchive release dists/stable > dists/stable/Release
+dpkg-scanpackages -a $arch pool/sh /dev/null > ${packages_dir}Packages
+#gzip -c dists/stable/main/binary-aarch64/Packages > ${packages_dir}/Packages.gz
+gzip -k -f $packages_dir/Packages
+
+
+
+#cat <<EOF > release.conf
+#APT::FTPArchive::Release::Codename "${dist_name}";
+#APT::FTPArchive::Release::Origin "TRepo";
+#APT::FTPArchive::Release::Components "${comp_name}";
+#APT::FTPArchive::Release::Label "TRepo";
+#APT::FTPArchive::Release::Architectures "${arch} all";
+#EOF
+
+
+echo "Generating Release file..."
+apt-ftparchive -c release/${dist_name}_${comp_name}_${arch}.conf release dists/$dist_name > dists/$dist_name/Release

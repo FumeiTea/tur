@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "./buildd termux $PREFIX ww-utils/"
+
+../../../build ../../../../pool/sh/ "$@"

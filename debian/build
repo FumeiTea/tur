@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# scanpackages
 
+# scanpackages
 
 #repo_root=
 dist_name=stable

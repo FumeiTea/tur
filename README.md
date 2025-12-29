@@ -46,12 +46,16 @@ curl -sL [https://raw.githubusercontent.com/FumeiTea/tur/main/setup.sh](https://
 curl -sL https://raw.githubusercontent.com/FumeiTea/tur/main/setup.sh | bash
 ```
 
-termux : `curl -o $PREFIX/etc/apt/trusted.gpg.d/tur.key.gpg https://raw.githubusercontent.com/FumeiTea/tur/main/debian/dists/public.gpg`
+```bash
+curl -o $PREFIX/etc/apt/trusted.gpg.d/tur.key.gpg https://raw.githubusercontent.com/FumeiTea/tur/main/debian/dists/public.gpg
+```
 
+__或__
+
+```bash
 curl https://raw.githubusercontent.com/FumeiTea/tur/main/debian/dists/public.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/tur.gpg
+```
 
-
-### ![debian](https://img.shields.io/badge/-A81D33?style=for-the-badge&logo=debian&logoColor=white) Debian:Trixie <span id="Debian-Trixie"/>
 
 `deb [trusted=yes] https://raw.githubusercontent.com/FumeiTea/tur/main/debian/ stable trixie sh main`
 
